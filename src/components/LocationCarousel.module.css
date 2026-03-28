@@ -24,25 +24,9 @@
 
 .carousel {
   display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  padding-bottom: 2rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) var(--color-border);
-}
-
-.carousel::-webkit-scrollbar {
-  height: 6px;
-}
-
-.carousel::-webkit-scrollbar-track {
-  background: var(--color-border);
-  border-radius: 10px;
-}
-
-.carousel::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 10px;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .card {

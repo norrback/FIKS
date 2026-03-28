@@ -20,12 +20,6 @@ export default function LocationCarousel() {
       desc: "See listings for clothes repair",
       link: "/s?category=clothes",
       bgClass: "clothes",
-    },
-    {
-      title: "Category: Electronics",
-      desc: "See listings for electronics",
-      link: "/s?category=electronics",
-      bgClass: "electronics",
     }
   ];
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -6,7 +7,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={`container ${styles.nav}`}>
         <Link href="/" className={styles.logo}>
-          FIKS.
+          <Image src="/fiks_logo.avif" alt="FIKS." width={0} height={0} sizes="100vw" style={{ width: "auto", height: "36px" }} priority />
         </Link>
         
         <div className={styles.search}>
