@@ -1,0 +1,96 @@
+.section {
+  padding: 5rem 0;
+  background-color: var(--color-bg);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--color-text-main);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+  max-width: 600px;
+}
+
+.carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-border);
+}
+
+.carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel::-webkit-scrollbar-track {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 10px;
+}
+
+.card {
+  min-width: 300px;
+  max-width: 300px;
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.cardImagePlaceholder {
+  height: 160px;
+  background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.cardContent {
+  padding: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cardLink {
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.cardLink:hover {
+  text-decoration: underline;
+}
