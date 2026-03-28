@@ -39,14 +39,14 @@ export default function HowItWorks() {
         <h2 className={styles.title}>How things work here.</h2>
         <div className={styles.grid}>
           {steps.map((step, index) => (
-            <div key={index} className={styles.step}>
+            <Link key={index} href={step.link} className={styles.step}>
               <div className={styles.iconWrapper}>{step.num}</div>
               <h3 className={styles.stepTitle}>{step.title}</h3>
               <p className={styles.stepDesc}>{step.desc}</p>
-              <Link href={step.link} className={styles.stepLink}>
+              <span className={styles.stepCta}>
                 {step.linkText} &rarr;
-              </Link>
-            </div>
+              </span>
+            </Link>
           ))}
         </div>
       </div>

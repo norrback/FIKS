@@ -25,11 +25,21 @@
   border-radius: var(--border-radius);
   background: var(--color-bg);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .step:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
 }
 
 .iconWrapper {
@@ -59,16 +69,15 @@
   margin-bottom: 1.5rem;
 }
 
-.stepLink {
+.stepCta {
   color: var(--color-primary);
   font-weight: 600;
   font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: opacity var(--transition-fast);
 }
 
-.stepLink:hover {
-  opacity: 0.8;
+.step:hover .stepCta {
+  opacity: 0.85;
 }

@@ -51,10 +51,15 @@ export function expertiseFromJson(json: string): string[] {
 export async function ensureRepairerProfile(userId: string): Promise<{ slug: string } | null> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { role: true, name: true, repairerProfile: true },
+    select: { role: true, name: true },
   });
   if (!user || user.role !== "REPAIRER") return null;
-  if (user.repairerProfile) return { slug: user.repairerProfile.slug };
+
+  const existing = await prisma.repairerProfile.findUnique({
+    where: { userId },
+    select: { slug: true },
+  });
+  if (existing) return { slug: existing.slug };
 
   const slug = await uniqueRepairerSlug(user.name ?? "repairer");
   await prisma.repairerProfile.create({

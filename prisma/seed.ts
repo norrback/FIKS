@@ -77,6 +77,82 @@ async function main() {
 
   console.log(`Upserted repairer: ${repairerEmail} / password123 — /repairers/demo-repairer`);
 
+  const featuredTextileEmail = "featured-textile@example.com";
+  const featuredTextileUser = await prisma.user.upsert({
+    where: { email: featuredTextileEmail },
+    update: { name: "NordSöm Atelje" },
+    create: {
+      email: featuredTextileEmail,
+      passwordHash,
+      name: "NordSöm Atelje",
+      role: "REPAIRER",
+    },
+  });
+
+  await prisma.repairerProfile.upsert({
+    where: { userId: featuredTextileUser.id },
+    update: {
+      bio: "Tailor and textile repair specialist serving Ostrobothnia.",
+      serviceDescription:
+        "Alterations, zippers, and outerwear — studio work with quick turnaround.",
+      expertise: JSON.stringify(["Textiles", "Clothing"]),
+      completedJobsCount: 11,
+      ratingSum: 38,
+      ratingCount: 8,
+    },
+    create: {
+      userId: featuredTextileUser.id,
+      slug: "nord-som-atelje",
+      bio: "Tailor and textile repair specialist serving Ostrobothnia.",
+      serviceDescription:
+        "Alterations, zippers, and outerwear — studio work with quick turnaround.",
+      expertise: JSON.stringify(["Textiles", "Clothing"]),
+      completedJobsCount: 11,
+      ratingSum: 38,
+      ratingCount: 8,
+    },
+  });
+
+  console.log(`Upserted featured repairer: ${featuredTextileEmail} / password123 — /repairers/nord-som-atelje`);
+
+  const featuredBikeEmail = "featured-bike@example.com";
+  const featuredBikeUser = await prisma.user.upsert({
+    where: { email: featuredBikeEmail },
+    update: { name: "Lumo Pyöräpaja" },
+    create: {
+      email: featuredBikeEmail,
+      passwordHash,
+      name: "Lumo Pyöräpaja",
+      role: "REPAIRER",
+    },
+  });
+
+  await prisma.repairerProfile.upsert({
+    where: { userId: featuredBikeUser.id },
+    update: {
+      bio: "Neighborhood bike shop focused on commuter and touring bikes.",
+      serviceDescription:
+        "Tune-ups, wheel truing, and drivetrain repairs for daily riders.",
+      expertise: JSON.stringify(["Bicycles", "Wheel building"]),
+      completedJobsCount: 31,
+      ratingSum: 105,
+      ratingCount: 22,
+    },
+    create: {
+      userId: featuredBikeUser.id,
+      slug: "lumo-pyorapaja",
+      bio: "Neighborhood bike shop focused on commuter and touring bikes.",
+      serviceDescription:
+        "Tune-ups, wheel truing, and drivetrain repairs for daily riders.",
+      expertise: JSON.stringify(["Bicycles", "Wheel building"]),
+      completedJobsCount: 31,
+      ratingSum: 105,
+      ratingCount: 22,
+    },
+  });
+
+  console.log(`Upserted featured repairer: ${featuredBikeEmail} / password123 — /repairers/lumo-pyorapaja`);
+
   const listings = [
     {
       title: "Broken Floor Fan",

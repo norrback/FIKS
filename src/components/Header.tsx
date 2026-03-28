@@ -13,13 +13,11 @@ export default async function Header() {
 
   let repairerSlug: string | null = null;
   if (session) {
-    const row = await prisma.user.findUnique({
-      where: { id: session.userId },
-      select: { role: true, repairerProfile: true },
+    const profile = await prisma.repairerProfile.findUnique({
+      where: { userId: session.userId },
+      select: { slug: true },
     });
-    if (row?.role === "REPAIRER" && row.repairerProfile) {
-      repairerSlug = row.repairerProfile.slug;
-    }
+    if (profile) repairerSlug = profile.slug;
   }
 
   return (
