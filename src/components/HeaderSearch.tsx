@@ -1,24 +1,14 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import styles from "./Header.module.css";
 
 type Props = { loggedIn: boolean };
 
-export default function HeaderSearch({ loggedIn }: Props) {
+function HeaderSearchField({ loggedIn, initialQ }: Props & { initialQ: string }) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [q, setQ] = useState("");
-
-  useEffect(() => {
-    if (pathname === "/listings") {
-      setQ(searchParams.get("q") ?? "");
-    } else {
-      setQ("");
-    }
-  }, [pathname, searchParams]);
+  const [q, setQ] = useState(initialQ);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,4 +42,13 @@ export default function HeaderSearch({ loggedIn }: Props) {
       />
     </form>
   );
+}
+
+export default function HeaderSearch(props: Props) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialQ = pathname === "/listings" ? (searchParams.get("q") ?? "") : "";
+  const syncKey = `${pathname}:${searchParams.get("q") ?? ""}`;
+
+  return <HeaderSearchField key={syncKey} {...props} initialQ={initialQ} />;
 }
