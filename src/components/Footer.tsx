@@ -17,8 +17,8 @@ export default function Footer() {
             <h4 className={styles.heading}>Discover</h4>
             <ul className={styles.linkList}>
               <li><Link href="/about" className={styles.link}>About us</Link></li>
-              <li><Link href="/search" className={styles.link}>Search listings</Link></li>
-              <li><Link href="/new" className={styles.link}>Post a broken part</Link></li>
+              <li><Link href="/listings" className={styles.link}>Search listings</Link></li>
+              <li><Link href="/create-listing" className={styles.link}>Post a broken part</Link></li>
             </ul>
           </div>
 

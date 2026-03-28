@@ -13,10 +13,10 @@ export default function HeroSection() {
         </p>
         
         <div className={styles.actions}>
-          <Link href="/new" className={`btn btn-primary ${styles.primaryBtn}`}>
+          <Link href="/create-listing" className={`btn btn-primary ${styles.primaryBtn}`}>
             Post a Broken Part
           </Link>
-          <Link href="/services/new" className={`btn btn-secondary ${styles.secondaryBtn}`}>
+          <Link href="/signup" className={`btn btn-secondary ${styles.secondaryBtn}`}>
             List your Repair Service
           </Link>
         </div>

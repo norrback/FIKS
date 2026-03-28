@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./signup.module.css";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [role, setRole] = useState<"user" | "repairer">("user");
   const [formData, setFormData] = useState({
     name: "",
@@ -13,16 +15,53 @@ export default function SignupPage() {
     services: "",
     bio: "",
   });
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(`Signup as ${role}:`, formData);
-    alert(`Signed up successfully as ${role}!`);
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role,
+          ...(role === "repairer"
+            ? { services: formData.services, bio: formData.bio }
+            : {}),
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        detail?: string;
+        repairerSlug?: string;
+      };
+      if (!res.ok) {
+        const base = data.error ?? "Could not create account. Try again.";
+        setError(data.detail ? `${base}\n${data.detail}` : base);
+        return;
+      }
+      if (data.repairerSlug) {
+        router.push(`/repairers/${data.repairerSlug}`);
+      } else {
+        router.push("/listings");
+      }
+      router.refresh();
+    } catch {
+      setError("Network error. Check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -53,6 +92,12 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
+          {error ? (
+            <p className={styles.error} role="alert">
+              {error}
+            </p>
+          ) : null}
+
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>Full Name</label>
             <input
@@ -63,7 +108,9 @@ export default function SignupPage() {
               placeholder="John Doe"
               value={formData.name}
               onChange={handleInputChange}
+              autoComplete="name"
               required
+              disabled={loading}
             />
           </div>
 
@@ -77,7 +124,9 @@ export default function SignupPage() {
               placeholder="you@example.com"
               value={formData.email}
               onChange={handleInputChange}
+              autoComplete="email"
               required
+              disabled={loading}
             />
           </div>
           
@@ -91,7 +140,9 @@ export default function SignupPage() {
               placeholder="Create a password"
               value={formData.password}
               onChange={handleInputChange}
+              autoComplete="new-password"
               required
+              disabled={loading}
             />
           </div>
 
@@ -108,6 +159,7 @@ export default function SignupPage() {
                   value={formData.services}
                   onChange={handleInputChange}
                   required={role === "repairer"}
+                  disabled={loading}
                 />
               </div>
 
@@ -121,13 +173,14 @@ export default function SignupPage() {
                   value={formData.bio}
                   onChange={handleInputChange}
                   required={role === "repairer"}
+                  disabled={loading}
                 />
               </div>
             </>
           )}
           
-          <button type="submit" className={styles.submitBtn}>
-            Create Account
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? "Creating account…" : "Create Account"}
           </button>
         </form>
 
