@@ -21,7 +21,7 @@ export default function Header() {
         <div className={styles.actions}>
           <Link href="/login" className={styles.loginLink}>Log in</Link>
           <Link href="/signup" className={styles.loginLink}>Sign up</Link>
-          <Link href="/new" className="btn btn-primary">
+          <Link href="/create-listing" className="btn btn-primary">
             Post a Listing
           </Link>
         </div>
