@@ -200,6 +200,9 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   listings?: Prisma.ListingListRelationFilter
   repairerProfile?: Prisma.XOR<Prisma.RepairerProfileNullableScalarRelationFilter, Prisma.RepairerProfileWhereInput> | null
+  repairStoriesAsRepairer?: Prisma.RepairStoryListRelationFilter
+  listingMessagesSent?: Prisma.ListingMessageListRelationFilter
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -212,6 +215,9 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   listings?: Prisma.ListingOrderByRelationAggregateInput
   repairerProfile?: Prisma.RepairerProfileOrderByWithRelationInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryOrderByRelationAggregateInput
+  listingMessagesSent?: Prisma.ListingMessageOrderByRelationAggregateInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -227,6 +233,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   listings?: Prisma.ListingListRelationFilter
   repairerProfile?: Prisma.XOR<Prisma.RepairerProfileNullableScalarRelationFilter, Prisma.RepairerProfileWhereInput> | null
+  repairStoriesAsRepairer?: Prisma.RepairStoryListRelationFilter
+  listingMessagesSent?: Prisma.ListingMessageListRelationFilter
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -265,6 +274,9 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   listings?: Prisma.ListingCreateNestedManyWithoutAuthorInput
   repairerProfile?: Prisma.RepairerProfileCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -277,6 +289,9 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   listings?: Prisma.ListingUncheckedCreateNestedManyWithoutAuthorInput
   repairerProfile?: Prisma.RepairerProfileUncheckedCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserUpdateInput = {
@@ -289,6 +304,9 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUpdateManyWithoutAuthorNestedInput
   repairerProfile?: Prisma.RepairerProfileUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -301,6 +319,9 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUncheckedUpdateManyWithoutAuthorNestedInput
   repairerProfile?: Prisma.RepairerProfileUncheckedUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -408,6 +429,48 @@ export type UserUpdateOneRequiredWithoutListingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutListingsInput, Prisma.UserUpdateWithoutListingsInput>, Prisma.UserUncheckedUpdateWithoutListingsInput>
 }
 
+export type UserCreateNestedOneWithoutRepairStoriesAsRepairerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRepairStoriesAsRepairerInput, Prisma.UserUncheckedCreateWithoutRepairStoriesAsRepairerInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRepairStoriesAsRepairerInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRepairStoriesAsRepairerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRepairStoriesAsRepairerInput, Prisma.UserUncheckedCreateWithoutRepairStoriesAsRepairerInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRepairStoriesAsRepairerInput
+  upsert?: Prisma.UserUpsertWithoutRepairStoriesAsRepairerInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRepairStoriesAsRepairerInput, Prisma.UserUpdateWithoutRepairStoriesAsRepairerInput>, Prisma.UserUncheckedUpdateWithoutRepairStoriesAsRepairerInput>
+}
+
+export type UserCreateNestedOneWithoutListingMessagesSentInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutListingMessagesSentInput, Prisma.UserUncheckedCreateWithoutListingMessagesSentInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutListingMessagesSentInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutListingMessagesSentNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutListingMessagesSentInput, Prisma.UserUncheckedCreateWithoutListingMessagesSentInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutListingMessagesSentInput
+  upsert?: Prisma.UserUpsertWithoutListingMessagesSentInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutListingMessagesSentInput, Prisma.UserUpdateWithoutListingMessagesSentInput>, Prisma.UserUncheckedUpdateWithoutListingMessagesSentInput>
+}
+
+export type UserCreateNestedOneWithoutRepairStoryMessagesSentInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRepairStoryMessagesSentInput, Prisma.UserUncheckedCreateWithoutRepairStoryMessagesSentInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRepairStoryMessagesSentInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRepairStoryMessagesSentNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRepairStoryMessagesSentInput, Prisma.UserUncheckedCreateWithoutRepairStoryMessagesSentInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRepairStoryMessagesSentInput
+  upsert?: Prisma.UserUpsertWithoutRepairStoryMessagesSentInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRepairStoryMessagesSentInput, Prisma.UserUpdateWithoutRepairStoryMessagesSentInput>, Prisma.UserUncheckedUpdateWithoutRepairStoryMessagesSentInput>
+}
+
 export type UserCreateWithoutRepairerProfileInput = {
   id?: string
   email: string
@@ -417,6 +480,9 @@ export type UserCreateWithoutRepairerProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingCreateNestedManyWithoutAuthorInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutRepairerProfileInput = {
@@ -428,6 +494,9 @@ export type UserUncheckedCreateWithoutRepairerProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingUncheckedCreateNestedManyWithoutAuthorInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutRepairerProfileInput = {
@@ -455,6 +524,9 @@ export type UserUpdateWithoutRepairerProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUpdateManyWithoutAuthorNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRepairerProfileInput = {
@@ -466,6 +538,9 @@ export type UserUncheckedUpdateWithoutRepairerProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUncheckedUpdateManyWithoutAuthorNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutListingsInput = {
@@ -477,6 +552,9 @@ export type UserCreateWithoutListingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   repairerProfile?: Prisma.RepairerProfileCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutListingsInput = {
@@ -488,6 +566,9 @@ export type UserUncheckedCreateWithoutListingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   repairerProfile?: Prisma.RepairerProfileUncheckedCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutListingsInput = {
@@ -515,6 +596,9 @@ export type UserUpdateWithoutListingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   repairerProfile?: Prisma.RepairerProfileUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutListingsInput = {
@@ -526,6 +610,225 @@ export type UserUncheckedUpdateWithoutListingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   repairerProfile?: Prisma.RepairerProfileUncheckedUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutRepairStoriesAsRepairerInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingCreateNestedManyWithoutAuthorInput
+  repairerProfile?: Prisma.RepairerProfileCreateNestedOneWithoutUserInput
+  listingMessagesSent?: Prisma.ListingMessageCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutRepairStoriesAsRepairerInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingUncheckedCreateNestedManyWithoutAuthorInput
+  repairerProfile?: Prisma.RepairerProfileUncheckedCreateNestedOneWithoutUserInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutSenderInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutRepairStoriesAsRepairerInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRepairStoriesAsRepairerInput, Prisma.UserUncheckedCreateWithoutRepairStoriesAsRepairerInput>
+}
+
+export type UserUpsertWithoutRepairStoriesAsRepairerInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRepairStoriesAsRepairerInput, Prisma.UserUncheckedUpdateWithoutRepairStoriesAsRepairerInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRepairStoriesAsRepairerInput, Prisma.UserUncheckedCreateWithoutRepairStoriesAsRepairerInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRepairStoriesAsRepairerInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRepairStoriesAsRepairerInput, Prisma.UserUncheckedUpdateWithoutRepairStoriesAsRepairerInput>
+}
+
+export type UserUpdateWithoutRepairStoriesAsRepairerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUpdateManyWithoutAuthorNestedInput
+  repairerProfile?: Prisma.RepairerProfileUpdateOneWithoutUserNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRepairStoriesAsRepairerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUncheckedUpdateManyWithoutAuthorNestedInput
+  repairerProfile?: Prisma.RepairerProfileUncheckedUpdateOneWithoutUserNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedUpdateManyWithoutSenderNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutListingMessagesSentInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingCreateNestedManyWithoutAuthorInput
+  repairerProfile?: Prisma.RepairerProfileCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryCreateNestedManyWithoutRepairerInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutListingMessagesSentInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingUncheckedCreateNestedManyWithoutAuthorInput
+  repairerProfile?: Prisma.RepairerProfileUncheckedCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutRepairerInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutListingMessagesSentInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutListingMessagesSentInput, Prisma.UserUncheckedCreateWithoutListingMessagesSentInput>
+}
+
+export type UserUpsertWithoutListingMessagesSentInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutListingMessagesSentInput, Prisma.UserUncheckedUpdateWithoutListingMessagesSentInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutListingMessagesSentInput, Prisma.UserUncheckedCreateWithoutListingMessagesSentInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutListingMessagesSentInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutListingMessagesSentInput, Prisma.UserUncheckedUpdateWithoutListingMessagesSentInput>
+}
+
+export type UserUpdateWithoutListingMessagesSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUpdateManyWithoutAuthorNestedInput
+  repairerProfile?: Prisma.RepairerProfileUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUpdateManyWithoutRepairerNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutListingMessagesSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUncheckedUpdateManyWithoutAuthorNestedInput
+  repairerProfile?: Prisma.RepairerProfileUncheckedUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedUpdateManyWithoutRepairerNestedInput
+  repairStoryMessagesSent?: Prisma.RepairStoryMessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutRepairStoryMessagesSentInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingCreateNestedManyWithoutAuthorInput
+  repairerProfile?: Prisma.RepairerProfileCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutRepairStoryMessagesSentInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingUncheckedCreateNestedManyWithoutAuthorInput
+  repairerProfile?: Prisma.RepairerProfileUncheckedCreateNestedOneWithoutUserInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutRepairerInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutRepairStoryMessagesSentInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRepairStoryMessagesSentInput, Prisma.UserUncheckedCreateWithoutRepairStoryMessagesSentInput>
+}
+
+export type UserUpsertWithoutRepairStoryMessagesSentInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRepairStoryMessagesSentInput, Prisma.UserUncheckedUpdateWithoutRepairStoryMessagesSentInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRepairStoryMessagesSentInput, Prisma.UserUncheckedCreateWithoutRepairStoryMessagesSentInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRepairStoryMessagesSentInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRepairStoryMessagesSentInput, Prisma.UserUncheckedUpdateWithoutRepairStoryMessagesSentInput>
+}
+
+export type UserUpdateWithoutRepairStoryMessagesSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUpdateManyWithoutAuthorNestedInput
+  repairerProfile?: Prisma.RepairerProfileUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRepairStoryMessagesSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUncheckedUpdateManyWithoutAuthorNestedInput
+  repairerProfile?: Prisma.RepairerProfileUncheckedUpdateOneWithoutUserNestedInput
+  repairStoriesAsRepairer?: Prisma.RepairStoryUncheckedUpdateManyWithoutRepairerNestedInput
+  listingMessagesSent?: Prisma.ListingMessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 
@@ -535,10 +838,16 @@ export type UserUncheckedUpdateWithoutListingsInput = {
 
 export type UserCountOutputType = {
   listings: number
+  repairStoriesAsRepairer: number
+  listingMessagesSent: number
+  repairStoryMessagesSent: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   listings?: boolean | UserCountOutputTypeCountListingsArgs
+  repairStoriesAsRepairer?: boolean | UserCountOutputTypeCountRepairStoriesAsRepairerArgs
+  listingMessagesSent?: boolean | UserCountOutputTypeCountListingMessagesSentArgs
+  repairStoryMessagesSent?: boolean | UserCountOutputTypeCountRepairStoryMessagesSentArgs
 }
 
 /**
@@ -558,6 +867,27 @@ export type UserCountOutputTypeCountListingsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ListingWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRepairStoriesAsRepairerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RepairStoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountListingMessagesSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ListingMessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRepairStoryMessagesSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RepairStoryMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -569,6 +899,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   listings?: boolean | Prisma.User$listingsArgs<ExtArgs>
   repairerProfile?: boolean | Prisma.User$repairerProfileArgs<ExtArgs>
+  repairStoriesAsRepairer?: boolean | Prisma.User$repairStoriesAsRepairerArgs<ExtArgs>
+  listingMessagesSent?: boolean | Prisma.User$listingMessagesSentArgs<ExtArgs>
+  repairStoryMessagesSent?: boolean | Prisma.User$repairStoryMessagesSentArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -606,6 +939,9 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   listings?: boolean | Prisma.User$listingsArgs<ExtArgs>
   repairerProfile?: boolean | Prisma.User$repairerProfileArgs<ExtArgs>
+  repairStoriesAsRepairer?: boolean | Prisma.User$repairStoriesAsRepairerArgs<ExtArgs>
+  listingMessagesSent?: boolean | Prisma.User$listingMessagesSentArgs<ExtArgs>
+  repairStoryMessagesSent?: boolean | Prisma.User$repairStoryMessagesSentArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -616,6 +952,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     listings: Prisma.$ListingPayload<ExtArgs>[]
     repairerProfile: Prisma.$RepairerProfilePayload<ExtArgs> | null
+    /**
+     * Repair attempts this user leads as a repairer account.
+     */
+    repairStoriesAsRepairer: Prisma.$RepairStoryPayload<ExtArgs>[]
+    listingMessagesSent: Prisma.$ListingMessagePayload<ExtArgs>[]
+    repairStoryMessagesSent: Prisma.$RepairStoryMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1021,6 +1363,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   listings<T extends Prisma.User$listingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   repairerProfile<T extends Prisma.User$repairerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$repairerProfileArgs<ExtArgs>>): Prisma.Prisma__RepairerProfileClient<runtime.Types.Result.GetResult<Prisma.$RepairerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  repairStoriesAsRepairer<T extends Prisma.User$repairStoriesAsRepairerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$repairStoriesAsRepairerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RepairStoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  listingMessagesSent<T extends Prisma.User$listingMessagesSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$listingMessagesSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  repairStoryMessagesSent<T extends Prisma.User$repairStoryMessagesSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$repairStoryMessagesSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RepairStoryMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1488,6 +1833,78 @@ export type User$repairerProfileArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.RepairerProfileInclude<ExtArgs> | null
   where?: Prisma.RepairerProfileWhereInput
+}
+
+/**
+ * User.repairStoriesAsRepairer
+ */
+export type User$repairStoriesAsRepairerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RepairStory
+   */
+  select?: Prisma.RepairStorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RepairStory
+   */
+  omit?: Prisma.RepairStoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RepairStoryInclude<ExtArgs> | null
+  where?: Prisma.RepairStoryWhereInput
+  orderBy?: Prisma.RepairStoryOrderByWithRelationInput | Prisma.RepairStoryOrderByWithRelationInput[]
+  cursor?: Prisma.RepairStoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RepairStoryScalarFieldEnum | Prisma.RepairStoryScalarFieldEnum[]
+}
+
+/**
+ * User.listingMessagesSent
+ */
+export type User$listingMessagesSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ListingMessage
+   */
+  select?: Prisma.ListingMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ListingMessage
+   */
+  omit?: Prisma.ListingMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ListingMessageInclude<ExtArgs> | null
+  where?: Prisma.ListingMessageWhereInput
+  orderBy?: Prisma.ListingMessageOrderByWithRelationInput | Prisma.ListingMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ListingMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ListingMessageScalarFieldEnum | Prisma.ListingMessageScalarFieldEnum[]
+}
+
+/**
+ * User.repairStoryMessagesSent
+ */
+export type User$repairStoryMessagesSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RepairStoryMessage
+   */
+  select?: Prisma.RepairStoryMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RepairStoryMessage
+   */
+  omit?: Prisma.RepairStoryMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RepairStoryMessageInclude<ExtArgs> | null
+  where?: Prisma.RepairStoryMessageWhereInput
+  orderBy?: Prisma.RepairStoryMessageOrderByWithRelationInput | Prisma.RepairStoryMessageOrderByWithRelationInput[]
+  cursor?: Prisma.RepairStoryMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RepairStoryMessageScalarFieldEnum | Prisma.RepairStoryMessageScalarFieldEnum[]
 }
 
 /**

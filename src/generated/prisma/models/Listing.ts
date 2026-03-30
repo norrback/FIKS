@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Listing
- * 
+ * A broken-item case (public listing). Use `id` as the stable case / item id in product copy.
  */
 export type ListingModel = runtime.Types.Result.DefaultSelection<Prisma.$ListingPayload>
 
@@ -207,6 +207,8 @@ export type ListingWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  repairStories?: Prisma.RepairStoryListRelationFilter
+  listingMessages?: Prisma.ListingMessageListRelationFilter
 }
 
 export type ListingOrderByWithRelationInput = {
@@ -219,6 +221,8 @@ export type ListingOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
+  repairStories?: Prisma.RepairStoryOrderByRelationAggregateInput
+  listingMessages?: Prisma.ListingMessageOrderByRelationAggregateInput
 }
 
 export type ListingWhereUniqueInput = Prisma.AtLeast<{
@@ -234,6 +238,8 @@ export type ListingWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  repairStories?: Prisma.RepairStoryListRelationFilter
+  listingMessages?: Prisma.ListingMessageListRelationFilter
 }, "id">
 
 export type ListingOrderByWithAggregationInput = {
@@ -273,6 +279,8 @@ export type ListingCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutListingsInput
+  repairStories?: Prisma.RepairStoryCreateNestedManyWithoutListingInput
+  listingMessages?: Prisma.ListingMessageCreateNestedManyWithoutListingInput
 }
 
 export type ListingUncheckedCreateInput = {
@@ -284,6 +292,8 @@ export type ListingUncheckedCreateInput = {
   authorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  repairStories?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutListingInput
+  listingMessages?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutListingInput
 }
 
 export type ListingUpdateInput = {
@@ -295,6 +305,8 @@ export type ListingUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutListingsNestedInput
+  repairStories?: Prisma.RepairStoryUpdateManyWithoutListingNestedInput
+  listingMessages?: Prisma.ListingMessageUpdateManyWithoutListingNestedInput
 }
 
 export type ListingUncheckedUpdateInput = {
@@ -306,6 +318,8 @@ export type ListingUncheckedUpdateInput = {
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  repairStories?: Prisma.RepairStoryUncheckedUpdateManyWithoutListingNestedInput
+  listingMessages?: Prisma.ListingMessageUncheckedUpdateManyWithoutListingNestedInput
 }
 
 export type ListingCreateManyInput = {
@@ -383,6 +397,11 @@ export type ListingMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ListingScalarRelationFilter = {
+  is?: Prisma.ListingWhereInput
+  isNot?: Prisma.ListingWhereInput
+}
+
 export type ListingCreateNestedManyWithoutAuthorInput = {
   create?: Prisma.XOR<Prisma.ListingCreateWithoutAuthorInput, Prisma.ListingUncheckedCreateWithoutAuthorInput> | Prisma.ListingCreateWithoutAuthorInput[] | Prisma.ListingUncheckedCreateWithoutAuthorInput[]
   connectOrCreate?: Prisma.ListingCreateOrConnectWithoutAuthorInput | Prisma.ListingCreateOrConnectWithoutAuthorInput[]
@@ -425,6 +444,34 @@ export type ListingUncheckedUpdateManyWithoutAuthorNestedInput = {
   deleteMany?: Prisma.ListingScalarWhereInput | Prisma.ListingScalarWhereInput[]
 }
 
+export type ListingCreateNestedOneWithoutRepairStoriesInput = {
+  create?: Prisma.XOR<Prisma.ListingCreateWithoutRepairStoriesInput, Prisma.ListingUncheckedCreateWithoutRepairStoriesInput>
+  connectOrCreate?: Prisma.ListingCreateOrConnectWithoutRepairStoriesInput
+  connect?: Prisma.ListingWhereUniqueInput
+}
+
+export type ListingUpdateOneRequiredWithoutRepairStoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.ListingCreateWithoutRepairStoriesInput, Prisma.ListingUncheckedCreateWithoutRepairStoriesInput>
+  connectOrCreate?: Prisma.ListingCreateOrConnectWithoutRepairStoriesInput
+  upsert?: Prisma.ListingUpsertWithoutRepairStoriesInput
+  connect?: Prisma.ListingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ListingUpdateToOneWithWhereWithoutRepairStoriesInput, Prisma.ListingUpdateWithoutRepairStoriesInput>, Prisma.ListingUncheckedUpdateWithoutRepairStoriesInput>
+}
+
+export type ListingCreateNestedOneWithoutListingMessagesInput = {
+  create?: Prisma.XOR<Prisma.ListingCreateWithoutListingMessagesInput, Prisma.ListingUncheckedCreateWithoutListingMessagesInput>
+  connectOrCreate?: Prisma.ListingCreateOrConnectWithoutListingMessagesInput
+  connect?: Prisma.ListingWhereUniqueInput
+}
+
+export type ListingUpdateOneRequiredWithoutListingMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.ListingCreateWithoutListingMessagesInput, Prisma.ListingUncheckedCreateWithoutListingMessagesInput>
+  connectOrCreate?: Prisma.ListingCreateOrConnectWithoutListingMessagesInput
+  upsert?: Prisma.ListingUpsertWithoutListingMessagesInput
+  connect?: Prisma.ListingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ListingUpdateToOneWithWhereWithoutListingMessagesInput, Prisma.ListingUpdateWithoutListingMessagesInput>, Prisma.ListingUncheckedUpdateWithoutListingMessagesInput>
+}
+
 export type ListingCreateWithoutAuthorInput = {
   id?: string
   title: string
@@ -433,6 +480,8 @@ export type ListingCreateWithoutAuthorInput = {
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  repairStories?: Prisma.RepairStoryCreateNestedManyWithoutListingInput
+  listingMessages?: Prisma.ListingMessageCreateNestedManyWithoutListingInput
 }
 
 export type ListingUncheckedCreateWithoutAuthorInput = {
@@ -443,6 +492,8 @@ export type ListingUncheckedCreateWithoutAuthorInput = {
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  repairStories?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutListingInput
+  listingMessages?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutListingInput
 }
 
 export type ListingCreateOrConnectWithoutAuthorInput = {
@@ -484,6 +535,134 @@ export type ListingScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
 }
 
+export type ListingCreateWithoutRepairStoriesInput = {
+  id?: string
+  title: string
+  description: string
+  location?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  author: Prisma.UserCreateNestedOneWithoutListingsInput
+  listingMessages?: Prisma.ListingMessageCreateNestedManyWithoutListingInput
+}
+
+export type ListingUncheckedCreateWithoutRepairStoriesInput = {
+  id?: string
+  title: string
+  description: string
+  location?: string | null
+  status?: string
+  authorId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listingMessages?: Prisma.ListingMessageUncheckedCreateNestedManyWithoutListingInput
+}
+
+export type ListingCreateOrConnectWithoutRepairStoriesInput = {
+  where: Prisma.ListingWhereUniqueInput
+  create: Prisma.XOR<Prisma.ListingCreateWithoutRepairStoriesInput, Prisma.ListingUncheckedCreateWithoutRepairStoriesInput>
+}
+
+export type ListingUpsertWithoutRepairStoriesInput = {
+  update: Prisma.XOR<Prisma.ListingUpdateWithoutRepairStoriesInput, Prisma.ListingUncheckedUpdateWithoutRepairStoriesInput>
+  create: Prisma.XOR<Prisma.ListingCreateWithoutRepairStoriesInput, Prisma.ListingUncheckedCreateWithoutRepairStoriesInput>
+  where?: Prisma.ListingWhereInput
+}
+
+export type ListingUpdateToOneWithWhereWithoutRepairStoriesInput = {
+  where?: Prisma.ListingWhereInput
+  data: Prisma.XOR<Prisma.ListingUpdateWithoutRepairStoriesInput, Prisma.ListingUncheckedUpdateWithoutRepairStoriesInput>
+}
+
+export type ListingUpdateWithoutRepairStoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  author?: Prisma.UserUpdateOneRequiredWithoutListingsNestedInput
+  listingMessages?: Prisma.ListingMessageUpdateManyWithoutListingNestedInput
+}
+
+export type ListingUncheckedUpdateWithoutRepairStoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listingMessages?: Prisma.ListingMessageUncheckedUpdateManyWithoutListingNestedInput
+}
+
+export type ListingCreateWithoutListingMessagesInput = {
+  id?: string
+  title: string
+  description: string
+  location?: string | null
+  status?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  author: Prisma.UserCreateNestedOneWithoutListingsInput
+  repairStories?: Prisma.RepairStoryCreateNestedManyWithoutListingInput
+}
+
+export type ListingUncheckedCreateWithoutListingMessagesInput = {
+  id?: string
+  title: string
+  description: string
+  location?: string | null
+  status?: string
+  authorId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  repairStories?: Prisma.RepairStoryUncheckedCreateNestedManyWithoutListingInput
+}
+
+export type ListingCreateOrConnectWithoutListingMessagesInput = {
+  where: Prisma.ListingWhereUniqueInput
+  create: Prisma.XOR<Prisma.ListingCreateWithoutListingMessagesInput, Prisma.ListingUncheckedCreateWithoutListingMessagesInput>
+}
+
+export type ListingUpsertWithoutListingMessagesInput = {
+  update: Prisma.XOR<Prisma.ListingUpdateWithoutListingMessagesInput, Prisma.ListingUncheckedUpdateWithoutListingMessagesInput>
+  create: Prisma.XOR<Prisma.ListingCreateWithoutListingMessagesInput, Prisma.ListingUncheckedCreateWithoutListingMessagesInput>
+  where?: Prisma.ListingWhereInput
+}
+
+export type ListingUpdateToOneWithWhereWithoutListingMessagesInput = {
+  where?: Prisma.ListingWhereInput
+  data: Prisma.XOR<Prisma.ListingUpdateWithoutListingMessagesInput, Prisma.ListingUncheckedUpdateWithoutListingMessagesInput>
+}
+
+export type ListingUpdateWithoutListingMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  author?: Prisma.UserUpdateOneRequiredWithoutListingsNestedInput
+  repairStories?: Prisma.RepairStoryUpdateManyWithoutListingNestedInput
+}
+
+export type ListingUncheckedUpdateWithoutListingMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  repairStories?: Prisma.RepairStoryUncheckedUpdateManyWithoutListingNestedInput
+}
+
 export type ListingCreateManyAuthorInput = {
   id?: string
   title: string
@@ -502,6 +681,8 @@ export type ListingUpdateWithoutAuthorInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  repairStories?: Prisma.RepairStoryUpdateManyWithoutListingNestedInput
+  listingMessages?: Prisma.ListingMessageUpdateManyWithoutListingNestedInput
 }
 
 export type ListingUncheckedUpdateWithoutAuthorInput = {
@@ -512,6 +693,8 @@ export type ListingUncheckedUpdateWithoutAuthorInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  repairStories?: Prisma.RepairStoryUncheckedUpdateManyWithoutListingNestedInput
+  listingMessages?: Prisma.ListingMessageUncheckedUpdateManyWithoutListingNestedInput
 }
 
 export type ListingUncheckedUpdateManyWithoutAuthorInput = {
@@ -525,6 +708,44 @@ export type ListingUncheckedUpdateManyWithoutAuthorInput = {
 }
 
 
+/**
+ * Count Type ListingCountOutputType
+ */
+
+export type ListingCountOutputType = {
+  repairStories: number
+  listingMessages: number
+}
+
+export type ListingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  repairStories?: boolean | ListingCountOutputTypeCountRepairStoriesArgs
+  listingMessages?: boolean | ListingCountOutputTypeCountListingMessagesArgs
+}
+
+/**
+ * ListingCountOutputType without action
+ */
+export type ListingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ListingCountOutputType
+   */
+  select?: Prisma.ListingCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ListingCountOutputType without action
+ */
+export type ListingCountOutputTypeCountRepairStoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RepairStoryWhereInput
+}
+
+/**
+ * ListingCountOutputType without action
+ */
+export type ListingCountOutputTypeCountListingMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ListingMessageWhereInput
+}
+
 
 export type ListingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -536,6 +757,9 @@ export type ListingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  repairStories?: boolean | Prisma.Listing$repairStoriesArgs<ExtArgs>
+  listingMessages?: boolean | Prisma.Listing$listingMessagesArgs<ExtArgs>
+  _count?: boolean | Prisma.ListingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["listing"]>
 
 export type ListingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -576,6 +800,9 @@ export type ListingSelectScalar = {
 export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "status" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
 export type ListingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  repairStories?: boolean | Prisma.Listing$repairStoriesArgs<ExtArgs>
+  listingMessages?: boolean | Prisma.Listing$listingMessagesArgs<ExtArgs>
+  _count?: boolean | Prisma.ListingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ListingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -588,6 +815,14 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Listing"
   objects: {
     author: Prisma.$UserPayload<ExtArgs>
+    /**
+     * All repair attempts / stories tied to this case (multiple repairers or re-tries after a branch).
+     */
+    repairStories: Prisma.$RepairStoryPayload<ExtArgs>[]
+    /**
+     * Item-level thread: owner + any repairer who has a story on this listing.
+     */
+    listingMessages: Prisma.$ListingMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -993,6 +1228,8 @@ readonly fields: ListingFieldRefs;
 export interface Prisma__ListingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  repairStories<T extends Prisma.Listing$repairStoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Listing$repairStoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RepairStoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  listingMessages<T extends Prisma.Listing$listingMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Listing$listingMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1426,6 +1663,54 @@ export type ListingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Listings to delete.
    */
   limit?: number
+}
+
+/**
+ * Listing.repairStories
+ */
+export type Listing$repairStoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RepairStory
+   */
+  select?: Prisma.RepairStorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RepairStory
+   */
+  omit?: Prisma.RepairStoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RepairStoryInclude<ExtArgs> | null
+  where?: Prisma.RepairStoryWhereInput
+  orderBy?: Prisma.RepairStoryOrderByWithRelationInput | Prisma.RepairStoryOrderByWithRelationInput[]
+  cursor?: Prisma.RepairStoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RepairStoryScalarFieldEnum | Prisma.RepairStoryScalarFieldEnum[]
+}
+
+/**
+ * Listing.listingMessages
+ */
+export type Listing$listingMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ListingMessage
+   */
+  select?: Prisma.ListingMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ListingMessage
+   */
+  omit?: Prisma.ListingMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ListingMessageInclude<ExtArgs> | null
+  where?: Prisma.ListingMessageWhereInput
+  orderBy?: Prisma.ListingMessageOrderByWithRelationInput | Prisma.ListingMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ListingMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ListingMessageScalarFieldEnum | Prisma.ListingMessageScalarFieldEnum[]
 }
 
 /**

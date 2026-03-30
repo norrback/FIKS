@@ -54,7 +54,10 @@ export const ModelName = {
   User: 'User',
   RepairerProfile: 'RepairerProfile',
   RepairerCompletedJob: 'RepairerCompletedJob',
-  Listing: 'Listing'
+  Listing: 'Listing',
+  RepairStory: 'RepairStory',
+  ListingMessage: 'ListingMessage',
+  RepairStoryMessage: 'RepairStoryMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -133,6 +136,49 @@ export const ListingScalarFieldEnum = {
 } as const
 
 export type ListingScalarFieldEnum = (typeof ListingScalarFieldEnum)[keyof typeof ListingScalarFieldEnum]
+
+
+export const RepairStoryScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  repairerUserId: 'repairerUserId',
+  status: 'status',
+  branchedFromId: 'branchedFromId',
+  agreedPriceCents: 'agreedPriceCents',
+  escrowState: 'escrowState',
+  agreedAt: 'agreedAt',
+  jobCompletedAt: 'jobCompletedAt',
+  paidAt: 'paidAt',
+  closedReason: 'closedReason',
+  customerScore: 'customerScore',
+  repairerScore: 'repairerScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairStoryScalarFieldEnum = (typeof RepairStoryScalarFieldEnum)[keyof typeof RepairStoryScalarFieldEnum]
+
+
+export const ListingMessageScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  senderId: 'senderId',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type ListingMessageScalarFieldEnum = (typeof ListingMessageScalarFieldEnum)[keyof typeof ListingMessageScalarFieldEnum]
+
+
+export const RepairStoryMessageScalarFieldEnum = {
+  id: 'id',
+  repairStoryId: 'repairStoryId',
+  senderId: 'senderId',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type RepairStoryMessageScalarFieldEnum = (typeof RepairStoryMessageScalarFieldEnum)[keyof typeof RepairStoryMessageScalarFieldEnum]
 
 
 export const SortOrder = {

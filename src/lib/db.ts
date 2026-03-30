@@ -6,9 +6,15 @@ import { findProjectRoot } from "@/lib/projectRoot";
 const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
 /** After `prisma generate`, Next.js dev/HMR can keep an old singleton without new models. */
-function hasRepairerCompletedJobDelegate(client: PrismaClient): boolean {
-  return typeof (client as unknown as { repairerCompletedJob?: { findMany: unknown } }).repairerCompletedJob
-    ?.findMany === "function";
+function isPrismaClientInSync(client: PrismaClient): boolean {
+  const c = client as unknown as {
+    repairerCompletedJob?: { findMany: unknown };
+    repairStory?: { findMany: unknown };
+  };
+  return (
+    typeof c.repairerCompletedJob?.findMany === "function" &&
+    typeof c.repairStory?.findMany === "function"
+  );
 }
 
 /**
@@ -33,18 +39,14 @@ function createPrismaClient() {
 }
 
 function getPrisma(): PrismaClient {
-  if (
-    process.env.NODE_ENV !== "production" &&
-    globalForPrisma.prisma &&
-    !hasRepairerCompletedJobDelegate(globalForPrisma.prisma)
-  ) {
+  if (process.env.NODE_ENV !== "production" && globalForPrisma.prisma && !isPrismaClientInSync(globalForPrisma.prisma)) {
     globalForPrisma.prisma = undefined;
   }
 
   const client = globalForPrisma.prisma ?? createPrismaClient();
-  if (!hasRepairerCompletedJobDelegate(client)) {
+  if (!isPrismaClientInSync(client)) {
     throw new Error(
-      "Prisma client is missing RepairerCompletedJob (schema newer than client). Run `npx prisma generate`, then restart the dev server.",
+      "Prisma client is out of date vs schema. Run `npx prisma generate`, then restart the dev server.",
     );
   }
 

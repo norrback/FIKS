@@ -387,7 +387,10 @@ export const ModelName = {
   User: 'User',
   RepairerProfile: 'RepairerProfile',
   RepairerCompletedJob: 'RepairerCompletedJob',
-  Listing: 'Listing'
+  Listing: 'Listing',
+  RepairStory: 'RepairStory',
+  ListingMessage: 'ListingMessage',
+  RepairStoryMessage: 'RepairStoryMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "repairerProfile" | "repairerCompletedJob" | "listing"
+    modelProps: "user" | "repairerProfile" | "repairerCompletedJob" | "listing" | "repairStory" | "listingMessage" | "repairStoryMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +706,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RepairStory: {
+      payload: Prisma.$RepairStoryPayload<ExtArgs>
+      fields: Prisma.RepairStoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairStoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairStoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>
+        }
+        findFirst: {
+          args: Prisma.RepairStoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairStoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>
+        }
+        findMany: {
+          args: Prisma.RepairStoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>[]
+        }
+        create: {
+          args: Prisma.RepairStoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>
+        }
+        createMany: {
+          args: Prisma.RepairStoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairStoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>[]
+        }
+        delete: {
+          args: Prisma.RepairStoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>
+        }
+        update: {
+          args: Prisma.RepairStoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairStoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairStoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairStoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairStoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryPayload>
+        }
+        aggregate: {
+          args: Prisma.RepairStoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairStory>
+        }
+        groupBy: {
+          args: Prisma.RepairStoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairStoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairStoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairStoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    ListingMessage: {
+      payload: Prisma.$ListingMessagePayload<ExtArgs>
+      fields: Prisma.ListingMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ListingMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ListingMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.ListingMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ListingMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>
+        }
+        findMany: {
+          args: Prisma.ListingMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>[]
+        }
+        create: {
+          args: Prisma.ListingMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>
+        }
+        createMany: {
+          args: Prisma.ListingMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ListingMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.ListingMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>
+        }
+        update: {
+          args: Prisma.ListingMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ListingMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ListingMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ListingMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ListingMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.ListingMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateListingMessage>
+        }
+        groupBy: {
+          args: Prisma.ListingMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ListingMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ListingMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ListingMessageCountAggregateOutputType> | number
+        }
+      }
+    }
+    RepairStoryMessage: {
+      payload: Prisma.$RepairStoryMessagePayload<ExtArgs>
+      fields: Prisma.RepairStoryMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairStoryMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairStoryMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.RepairStoryMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairStoryMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>
+        }
+        findMany: {
+          args: Prisma.RepairStoryMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>[]
+        }
+        create: {
+          args: Prisma.RepairStoryMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>
+        }
+        createMany: {
+          args: Prisma.RepairStoryMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairStoryMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.RepairStoryMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>
+        }
+        update: {
+          args: Prisma.RepairStoryMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairStoryMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairStoryMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairStoryMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairStoryMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairStoryMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.RepairStoryMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairStoryMessage>
+        }
+        groupBy: {
+          args: Prisma.RepairStoryMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairStoryMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairStoryMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairStoryMessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -802,6 +1027,49 @@ export const ListingScalarFieldEnum = {
 } as const
 
 export type ListingScalarFieldEnum = (typeof ListingScalarFieldEnum)[keyof typeof ListingScalarFieldEnum]
+
+
+export const RepairStoryScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  repairerUserId: 'repairerUserId',
+  status: 'status',
+  branchedFromId: 'branchedFromId',
+  agreedPriceCents: 'agreedPriceCents',
+  escrowState: 'escrowState',
+  agreedAt: 'agreedAt',
+  jobCompletedAt: 'jobCompletedAt',
+  paidAt: 'paidAt',
+  closedReason: 'closedReason',
+  customerScore: 'customerScore',
+  repairerScore: 'repairerScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairStoryScalarFieldEnum = (typeof RepairStoryScalarFieldEnum)[keyof typeof RepairStoryScalarFieldEnum]
+
+
+export const ListingMessageScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  senderId: 'senderId',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type ListingMessageScalarFieldEnum = (typeof ListingMessageScalarFieldEnum)[keyof typeof ListingMessageScalarFieldEnum]
+
+
+export const RepairStoryMessageScalarFieldEnum = {
+  id: 'id',
+  repairStoryId: 'repairStoryId',
+  senderId: 'senderId',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type RepairStoryMessageScalarFieldEnum = (typeof RepairStoryMessageScalarFieldEnum)[keyof typeof RepairStoryMessageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -952,6 +1220,9 @@ export type GlobalOmitConfig = {
   repairerProfile?: Prisma.RepairerProfileOmit
   repairerCompletedJob?: Prisma.RepairerCompletedJobOmit
   listing?: Prisma.ListingOmit
+  repairStory?: Prisma.RepairStoryOmit
+  listingMessage?: Prisma.ListingMessageOmit
+  repairStoryMessage?: Prisma.RepairStoryMessageOmit
 }
 
 /* Types for Logging */

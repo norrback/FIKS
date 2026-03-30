@@ -9,7 +9,7 @@ export default function HeroSection() {
           At FIKS we connect broken products with expert repairers.
         </h1>
         <p className={styles.subtitle}>
-          Extend the lifetime of products you own. Find a local repairer, repair a broken part, and decrease emissions on our planet. It&#39;s a win-win for everyone.
+          Extend the lifetime of the products you own. Find a local repairer to fix broken items; it&apos;s a simple way to reduce waste and stop using new resources needlessly. It&apos;s a win-win for everyone.
         </p>
         
         <div className={styles.actions}>

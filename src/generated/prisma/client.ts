@@ -58,6 +58,22 @@ export type RepairerProfile = Prisma.RepairerProfileModel
 export type RepairerCompletedJob = Prisma.RepairerCompletedJobModel
 /**
  * Model Listing
- * 
+ * A broken-item case (public listing). Use `id` as the stable case / item id in product copy.
  */
 export type Listing = Prisma.ListingModel
+/**
+ * Model RepairStory
+ * One repairer’s attempt on one listing. Several rows can exist per listing (different repairers or branched retries).
+ * Status values are app-level strings — see `src/lib/repairStoryStatus.ts` (we expect to adjust while the product evolves).
+ */
+export type RepairStory = Prisma.RepairStoryModel
+/**
+ * Model ListingMessage
+ * Messages visible to listing owner and every repairer who has a story on this listing.
+ */
+export type ListingMessage = Prisma.ListingMessageModel
+/**
+ * Model RepairStoryMessage
+ * Per–repair-story discussion (agreement, troubleshooting, handover) between owner and that repairer only.
+ */
+export type RepairStoryMessage = Prisma.RepairStoryMessageModel

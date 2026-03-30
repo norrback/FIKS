@@ -69,8 +69,8 @@ export default function SignupPage() {
       <div className={styles.formWrapper}>
         <h1 className={styles.title}>Create an account</h1>
         <p className={styles.subtitle}>
-          {role === "user" 
-            ? "Sign up to list your broken items and find repairers." 
+          {role === "user"
+            ? "Sign up to list your broken items."
             : "Sign up to offer your repair services and help others."}
         </p>
         

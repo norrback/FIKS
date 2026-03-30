@@ -82,3 +82,143 @@
   margin: 0;
   white-space: pre-wrap;
 }
+
+.caseBlock {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.caseId {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.caseNote {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  margin: 0 0 1rem;
+}
+
+.caseStoriesTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin: 0 0 0.65rem;
+}
+
+.caseStoryList {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.caseStoryRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg);
+  font-size: 0.9rem;
+}
+
+.caseStoryMeta {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.caseLink {
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.caseLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.caseActions {
+  margin-top: 0.75rem;
+}
+
+.applyBtn {
+  padding: 0.55rem 1.1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: var(--border-radius-full);
+  background: var(--color-primary);
+  color: white;
+}
+
+.applyBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.caseHint {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0.5rem 0 0;
+  line-height: 1.45;
+}
+
+.caseError {
+  font-size: 0.875rem;
+  color: #b91c1c;
+  margin: 0 0 0.5rem;
+}
+
+.itemThread {
+  margin-top: 0.75rem;
+}
+
+.itemThreadMessages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+  margin-bottom: 0.75rem;
+}
+
+.itemThreadBubble {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  background: var(--color-bg);
+}
+
+.itemThreadMeta {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.itemThreadTextarea {
+  width: 100%;
+  margin-top: 0.35rem;
+  margin-bottom: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-border);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
