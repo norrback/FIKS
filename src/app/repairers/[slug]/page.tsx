@@ -23,6 +23,21 @@ export default async function RepairerServicePage({ params }: Props) {
   const isOwner = Boolean(session && session.userId === profile.userId);
   const displayName = profile.user.name?.trim() || profile.user.email;
 
+  const completedJobs = await prisma.repairerCompletedJob.findMany({
+    where: { repairerProfileId: profile.id },
+    orderBy: { completedAt: "desc" },
+    select: {
+      id: true,
+      title: true,
+      itemSummary: true,
+      completedAt: true,
+      ratingStars: true,
+      agreementSummary: true,
+      messagesSummary: true,
+      repairStoryNotes: true,
+    },
+  });
+
   const initial = {
     slug: profile.slug,
     displayName,
@@ -32,6 +47,20 @@ export default async function RepairerServicePage({ params }: Props) {
     completedJobsCount: profile.completedJobsCount,
     ratingSum: profile.ratingSum,
     ratingCount: profile.ratingCount,
+    servicePhotoUrl: profile.servicePhotoUrl,
+    serviceLocationLabel: profile.serviceLocationLabel,
+    serviceLatitude: profile.serviceLatitude,
+    serviceLongitude: profile.serviceLongitude,
+    completedJobs: completedJobs.map((j) => ({
+      id: j.id,
+      title: j.title,
+      itemSummary: j.itemSummary,
+      completedAt: j.completedAt.toISOString(),
+      ratingStars: j.ratingStars,
+      agreementSummary: j.agreementSummary,
+      messagesSummary: j.messagesSummary,
+      repairStoryNotes: j.repairStoryNotes,
+    })),
   };
 
   return <RepairerServiceClient initial={initial} isOwner={isOwner} />;

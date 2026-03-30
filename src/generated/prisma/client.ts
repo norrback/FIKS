@@ -52,6 +52,11 @@ export type User = Prisma.UserModel
  */
 export type RepairerProfile = Prisma.RepairerProfileModel
 /**
+ * Model RepairerCompletedJob
+ * A finished repair engagement shown on the public repairer page (expandable details).
+ */
+export type RepairerCompletedJob = Prisma.RepairerCompletedJobModel
+/**
  * Model Listing
  * 
  */

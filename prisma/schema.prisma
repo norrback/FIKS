@@ -21,20 +21,49 @@ model User {
 
 /// Public repair service page: bio, expertise, service copy, and job/rating aggregates.
 model RepairerProfile {
-  id                 String   @id @default(uuid())
-  userId             String   @unique
-  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  slug               String   @unique
-  bio                String   @default("")
-  serviceDescription String   @default("")
+  id                   String   @id @default(uuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug                 String   @unique
+  bio                  String   @default("")
+  serviceDescription   String   @default("")
   /// JSON array of strings, e.g. ["Electronics","Bicycles"]
-  expertise          String   @default("[]")
-  completedJobsCount Int      @default(0)
+  expertise            String   @default("[]")
+  completedJobsCount   Int      @default(0)
   /// Sum of star ratings (1–5) from completed jobs; average = ratingSum / ratingCount
-  ratingSum          Int      @default(0)
-  ratingCount        Int      @default(0)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  ratingSum            Int      @default(0)
+  ratingCount          Int      @default(0)
+  /// Public HTTPS URL for a workshop or profile photo (paste link; uploads can be added later).
+  servicePhotoUrl      String?
+  /// Human-readable service area label shown next to the map.
+  serviceLocationLabel String   @default("")
+  /// WGS84 coordinates for the embedded map (both should be set for a pin).
+  serviceLatitude      Float?
+  serviceLongitude     Float?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  completedJobs RepairerCompletedJob[]
+}
+
+/// A finished repair engagement shown on the public repairer page (expandable details).
+model RepairerCompletedJob {
+  id                  String          @id @default(uuid())
+  repairerProfileId   String
+  repairerProfile     RepairerProfile @relation(fields: [repairerProfileId], references: [id], onDelete: Cascade)
+  title               String
+  itemSummary         String          @default("")
+  completedAt         DateTime        @default(now())
+  /// 1–5 when the customer rated; omit when not rated.
+  ratingStars         Int?
+  agreementSummary    String          @default("")
+  messagesSummary     String          @default("")
+  /// Filled when the repair-story feature ships; empty shows a placeholder in the UI.
+  repairStoryNotes    String          @default("")
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([repairerProfileId, completedAt])
 }
 
 model Listing {

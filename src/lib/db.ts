@@ -3,7 +3,13 @@ import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "@/generated/prisma/client";
 import { findProjectRoot } from "@/lib/projectRoot";
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
+
+/** After `prisma generate`, Next.js dev/HMR can keep an old singleton without new models. */
+function hasRepairerCompletedJobDelegate(client: PrismaClient): boolean {
+  return typeof (client as unknown as { repairerCompletedJob?: { findMany: unknown } }).repairerCompletedJob
+    ?.findMany === "function";
+}
 
 /**
  * Resolve SQLite `file:` URLs against the repo root (same DB as `npx prisma db push`),
@@ -26,6 +32,26 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+function getPrisma(): PrismaClient {
+  if (
+    process.env.NODE_ENV !== "production" &&
+    globalForPrisma.prisma &&
+    !hasRepairerCompletedJobDelegate(globalForPrisma.prisma)
+  ) {
+    globalForPrisma.prisma = undefined;
+  }
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+  const client = globalForPrisma.prisma ?? createPrismaClient();
+  if (!hasRepairerCompletedJobDelegate(client)) {
+    throw new Error(
+      "Prisma client is missing RepairerCompletedJob (schema newer than client). Run `npx prisma generate`, then restart the dev server.",
+    );
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    globalForPrisma.prisma = client;
+  }
+  return client;
+}
+
+export const prisma = getPrisma();

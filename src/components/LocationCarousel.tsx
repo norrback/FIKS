@@ -10,8 +10,8 @@ const promotedRepairers = [
     tagline: "Electronics, small appliances, and soldering in the capital region.",
     expertise: ["Electronics", "Small appliances"],
     location: "Helsinki area",
-    ratingText: "4.4",
-    ratingCount: 14,
+    ratingText: "4.7",
+    ratingCount: 3,
     headerClass: styles.cardHeaderA,
   },
   {
@@ -21,8 +21,8 @@ const promotedRepairers = [
     tagline: "Alterations, zippers, and outerwear — studio work with quick turnaround.",
     expertise: ["Textiles", "Clothing"],
     location: "Vaasa",
-    ratingText: "4.8",
-    ratingCount: 8,
+    ratingText: "5.0",
+    ratingCount: 2,
     headerClass: styles.cardHeaderB,
   },
   {
@@ -33,7 +33,7 @@ const promotedRepairers = [
     expertise: ["Bicycles", "Wheel building"],
     location: "Seinäjoki",
     ratingText: "4.8",
-    ratingCount: 22,
+    ratingCount: 4,
     headerClass: styles.cardHeaderC,
   },
 ] as const;

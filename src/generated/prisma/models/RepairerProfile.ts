@@ -30,12 +30,16 @@ export type RepairerProfileAvgAggregateOutputType = {
   completedJobsCount: number | null
   ratingSum: number | null
   ratingCount: number | null
+  serviceLatitude: number | null
+  serviceLongitude: number | null
 }
 
 export type RepairerProfileSumAggregateOutputType = {
   completedJobsCount: number | null
   ratingSum: number | null
   ratingCount: number | null
+  serviceLatitude: number | null
+  serviceLongitude: number | null
 }
 
 export type RepairerProfileMinAggregateOutputType = {
@@ -48,6 +52,10 @@ export type RepairerProfileMinAggregateOutputType = {
   completedJobsCount: number | null
   ratingSum: number | null
   ratingCount: number | null
+  servicePhotoUrl: string | null
+  serviceLocationLabel: string | null
+  serviceLatitude: number | null
+  serviceLongitude: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +70,10 @@ export type RepairerProfileMaxAggregateOutputType = {
   completedJobsCount: number | null
   ratingSum: number | null
   ratingCount: number | null
+  servicePhotoUrl: string | null
+  serviceLocationLabel: string | null
+  serviceLatitude: number | null
+  serviceLongitude: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -76,6 +88,10 @@ export type RepairerProfileCountAggregateOutputType = {
   completedJobsCount: number
   ratingSum: number
   ratingCount: number
+  servicePhotoUrl: number
+  serviceLocationLabel: number
+  serviceLatitude: number
+  serviceLongitude: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -86,12 +102,16 @@ export type RepairerProfileAvgAggregateInputType = {
   completedJobsCount?: true
   ratingSum?: true
   ratingCount?: true
+  serviceLatitude?: true
+  serviceLongitude?: true
 }
 
 export type RepairerProfileSumAggregateInputType = {
   completedJobsCount?: true
   ratingSum?: true
   ratingCount?: true
+  serviceLatitude?: true
+  serviceLongitude?: true
 }
 
 export type RepairerProfileMinAggregateInputType = {
@@ -104,6 +124,10 @@ export type RepairerProfileMinAggregateInputType = {
   completedJobsCount?: true
   ratingSum?: true
   ratingCount?: true
+  servicePhotoUrl?: true
+  serviceLocationLabel?: true
+  serviceLatitude?: true
+  serviceLongitude?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +142,10 @@ export type RepairerProfileMaxAggregateInputType = {
   completedJobsCount?: true
   ratingSum?: true
   ratingCount?: true
+  servicePhotoUrl?: true
+  serviceLocationLabel?: true
+  serviceLatitude?: true
+  serviceLongitude?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -132,6 +160,10 @@ export type RepairerProfileCountAggregateInputType = {
   completedJobsCount?: true
   ratingSum?: true
   ratingCount?: true
+  servicePhotoUrl?: true
+  serviceLocationLabel?: true
+  serviceLatitude?: true
+  serviceLongitude?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -233,6 +265,10 @@ export type RepairerProfileGroupByOutputType = {
   completedJobsCount: number
   ratingSum: number
   ratingCount: number
+  servicePhotoUrl: string | null
+  serviceLocationLabel: string
+  serviceLatitude: number | null
+  serviceLongitude: number | null
   createdAt: Date
   updatedAt: Date
   _count: RepairerProfileCountAggregateOutputType | null
@@ -270,9 +306,14 @@ export type RepairerProfileWhereInput = {
   completedJobsCount?: Prisma.IntFilter<"RepairerProfile"> | number
   ratingSum?: Prisma.IntFilter<"RepairerProfile"> | number
   ratingCount?: Prisma.IntFilter<"RepairerProfile"> | number
+  servicePhotoUrl?: Prisma.StringNullableFilter<"RepairerProfile"> | string | null
+  serviceLocationLabel?: Prisma.StringFilter<"RepairerProfile"> | string
+  serviceLatitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
+  serviceLongitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
   createdAt?: Prisma.DateTimeFilter<"RepairerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RepairerProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  completedJobs?: Prisma.RepairerCompletedJobListRelationFilter
 }
 
 export type RepairerProfileOrderByWithRelationInput = {
@@ -285,9 +326,14 @@ export type RepairerProfileOrderByWithRelationInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  servicePhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceLocationLabel?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  completedJobs?: Prisma.RepairerCompletedJobOrderByRelationAggregateInput
 }
 
 export type RepairerProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -303,9 +349,14 @@ export type RepairerProfileWhereUniqueInput = Prisma.AtLeast<{
   completedJobsCount?: Prisma.IntFilter<"RepairerProfile"> | number
   ratingSum?: Prisma.IntFilter<"RepairerProfile"> | number
   ratingCount?: Prisma.IntFilter<"RepairerProfile"> | number
+  servicePhotoUrl?: Prisma.StringNullableFilter<"RepairerProfile"> | string | null
+  serviceLocationLabel?: Prisma.StringFilter<"RepairerProfile"> | string
+  serviceLatitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
+  serviceLongitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
   createdAt?: Prisma.DateTimeFilter<"RepairerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RepairerProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  completedJobs?: Prisma.RepairerCompletedJobListRelationFilter
 }, "id" | "userId" | "slug">
 
 export type RepairerProfileOrderByWithAggregationInput = {
@@ -318,6 +369,10 @@ export type RepairerProfileOrderByWithAggregationInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  servicePhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceLocationLabel?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RepairerProfileCountOrderByAggregateInput
@@ -340,6 +395,10 @@ export type RepairerProfileScalarWhereWithAggregatesInput = {
   completedJobsCount?: Prisma.IntWithAggregatesFilter<"RepairerProfile"> | number
   ratingSum?: Prisma.IntWithAggregatesFilter<"RepairerProfile"> | number
   ratingCount?: Prisma.IntWithAggregatesFilter<"RepairerProfile"> | number
+  servicePhotoUrl?: Prisma.StringNullableWithAggregatesFilter<"RepairerProfile"> | string | null
+  serviceLocationLabel?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
+  serviceLatitude?: Prisma.FloatNullableWithAggregatesFilter<"RepairerProfile"> | number | null
+  serviceLongitude?: Prisma.FloatNullableWithAggregatesFilter<"RepairerProfile"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RepairerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"RepairerProfile"> | Date | string
 }
@@ -353,9 +412,14 @@ export type RepairerProfileCreateInput = {
   completedJobsCount?: number
   ratingSum?: number
   ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRepairerProfileInput
+  completedJobs?: Prisma.RepairerCompletedJobCreateNestedManyWithoutRepairerProfileInput
 }
 
 export type RepairerProfileUncheckedCreateInput = {
@@ -368,8 +432,13 @@ export type RepairerProfileUncheckedCreateInput = {
   completedJobsCount?: number
   ratingSum?: number
   ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  completedJobs?: Prisma.RepairerCompletedJobUncheckedCreateNestedManyWithoutRepairerProfileInput
 }
 
 export type RepairerProfileUpdateInput = {
@@ -381,9 +450,14 @@ export type RepairerProfileUpdateInput = {
   completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRepairerProfileNestedInput
+  completedJobs?: Prisma.RepairerCompletedJobUpdateManyWithoutRepairerProfileNestedInput
 }
 
 export type RepairerProfileUncheckedUpdateInput = {
@@ -396,8 +470,13 @@ export type RepairerProfileUncheckedUpdateInput = {
   completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedJobs?: Prisma.RepairerCompletedJobUncheckedUpdateManyWithoutRepairerProfileNestedInput
 }
 
 export type RepairerProfileCreateManyInput = {
@@ -410,6 +489,10 @@ export type RepairerProfileCreateManyInput = {
   completedJobsCount?: number
   ratingSum?: number
   ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -423,6 +506,10 @@ export type RepairerProfileUpdateManyMutationInput = {
   completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -437,6 +524,10 @@ export type RepairerProfileUncheckedUpdateManyInput = {
   completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -456,6 +547,10 @@ export type RepairerProfileCountOrderByAggregateInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  servicePhotoUrl?: Prisma.SortOrder
+  serviceLocationLabel?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -464,6 +559,8 @@ export type RepairerProfileAvgOrderByAggregateInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrder
 }
 
 export type RepairerProfileMaxOrderByAggregateInput = {
@@ -476,6 +573,10 @@ export type RepairerProfileMaxOrderByAggregateInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  servicePhotoUrl?: Prisma.SortOrder
+  serviceLocationLabel?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -490,6 +591,10 @@ export type RepairerProfileMinOrderByAggregateInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  servicePhotoUrl?: Prisma.SortOrder
+  serviceLocationLabel?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -498,6 +603,13 @@ export type RepairerProfileSumOrderByAggregateInput = {
   completedJobsCount?: Prisma.SortOrder
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
+  serviceLatitude?: Prisma.SortOrder
+  serviceLongitude?: Prisma.SortOrder
+}
+
+export type RepairerProfileScalarRelationFilter = {
+  is?: Prisma.RepairerProfileWhereInput
+  isNot?: Prisma.RepairerProfileWhereInput
 }
 
 export type RepairerProfileCreateNestedOneWithoutUserInput = {
@@ -540,6 +652,28 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type RepairerProfileCreateNestedOneWithoutCompletedJobsInput = {
+  create?: Prisma.XOR<Prisma.RepairerProfileCreateWithoutCompletedJobsInput, Prisma.RepairerProfileUncheckedCreateWithoutCompletedJobsInput>
+  connectOrCreate?: Prisma.RepairerProfileCreateOrConnectWithoutCompletedJobsInput
+  connect?: Prisma.RepairerProfileWhereUniqueInput
+}
+
+export type RepairerProfileUpdateOneRequiredWithoutCompletedJobsNestedInput = {
+  create?: Prisma.XOR<Prisma.RepairerProfileCreateWithoutCompletedJobsInput, Prisma.RepairerProfileUncheckedCreateWithoutCompletedJobsInput>
+  connectOrCreate?: Prisma.RepairerProfileCreateOrConnectWithoutCompletedJobsInput
+  upsert?: Prisma.RepairerProfileUpsertWithoutCompletedJobsInput
+  connect?: Prisma.RepairerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RepairerProfileUpdateToOneWithWhereWithoutCompletedJobsInput, Prisma.RepairerProfileUpdateWithoutCompletedJobsInput>, Prisma.RepairerProfileUncheckedUpdateWithoutCompletedJobsInput>
+}
+
 export type RepairerProfileCreateWithoutUserInput = {
   id?: string
   slug: string
@@ -549,8 +683,13 @@ export type RepairerProfileCreateWithoutUserInput = {
   completedJobsCount?: number
   ratingSum?: number
   ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  completedJobs?: Prisma.RepairerCompletedJobCreateNestedManyWithoutRepairerProfileInput
 }
 
 export type RepairerProfileUncheckedCreateWithoutUserInput = {
@@ -562,8 +701,13 @@ export type RepairerProfileUncheckedCreateWithoutUserInput = {
   completedJobsCount?: number
   ratingSum?: number
   ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  completedJobs?: Prisma.RepairerCompletedJobUncheckedCreateNestedManyWithoutRepairerProfileInput
 }
 
 export type RepairerProfileCreateOrConnectWithoutUserInput = {
@@ -591,8 +735,13 @@ export type RepairerProfileUpdateWithoutUserInput = {
   completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedJobs?: Prisma.RepairerCompletedJobUpdateManyWithoutRepairerProfileNestedInput
 }
 
 export type RepairerProfileUncheckedUpdateWithoutUserInput = {
@@ -604,10 +753,132 @@ export type RepairerProfileUncheckedUpdateWithoutUserInput = {
   completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedJobs?: Prisma.RepairerCompletedJobUncheckedUpdateManyWithoutRepairerProfileNestedInput
+}
+
+export type RepairerProfileCreateWithoutCompletedJobsInput = {
+  id?: string
+  slug: string
+  bio?: string
+  serviceDescription?: string
+  expertise?: string
+  completedJobsCount?: number
+  ratingSum?: number
+  ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutRepairerProfileInput
+}
+
+export type RepairerProfileUncheckedCreateWithoutCompletedJobsInput = {
+  id?: string
+  userId: string
+  slug: string
+  bio?: string
+  serviceDescription?: string
+  expertise?: string
+  completedJobsCount?: number
+  ratingSum?: number
+  ratingCount?: number
+  servicePhotoUrl?: string | null
+  serviceLocationLabel?: string
+  serviceLatitude?: number | null
+  serviceLongitude?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RepairerProfileCreateOrConnectWithoutCompletedJobsInput = {
+  where: Prisma.RepairerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.RepairerProfileCreateWithoutCompletedJobsInput, Prisma.RepairerProfileUncheckedCreateWithoutCompletedJobsInput>
+}
+
+export type RepairerProfileUpsertWithoutCompletedJobsInput = {
+  update: Prisma.XOR<Prisma.RepairerProfileUpdateWithoutCompletedJobsInput, Prisma.RepairerProfileUncheckedUpdateWithoutCompletedJobsInput>
+  create: Prisma.XOR<Prisma.RepairerProfileCreateWithoutCompletedJobsInput, Prisma.RepairerProfileUncheckedCreateWithoutCompletedJobsInput>
+  where?: Prisma.RepairerProfileWhereInput
+}
+
+export type RepairerProfileUpdateToOneWithWhereWithoutCompletedJobsInput = {
+  where?: Prisma.RepairerProfileWhereInput
+  data: Prisma.XOR<Prisma.RepairerProfileUpdateWithoutCompletedJobsInput, Prisma.RepairerProfileUncheckedUpdateWithoutCompletedJobsInput>
+}
+
+export type RepairerProfileUpdateWithoutCompletedJobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  expertise?: Prisma.StringFieldUpdateOperationsInput | string
+  completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutRepairerProfileNestedInput
+}
+
+export type RepairerProfileUncheckedUpdateWithoutCompletedJobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  expertise?: Prisma.StringFieldUpdateOperationsInput | string
+  completedJobsCount?: Prisma.IntFieldUpdateOperationsInput | number
+  ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type RepairerProfileCountOutputType
+ */
+
+export type RepairerProfileCountOutputType = {
+  completedJobs: number
+}
+
+export type RepairerProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  completedJobs?: boolean | RepairerProfileCountOutputTypeCountCompletedJobsArgs
+}
+
+/**
+ * RepairerProfileCountOutputType without action
+ */
+export type RepairerProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RepairerProfileCountOutputType
+   */
+  select?: Prisma.RepairerProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * RepairerProfileCountOutputType without action
+ */
+export type RepairerProfileCountOutputTypeCountCompletedJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RepairerCompletedJobWhereInput
+}
 
 
 export type RepairerProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -620,9 +891,15 @@ export type RepairerProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
   completedJobsCount?: boolean
   ratingSum?: boolean
   ratingCount?: boolean
+  servicePhotoUrl?: boolean
+  serviceLocationLabel?: boolean
+  serviceLatitude?: boolean
+  serviceLongitude?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  completedJobs?: boolean | Prisma.RepairerProfile$completedJobsArgs<ExtArgs>
+  _count?: boolean | Prisma.RepairerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["repairerProfile"]>
 
 export type RepairerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -635,6 +912,10 @@ export type RepairerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   completedJobsCount?: boolean
   ratingSum?: boolean
   ratingCount?: boolean
+  servicePhotoUrl?: boolean
+  serviceLocationLabel?: boolean
+  serviceLatitude?: boolean
+  serviceLongitude?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -650,6 +931,10 @@ export type RepairerProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   completedJobsCount?: boolean
   ratingSum?: boolean
   ratingCount?: boolean
+  servicePhotoUrl?: boolean
+  serviceLocationLabel?: boolean
+  serviceLatitude?: boolean
+  serviceLongitude?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -665,13 +950,19 @@ export type RepairerProfileSelectScalar = {
   completedJobsCount?: boolean
   ratingSum?: boolean
   ratingCount?: boolean
+  servicePhotoUrl?: boolean
+  serviceLocationLabel?: boolean
+  serviceLatitude?: boolean
+  serviceLongitude?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RepairerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "bio" | "serviceDescription" | "expertise" | "completedJobsCount" | "ratingSum" | "ratingCount" | "createdAt" | "updatedAt", ExtArgs["result"]["repairerProfile"]>
+export type RepairerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "bio" | "serviceDescription" | "expertise" | "completedJobsCount" | "ratingSum" | "ratingCount" | "servicePhotoUrl" | "serviceLocationLabel" | "serviceLatitude" | "serviceLongitude" | "createdAt" | "updatedAt", ExtArgs["result"]["repairerProfile"]>
 export type RepairerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  completedJobs?: boolean | Prisma.RepairerProfile$completedJobsArgs<ExtArgs>
+  _count?: boolean | Prisma.RepairerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RepairerProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -684,6 +975,7 @@ export type $RepairerProfilePayload<ExtArgs extends runtime.Types.Extensions.Int
   name: "RepairerProfile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    completedJobs: Prisma.$RepairerCompletedJobPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -701,6 +993,19 @@ export type $RepairerProfilePayload<ExtArgs extends runtime.Types.Extensions.Int
      */
     ratingSum: number
     ratingCount: number
+    /**
+     * Public HTTPS URL for a workshop or profile photo (paste link; uploads can be added later).
+     */
+    servicePhotoUrl: string | null
+    /**
+     * Human-readable service area label shown next to the map.
+     */
+    serviceLocationLabel: string
+    /**
+     * WGS84 coordinates for the embedded map (both should be set for a pin).
+     */
+    serviceLatitude: number | null
+    serviceLongitude: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["repairerProfile"]>
@@ -1098,6 +1403,7 @@ readonly fields: RepairerProfileFieldRefs;
 export interface Prisma__RepairerProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  completedJobs<T extends Prisma.RepairerProfile$completedJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RepairerProfile$completedJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RepairerCompletedJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1136,6 +1442,10 @@ export interface RepairerProfileFieldRefs {
   readonly completedJobsCount: Prisma.FieldRef<"RepairerProfile", 'Int'>
   readonly ratingSum: Prisma.FieldRef<"RepairerProfile", 'Int'>
   readonly ratingCount: Prisma.FieldRef<"RepairerProfile", 'Int'>
+  readonly servicePhotoUrl: Prisma.FieldRef<"RepairerProfile", 'String'>
+  readonly serviceLocationLabel: Prisma.FieldRef<"RepairerProfile", 'String'>
+  readonly serviceLatitude: Prisma.FieldRef<"RepairerProfile", 'Float'>
+  readonly serviceLongitude: Prisma.FieldRef<"RepairerProfile", 'Float'>
   readonly createdAt: Prisma.FieldRef<"RepairerProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"RepairerProfile", 'DateTime'>
 }
@@ -1534,6 +1844,30 @@ export type RepairerProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many RepairerProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * RepairerProfile.completedJobs
+ */
+export type RepairerProfile$completedJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RepairerCompletedJob
+   */
+  select?: Prisma.RepairerCompletedJobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RepairerCompletedJob
+   */
+  omit?: Prisma.RepairerCompletedJobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RepairerCompletedJobInclude<ExtArgs> | null
+  where?: Prisma.RepairerCompletedJobWhereInput
+  orderBy?: Prisma.RepairerCompletedJobOrderByWithRelationInput | Prisma.RepairerCompletedJobOrderByWithRelationInput[]
+  cursor?: Prisma.RepairerCompletedJobWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RepairerCompletedJobScalarFieldEnum | Prisma.RepairerCompletedJobScalarFieldEnum[]
 }
 
 /**

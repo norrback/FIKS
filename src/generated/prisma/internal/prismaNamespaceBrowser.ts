@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   RepairerProfile: 'RepairerProfile',
+  RepairerCompletedJob: 'RepairerCompletedJob',
   Listing: 'Listing'
 } as const
 
@@ -92,11 +93,32 @@ export const RepairerProfileScalarFieldEnum = {
   completedJobsCount: 'completedJobsCount',
   ratingSum: 'ratingSum',
   ratingCount: 'ratingCount',
+  servicePhotoUrl: 'servicePhotoUrl',
+  serviceLocationLabel: 'serviceLocationLabel',
+  serviceLatitude: 'serviceLatitude',
+  serviceLongitude: 'serviceLongitude',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type RepairerProfileScalarFieldEnum = (typeof RepairerProfileScalarFieldEnum)[keyof typeof RepairerProfileScalarFieldEnum]
+
+
+export const RepairerCompletedJobScalarFieldEnum = {
+  id: 'id',
+  repairerProfileId: 'repairerProfileId',
+  title: 'title',
+  itemSummary: 'itemSummary',
+  completedAt: 'completedAt',
+  ratingStars: 'ratingStars',
+  agreementSummary: 'agreementSummary',
+  messagesSummary: 'messagesSummary',
+  repairStoryNotes: 'repairStoryNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairerCompletedJobScalarFieldEnum = (typeof RepairerCompletedJobScalarFieldEnum)[keyof typeof RepairerCompletedJobScalarFieldEnum]
 
 
 export const ListingScalarFieldEnum = {

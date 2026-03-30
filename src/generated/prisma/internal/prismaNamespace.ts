@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   RepairerProfile: 'RepairerProfile',
+  RepairerCompletedJob: 'RepairerCompletedJob',
   Listing: 'Listing'
 } as const
 
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "repairerProfile" | "listing"
+    modelProps: "user" | "repairerProfile" | "repairerCompletedJob" | "listing"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -554,6 +555,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RepairerCompletedJob: {
+      payload: Prisma.$RepairerCompletedJobPayload<ExtArgs>
+      fields: Prisma.RepairerCompletedJobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairerCompletedJobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairerCompletedJobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>
+        }
+        findFirst: {
+          args: Prisma.RepairerCompletedJobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairerCompletedJobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>
+        }
+        findMany: {
+          args: Prisma.RepairerCompletedJobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>[]
+        }
+        create: {
+          args: Prisma.RepairerCompletedJobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>
+        }
+        createMany: {
+          args: Prisma.RepairerCompletedJobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairerCompletedJobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>[]
+        }
+        delete: {
+          args: Prisma.RepairerCompletedJobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>
+        }
+        update: {
+          args: Prisma.RepairerCompletedJobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairerCompletedJobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairerCompletedJobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairerCompletedJobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairerCompletedJobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairerCompletedJobPayload>
+        }
+        aggregate: {
+          args: Prisma.RepairerCompletedJobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairerCompletedJob>
+        }
+        groupBy: {
+          args: Prisma.RepairerCompletedJobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairerCompletedJobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairerCompletedJobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairerCompletedJobCountAggregateOutputType> | number
+        }
+      }
+    }
     Listing: {
       payload: Prisma.$ListingPayload<ExtArgs>
       fields: Prisma.ListingFieldRefs
@@ -687,11 +762,32 @@ export const RepairerProfileScalarFieldEnum = {
   completedJobsCount: 'completedJobsCount',
   ratingSum: 'ratingSum',
   ratingCount: 'ratingCount',
+  servicePhotoUrl: 'servicePhotoUrl',
+  serviceLocationLabel: 'serviceLocationLabel',
+  serviceLatitude: 'serviceLatitude',
+  serviceLongitude: 'serviceLongitude',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type RepairerProfileScalarFieldEnum = (typeof RepairerProfileScalarFieldEnum)[keyof typeof RepairerProfileScalarFieldEnum]
+
+
+export const RepairerCompletedJobScalarFieldEnum = {
+  id: 'id',
+  repairerProfileId: 'repairerProfileId',
+  title: 'title',
+  itemSummary: 'itemSummary',
+  completedAt: 'completedAt',
+  ratingStars: 'ratingStars',
+  agreementSummary: 'agreementSummary',
+  messagesSummary: 'messagesSummary',
+  repairStoryNotes: 'repairStoryNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairerCompletedJobScalarFieldEnum = (typeof RepairerCompletedJobScalarFieldEnum)[keyof typeof RepairerCompletedJobScalarFieldEnum]
 
 
 export const ListingScalarFieldEnum = {
@@ -854,6 +950,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   repairerProfile?: Prisma.RepairerProfileOmit
+  repairerCompletedJob?: Prisma.RepairerCompletedJobOmit
   listing?: Prisma.ListingOmit
 }
 

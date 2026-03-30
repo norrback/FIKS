@@ -10,5 +10,6 @@
  */
 export type * from './models/User'
 export type * from './models/RepairerProfile'
+export type * from './models/RepairerCompletedJob'
 export type * from './models/Listing'
 export type * from './commonInputTypes'
