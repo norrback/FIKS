@@ -16,6 +16,7 @@ type SignupBody = {
   email?: string;
   password?: string;
   role?: string;
+  serviceName?: string;
   services?: string;
   bio?: string;
 };
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
   const password = String(body.password ?? "");
   const roleUi = body.role === "repairer" ? "repairer" : "user";
   const roleDb = roleUi === "repairer" ? "REPAIRER" : "USER";
+  const serviceName = String(body.serviceName ?? "").trim();
   const servicesRaw = String(body.services ?? "").trim();
   const bioRepairer = String(body.bio ?? "").trim();
 
@@ -53,6 +55,12 @@ export async function POST(request: NextRequest) {
   }
 
   if (roleDb === "REPAIRER") {
+    if (!serviceName) {
+      return NextResponse.json(
+        { error: "Service name is required for repairer accounts" },
+        { status: 400 },
+      );
+    }
     if (!servicesRaw) {
       return NextResponse.json(
         { error: "Services offered are required for repairer accounts" },
@@ -80,7 +88,7 @@ export async function POST(request: NextRequest) {
   try {
     if (roleDb === "REPAIRER") {
       const expertise = parseExpertiseList(servicesRaw);
-      const slug = await uniqueRepairerSlug(name);
+      const slug = await uniqueRepairerSlug(serviceName);
       const created = await prisma.user.create({
         data: {
           email,
@@ -90,6 +98,7 @@ export async function POST(request: NextRequest) {
           repairerProfile: {
             create: {
               slug,
+              serviceName,
               bio: bioRepairer,
               serviceDescription: "",
               expertise: expertiseToJson(expertise),

@@ -19,6 +19,7 @@ export type CompletedJobInitial = {
 export type RepairerServiceInitial = {
   slug: string;
   displayName: string;
+  serviceName: string;
   bio: string;
   serviceDescription: string;
   expertise: string[];
@@ -63,6 +64,7 @@ function formatJobDate(iso: string): string {
 
 export default function RepairerServiceClient({ initial, isOwner }: Props) {
   const router = useRouter();
+  const [serviceName, setServiceName] = useState(initial.serviceName);
   const [bio, setBio] = useState(initial.bio);
   const [serviceDescription, setServiceDescription] = useState(initial.serviceDescription);
   const [expertiseText, setExpertiseText] = useState(initial.expertise.join(", "));
@@ -76,6 +78,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
   );
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [photoBroken, setPhotoBroken] = useState(false);
   const [stats, setStats] = useState({
@@ -84,6 +87,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
     ratingCount: initial.ratingCount,
   });
   const [snapshot, setSnapshot] = useState<{
+    serviceName: string;
     bio: string;
     serviceDescription: string;
     expertiseText: string;
@@ -97,6 +101,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
 
   useEffect(() => {
     if (editing) return;
+    setServiceName(initial.serviceName);
     setBio(initial.bio);
     setServiceDescription(initial.serviceDescription);
     setExpertiseText(initial.expertise.join(", "));
@@ -113,6 +118,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
   }, [
     editing,
     initial.slug,
+    initial.serviceName,
     initial.bio,
     initial.serviceDescription,
     initial.expertise.join(","),
@@ -160,6 +166,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
 
   function startEditing() {
     setSnapshot({
+      serviceName,
       bio,
       serviceDescription,
       expertiseText,
@@ -205,6 +212,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          serviceName,
           bio,
           serviceDescription,
           expertise: expertiseText,
@@ -216,6 +224,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
       });
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
+        serviceName?: string;
         bio?: string;
         serviceDescription?: string;
         expertise?: string[];
@@ -231,6 +240,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
         setError(data.error ?? "Could not save changes.");
         return;
       }
+      if (typeof data.serviceName === "string") setServiceName(data.serviceName);
       if (typeof data.bio === "string") setBio(data.bio);
       if (typeof data.serviceDescription === "string") setServiceDescription(data.serviceDescription);
       if (Array.isArray(data.expertise)) setExpertiseText(data.expertise.join(", "));
@@ -264,6 +274,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
   function handleCancel() {
     if (snapshot) {
       setBio(snapshot.bio);
+      setServiceName(snapshot.serviceName);
       setServiceDescription(snapshot.serviceDescription);
       setExpertiseText(snapshot.expertiseText);
       setServicePhotoUrl(snapshot.servicePhotoUrl);
@@ -277,13 +288,35 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
     setEditing(false);
   }
 
+  async function uploadServicePhoto(file: File | null) {
+    if (!file) return;
+    setError(null);
+    setUploadingPhoto(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/uploads", { method: "POST", body: fd });
+      const data = (await res.json().catch(() => ({}))) as { error?: string; url?: string };
+      if (!res.ok || !data.url) {
+        setError(data.error ?? "Upload failed.");
+        return;
+      }
+      setServicePhotoUrl(data.url);
+      setPhotoBroken(false);
+    } catch {
+      setError("Upload failed.");
+    } finally {
+      setUploadingPhoto(false);
+    }
+  }
+
   return (
     <div className={styles.layout}>
       <div className={styles.mainColumn}>
         <header className={styles.head}>
           <div className={styles.headRow}>
             <div>
-              <h1 className={styles.title}>{initial.displayName}</h1>
+              <h1 className={styles.title}>{serviceName || initial.displayName}</h1>
               <p className={styles.subtitle}>Repair service on FIKS</p>
             </div>
             {isOwner && !editing ? (
@@ -315,23 +348,49 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
               </p>
             ) : null}
             <div className={styles.field}>
-              <label className={styles.label} htmlFor="servicePhotoUrl">
-                Service photo (image URL)
+              <label className={styles.label} htmlFor="serviceName">
+                Service name
               </label>
               <input
-                id="servicePhotoUrl"
+                id="serviceName"
                 className={styles.input}
-                type="url"
-                inputMode="url"
-                placeholder="https://…"
-                value={servicePhotoUrl}
-                onChange={(e) => {
-                  setServicePhotoUrl(e.target.value);
-                  setPhotoBroken(false);
-                }}
+                value={serviceName}
+                onChange={(e) => setServiceName(e.target.value)}
+                placeholder="Your repair service name"
                 disabled={saving}
+                required
               />
-              <p className={styles.fieldHint}>Paste a public https image link. File uploads can be added later.</p>
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="servicePhotoUpload">
+                Service photo
+              </label>
+              <input
+                id="servicePhotoUpload"
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                className={styles.fileInput}
+                disabled={saving || uploadingPhoto}
+                onChange={(e) => {
+                  void uploadServicePhoto(e.target.files?.[0] ?? null);
+                  e.target.value = "";
+                }}
+              />
+              {servicePhotoUrl ? (
+                <button
+                  type="button"
+                  className={styles.removePhotoBtn}
+                  onClick={() => setServicePhotoUrl("")}
+                  disabled={saving || uploadingPhoto}
+                >
+                  Remove photo
+                </button>
+              ) : null}
+              <p className={styles.fieldHint}>
+                {uploadingPhoto
+                  ? "Uploading service photo..."
+                  : "Upload an image file (jpg, png, webp, gif)."}
+              </p>
             </div>
             <div className={styles.field}>
               <label className={styles.label} htmlFor="serviceLocationLabel">

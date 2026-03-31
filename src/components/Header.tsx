@@ -5,6 +5,7 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import HeaderSearch from "./HeaderSearch";
 import HeaderSearchFallback from "./HeaderSearchFallback";
+import HeaderAccountMenu from "./HeaderAccountMenu";
 import styles from "./Header.module.css";
 
 export default async function Header() {
@@ -12,12 +13,66 @@ export default async function Header() {
   const loggedIn = Boolean(session);
 
   let repairerSlug: string | null = null;
+  let serviceName: string | null = null;
+  let isRepairer = false;
+  let accountName = "Guest";
+  let accountSubtitle = "Not signed in";
   if (session) {
-    const profile = await prisma.repairerProfile.findUnique({
-      where: { userId: session.userId },
-      select: { slug: true },
-    });
-    if (profile) repairerSlug = profile.slug;
+    let user:
+      | {
+          name: string | null;
+          email: string;
+          role: string;
+          repairerProfile: { slug: string; serviceName: string } | null;
+        }
+      | {
+          name: string | null;
+          email: string;
+          role: string;
+          repairerProfile: { slug: string } | null;
+        }
+      | null = null;
+    try {
+      user = await prisma.user.findUnique({
+        where: { id: session.userId },
+        select: {
+          name: true,
+          email: true,
+          role: true,
+          repairerProfile: {
+            select: {
+              slug: true,
+              serviceName: true,
+            },
+          },
+        },
+      });
+    } catch {
+      // Dev fallback for stale Prisma client instances during HMR.
+      user = await prisma.user.findUnique({
+        where: { id: session.userId },
+        select: {
+          name: true,
+          email: true,
+          role: true,
+          repairerProfile: {
+            select: {
+              slug: true,
+            },
+          },
+        },
+      });
+    }
+    repairerSlug = user?.repairerProfile?.slug ?? null;
+    isRepairer = user?.role === "REPAIRER";
+    serviceName =
+      "serviceName" in (user?.repairerProfile ?? {})
+        ? user?.repairerProfile?.serviceName?.trim() || null
+        : null;
+
+    const userName = user?.name?.trim() || user?.email || session.email;
+    accountName = serviceName || userName;
+    accountSubtitle = user?.role === "REPAIRER" ? "Service account" : "Customer account";
   }
 
   return (
@@ -32,33 +87,13 @@ export default async function Header() {
         </Suspense>
 
         <div className={styles.actions}>
-          {session ? (
-            <>
-              {repairerSlug ? (
-                <Link href={`/repairers/${repairerSlug}`} className={styles.loginLink}>
-                  My repair service
-                </Link>
-              ) : null}
-              <Link href="/listings" className={styles.loginLink}>
-                Listings
-              </Link>
-              <a href="/api/auth/logout" className={styles.loginLink}>
-                Log out
-              </a>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className={styles.loginLink}>
-                Log in
-              </Link>
-              <Link href="/signup" className={styles.loginLink}>
-                Sign up
-              </Link>
-            </>
-          )}
-          <Link href="/create-listing" className="btn btn-primary">
-            Post a Listing
-          </Link>
+          <HeaderAccountMenu
+            loggedIn={loggedIn}
+            isRepairer={isRepairer}
+            repairerSlug={repairerSlug}
+            accountName={accountName}
+            accountSubtitle={accountSubtitle}
+          />
         </div>
       </div>
     </header>

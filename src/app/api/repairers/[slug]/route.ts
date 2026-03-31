@@ -10,6 +10,7 @@ import {
 export const runtime = "nodejs";
 
 type PatchBody = {
+  serviceName?: unknown;
   bio?: unknown;
   serviceDescription?: unknown;
   expertise?: unknown;
@@ -25,21 +26,20 @@ function normalizeOptionalUrl(value: unknown): string | null | undefined {
   if (typeof value !== "string") return undefined;
   const t = value.trim();
   if (t.length === 0) return null;
-  let u: URL;
-  try {
-    u = new URL(t);
-  } catch {
-    return undefined;
-  }
-  if (u.protocol !== "http:" && u.protocol !== "https:") return undefined;
-  if (t.length > 2048) return undefined;
-  return t;
+  if (t.startsWith("/uploads/")) return t;
+  return undefined;
 }
 
 function normalizeLocationLabel(value: unknown): string | undefined {
   if (value === undefined) return undefined;
   if (typeof value !== "string") return undefined;
   return value.trim().slice(0, 200);
+}
+
+function normalizeServiceName(value: unknown): string | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value !== "string") return undefined;
+  return value.trim().slice(0, 120);
 }
 
 function normalizeCoord(value: unknown): number | null | undefined {
@@ -82,13 +82,20 @@ export async function PATCH(
   const bio = typeof body.bio === "string" ? body.bio.trim() : undefined;
   const serviceDescription =
     typeof body.serviceDescription === "string" ? body.serviceDescription.trim() : undefined;
+  const serviceName = normalizeServiceName(body.serviceName);
+  if (body.serviceName !== undefined && serviceName === undefined) {
+    return NextResponse.json({ error: "serviceName must be a string" }, { status: 400 });
+  }
+  if (serviceName !== undefined && serviceName.length === 0) {
+    return NextResponse.json({ error: "serviceName cannot be empty" }, { status: 400 });
+  }
 
   const servicePhotoUrl = normalizeOptionalUrl(body.servicePhotoUrl);
   if (body.servicePhotoUrl !== undefined && servicePhotoUrl === undefined && body.servicePhotoUrl !== null) {
     const raw = body.servicePhotoUrl;
     const emptyString = typeof raw === "string" && raw.trim() === "";
     if (!emptyString) {
-      return NextResponse.json({ error: "servicePhotoUrl must be a valid http(s) URL or empty" }, { status: 400 });
+      return NextResponse.json({ error: "servicePhotoUrl must be an uploaded image path or empty" }, { status: 400 });
     }
   }
 
@@ -144,6 +151,7 @@ export async function PATCH(
   const updated = await prisma.repairerProfile.update({
     where: { slug },
     data: {
+      ...(serviceName !== undefined ? { serviceName } : {}),
       ...(bio !== undefined ? { bio } : {}),
       ...(serviceDescription !== undefined ? { serviceDescription } : {}),
       ...(expertiseJson !== undefined ? { expertise: expertiseJson } : {}),
@@ -153,6 +161,7 @@ export async function PATCH(
       ...(serviceLongitude !== undefined ? { serviceLongitude } : {}),
     },
     select: {
+      serviceName: true,
       bio: true,
       serviceDescription: true,
       expertise: true,
@@ -167,6 +176,7 @@ export async function PATCH(
   });
 
   return NextResponse.json({
+    serviceName: updated.serviceName,
     bio: updated.bio,
     serviceDescription: updated.serviceDescription,
     expertise: expertiseFromJson(updated.expertise),

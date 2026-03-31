@@ -2,10 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { LISTING_CATEGORY_TREE } from "@/lib/listingCategories";
+import { parsePhotoUrls } from "@/lib/listingPhotos";
+import ListingsGrid, { type ListingGridItem } from "./ListingsGrid";
 import styles from "./listings.module.css";
 
 type Props = {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; category?: string }>;
 };
 
 export default async function ListingsPage({ searchParams }: Props) {
@@ -14,24 +17,42 @@ export default async function ListingsPage({ searchParams }: Props) {
     redirect("/login?next=/listings");
   }
 
-  const { q: qRaw } = await searchParams;
+  const { q: qRaw, category: categoryRaw } = await searchParams;
   const q = (qRaw ?? "").trim();
+  const category = (categoryRaw ?? "").trim().toUpperCase();
 
   const listings = await prisma.listing.findMany({
-    where: q
-      ? {
-          OR: [
-            { title: { contains: q } },
-            { description: { contains: q } },
-            { location: { contains: q } },
-          ],
-        }
-      : undefined,
+    where: {
+      ...(category ? { mainCategory: category } : {}),
+      ...(q
+        ? {
+            OR: [
+              { title: { contains: q } },
+              { description: { contains: q } },
+              { location: { contains: q } },
+              { mainCategory: { contains: q.toUpperCase() } },
+              { subCategory: { contains: q } },
+            ],
+          }
+        : {}),
+    },
     orderBy: { createdAt: "desc" },
     include: {
       author: { select: { name: true, email: true } },
     },
   });
+
+  const listingCards: ListingGridItem[] = listings.map((listing) => ({
+    id: listing.id,
+    title: listing.title,
+    description: listing.description,
+    location: listing.location,
+    status: listing.status,
+    mainCategory: listing.mainCategory || "UNCATEGORIZED",
+    subCategory: listing.subCategory || "",
+    authorName: listing.author.name ?? listing.author.email,
+    photoUrls: parsePhotoUrls(listing.photoUrlsJson),
+  }));
 
   return (
     <div className={styles.container}>
@@ -51,6 +72,23 @@ export default async function ListingsPage({ searchParams }: Props) {
             "Open repair requests from the community."
           )}
         </p>
+        <div className={styles.categoryFilters}>
+          <Link
+            href={q ? `/listings?q=${encodeURIComponent(q)}` : "/listings"}
+            className={`${styles.categoryFilter} ${!category ? styles.categoryFilterActive : ""}`}
+          >
+            All
+          </Link>
+          {Object.keys(LISTING_CATEGORY_TREE).map((c) => (
+            <Link
+              key={c}
+              href={q ? `/listings?category=${encodeURIComponent(c)}&q=${encodeURIComponent(q)}` : `/listings?category=${encodeURIComponent(c)}`}
+              className={`${styles.categoryFilter} ${category === c ? styles.categoryFilterActive : ""}`}
+            >
+              {c.charAt(0) + c.slice(1).toLowerCase()}
+            </Link>
+          ))}
+        </div>
       </header>
 
       {listings.length === 0 ? (
@@ -63,22 +101,7 @@ export default async function ListingsPage({ searchParams }: Props) {
           </p>
         </div>
       ) : (
-        <ul className={styles.list}>
-          {listings.map((listing) => (
-            <li key={listing.id} className={styles.listItem}>
-              <Link href={`/listings/${listing.id}`} className={`${styles.card} ${styles.cardLink}`}>
-                <h2 className={styles.cardTitle}>{listing.title}</h2>
-                <p className={styles.cardMeta}>
-                  {listing.location ?? "Location not set"}
-                  {" · "}
-                  {listing.author.name ?? listing.author.email}
-                </p>
-                <p className={styles.cardDesc}>{listing.description}</p>
-                <span className={styles.status}>{listing.status}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ListingsGrid listings={listingCards} />
       )}
     </div>
   );

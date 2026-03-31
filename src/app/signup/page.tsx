@@ -12,6 +12,7 @@ export default function SignupPage() {
     name: "",
     email: "",
     password: "",
+    serviceName: "",
     services: "",
     bio: "",
   });
@@ -36,6 +37,7 @@ export default function SignupPage() {
           email: formData.email,
           password: formData.password,
           role,
+          ...(role === "repairer" ? { serviceName: formData.serviceName } : {}),
           ...(role === "repairer"
             ? { services: formData.services, bio: formData.bio }
             : {}),
@@ -148,6 +150,20 @@ export default function SignupPage() {
 
           {role === "repairer" && (
             <>
+              <div className={styles.formGroup}>
+                <label htmlFor="serviceName" className={styles.label}>Repair Service Name</label>
+                <input
+                  id="serviceName"
+                  name="serviceName"
+                  type="text"
+                  className={styles.input}
+                  placeholder="e.g. Nordic Fix Lab"
+                  value={formData.serviceName}
+                  onChange={handleInputChange}
+                  required={role === "repairer"}
+                  disabled={loading}
+                />
+              </div>
               <div className={styles.formGroup}>
                 <label htmlFor="services" className={styles.label}>Services Offered</label>
                 <input

@@ -104,6 +104,134 @@
   margin: 0 0 1rem;
 }
 
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.leftCol,
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.mainPhotoBtn {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.mainPhoto {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  background: #eef2f7;
+}
+
+.viewerDots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.viewerDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: #cbd5e1;
+  cursor: pointer;
+}
+
+.viewerDotActive {
+  background: var(--color-primary);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+}
+
+.lightboxBackdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(2, 6, 23, 0.8);
+  cursor: zoom-out;
+}
+
+.lightboxContent {
+  position: relative;
+  z-index: 1;
+  width: min(94vw, 1100px);
+  max-height: 90vh;
+  display: grid;
+  place-items: center;
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 86vh;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #0b1220;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: -2.3rem;
+  right: 0;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightboxPrev {
+  left: -0.8rem;
+}
+
+.lightboxNext {
+  right: -0.8rem;
+}
+
+@media (max-width: 900px) {
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .caseStoriesTitle {
   font-size: 0.8rem;
   font-weight: 600;

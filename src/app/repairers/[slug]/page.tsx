@@ -21,7 +21,8 @@ export default async function RepairerServicePage({ params }: Props) {
 
   const session = await getSession();
   const isOwner = Boolean(session && session.userId === profile.userId);
-  const displayName = profile.user.name?.trim() || profile.user.email;
+  const ownerDisplayName = profile.user.name?.trim() || profile.user.email;
+  const serviceName = profile.serviceName.trim() || ownerDisplayName;
 
   const completedJobs = await prisma.repairerCompletedJob.findMany({
     where: { repairerProfileId: profile.id },
@@ -40,7 +41,8 @@ export default async function RepairerServicePage({ params }: Props) {
 
   const initial = {
     slug: profile.slug,
-    displayName,
+    displayName: ownerDisplayName,
+    serviceName,
     bio: profile.bio,
     serviceDescription: profile.serviceDescription,
     expertise: expertiseFromJson(profile.expertise),

@@ -29,6 +29,8 @@ model RepairerProfile {
   userId               String   @unique
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   slug                 String   @unique
+  /// Public-facing repair service name shown in header and profile.
+  serviceName          String   @default("")
   bio                  String   @default("")
   serviceDescription   String   @default("")
   /// JSON array of strings, e.g. ["Electronics","Bicycles"]
@@ -76,6 +78,12 @@ model Listing {
   title       String
   description String
   location    String?
+  /// Top-level category selected by the listing owner (e.g. ELECTRONICS, CLOTHES).
+  mainCategory String  @default("")
+  /// Optional second-level category under `mainCategory`.
+  subCategory  String  @default("")
+  /// JSON array of image URLs for card/details previews.
+  photoUrlsJson String @default("[]")
   status      String   @default("OPEN")
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])

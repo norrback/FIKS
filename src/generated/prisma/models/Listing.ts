@@ -29,6 +29,9 @@ export type ListingMinAggregateOutputType = {
   title: string | null
   description: string | null
   location: string | null
+  mainCategory: string | null
+  subCategory: string | null
+  photoUrlsJson: string | null
   status: string | null
   authorId: string | null
   createdAt: Date | null
@@ -40,6 +43,9 @@ export type ListingMaxAggregateOutputType = {
   title: string | null
   description: string | null
   location: string | null
+  mainCategory: string | null
+  subCategory: string | null
+  photoUrlsJson: string | null
   status: string | null
   authorId: string | null
   createdAt: Date | null
@@ -51,6 +57,9 @@ export type ListingCountAggregateOutputType = {
   title: number
   description: number
   location: number
+  mainCategory: number
+  subCategory: number
+  photoUrlsJson: number
   status: number
   authorId: number
   createdAt: number
@@ -64,6 +73,9 @@ export type ListingMinAggregateInputType = {
   title?: true
   description?: true
   location?: true
+  mainCategory?: true
+  subCategory?: true
+  photoUrlsJson?: true
   status?: true
   authorId?: true
   createdAt?: true
@@ -75,6 +87,9 @@ export type ListingMaxAggregateInputType = {
   title?: true
   description?: true
   location?: true
+  mainCategory?: true
+  subCategory?: true
+  photoUrlsJson?: true
   status?: true
   authorId?: true
   createdAt?: true
@@ -86,6 +101,9 @@ export type ListingCountAggregateInputType = {
   title?: true
   description?: true
   location?: true
+  mainCategory?: true
+  subCategory?: true
+  photoUrlsJson?: true
   status?: true
   authorId?: true
   createdAt?: true
@@ -170,6 +188,9 @@ export type ListingGroupByOutputType = {
   title: string
   description: string
   location: string | null
+  mainCategory: string
+  subCategory: string
+  photoUrlsJson: string
   status: string
   authorId: string
   createdAt: Date
@@ -202,6 +223,9 @@ export type ListingWhereInput = {
   title?: Prisma.StringFilter<"Listing"> | string
   description?: Prisma.StringFilter<"Listing"> | string
   location?: Prisma.StringNullableFilter<"Listing"> | string | null
+  mainCategory?: Prisma.StringFilter<"Listing"> | string
+  subCategory?: Prisma.StringFilter<"Listing"> | string
+  photoUrlsJson?: Prisma.StringFilter<"Listing"> | string
   status?: Prisma.StringFilter<"Listing"> | string
   authorId?: Prisma.StringFilter<"Listing"> | string
   createdAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
@@ -216,6 +240,9 @@ export type ListingOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
+  mainCategory?: Prisma.SortOrder
+  subCategory?: Prisma.SortOrder
+  photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -233,6 +260,9 @@ export type ListingWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Listing"> | string
   description?: Prisma.StringFilter<"Listing"> | string
   location?: Prisma.StringNullableFilter<"Listing"> | string | null
+  mainCategory?: Prisma.StringFilter<"Listing"> | string
+  subCategory?: Prisma.StringFilter<"Listing"> | string
+  photoUrlsJson?: Prisma.StringFilter<"Listing"> | string
   status?: Prisma.StringFilter<"Listing"> | string
   authorId?: Prisma.StringFilter<"Listing"> | string
   createdAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
@@ -247,6 +277,9 @@ export type ListingOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
+  mainCategory?: Prisma.SortOrder
+  subCategory?: Prisma.SortOrder
+  photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -264,6 +297,9 @@ export type ListingScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   description?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   location?: Prisma.StringNullableWithAggregatesFilter<"Listing"> | string | null
+  mainCategory?: Prisma.StringWithAggregatesFilter<"Listing"> | string
+  subCategory?: Prisma.StringWithAggregatesFilter<"Listing"> | string
+  photoUrlsJson?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   status?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   authorId?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Listing"> | Date | string
@@ -275,6 +311,9 @@ export type ListingCreateInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -288,6 +327,9 @@ export type ListingUncheckedCreateInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   authorId: string
   createdAt?: Date | string
@@ -301,6 +343,9 @@ export type ListingUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -314,6 +359,9 @@ export type ListingUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -327,6 +375,9 @@ export type ListingCreateManyInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   authorId: string
   createdAt?: Date | string
@@ -338,6 +389,9 @@ export type ListingUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,6 +402,9 @@ export type ListingUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -369,6 +426,9 @@ export type ListingCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  mainCategory?: Prisma.SortOrder
+  subCategory?: Prisma.SortOrder
+  photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -380,6 +440,9 @@ export type ListingMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  mainCategory?: Prisma.SortOrder
+  subCategory?: Prisma.SortOrder
+  photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -391,6 +454,9 @@ export type ListingMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  mainCategory?: Prisma.SortOrder
+  subCategory?: Prisma.SortOrder
+  photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -477,6 +543,9 @@ export type ListingCreateWithoutAuthorInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -489,6 +558,9 @@ export type ListingUncheckedCreateWithoutAuthorInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -529,6 +601,9 @@ export type ListingScalarWhereInput = {
   title?: Prisma.StringFilter<"Listing"> | string
   description?: Prisma.StringFilter<"Listing"> | string
   location?: Prisma.StringNullableFilter<"Listing"> | string | null
+  mainCategory?: Prisma.StringFilter<"Listing"> | string
+  subCategory?: Prisma.StringFilter<"Listing"> | string
+  photoUrlsJson?: Prisma.StringFilter<"Listing"> | string
   status?: Prisma.StringFilter<"Listing"> | string
   authorId?: Prisma.StringFilter<"Listing"> | string
   createdAt?: Prisma.DateTimeFilter<"Listing"> | Date | string
@@ -540,6 +615,9 @@ export type ListingCreateWithoutRepairStoriesInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -552,6 +630,9 @@ export type ListingUncheckedCreateWithoutRepairStoriesInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   authorId: string
   createdAt?: Date | string
@@ -580,6 +661,9 @@ export type ListingUpdateWithoutRepairStoriesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -592,6 +676,9 @@ export type ListingUncheckedUpdateWithoutRepairStoriesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -604,6 +691,9 @@ export type ListingCreateWithoutListingMessagesInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -616,6 +706,9 @@ export type ListingUncheckedCreateWithoutListingMessagesInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   authorId: string
   createdAt?: Date | string
@@ -644,6 +737,9 @@ export type ListingUpdateWithoutListingMessagesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +752,9 @@ export type ListingUncheckedUpdateWithoutListingMessagesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -668,6 +767,9 @@ export type ListingCreateManyAuthorInput = {
   title: string
   description: string
   location?: string | null
+  mainCategory?: string
+  subCategory?: string
+  photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -678,6 +780,9 @@ export type ListingUpdateWithoutAuthorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -690,6 +795,9 @@ export type ListingUncheckedUpdateWithoutAuthorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -702,6 +810,9 @@ export type ListingUncheckedUpdateManyWithoutAuthorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -752,6 +863,9 @@ export type ListingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   title?: boolean
   description?: boolean
   location?: boolean
+  mainCategory?: boolean
+  subCategory?: boolean
+  photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -767,6 +881,9 @@ export type ListingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   title?: boolean
   description?: boolean
   location?: boolean
+  mainCategory?: boolean
+  subCategory?: boolean
+  photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -779,6 +896,9 @@ export type ListingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   title?: boolean
   description?: boolean
   location?: boolean
+  mainCategory?: boolean
+  subCategory?: boolean
+  photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -791,13 +911,16 @@ export type ListingSelectScalar = {
   title?: boolean
   description?: boolean
   location?: boolean
+  mainCategory?: boolean
+  subCategory?: boolean
+  photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "status" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
+export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "mainCategory" | "subCategory" | "photoUrlsJson" | "status" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
 export type ListingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   repairStories?: boolean | Prisma.Listing$repairStoriesArgs<ExtArgs>
@@ -829,6 +952,18 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     title: string
     description: string
     location: string | null
+    /**
+     * Top-level category selected by the listing owner (e.g. ELECTRONICS, CLOTHES).
+     */
+    mainCategory: string
+    /**
+     * Optional second-level category under `mainCategory`.
+     */
+    subCategory: string
+    /**
+     * JSON array of image URLs for card/details previews.
+     */
+    photoUrlsJson: string
     status: string
     authorId: string
     createdAt: Date
@@ -1263,6 +1398,9 @@ export interface ListingFieldRefs {
   readonly title: Prisma.FieldRef<"Listing", 'String'>
   readonly description: Prisma.FieldRef<"Listing", 'String'>
   readonly location: Prisma.FieldRef<"Listing", 'String'>
+  readonly mainCategory: Prisma.FieldRef<"Listing", 'String'>
+  readonly subCategory: Prisma.FieldRef<"Listing", 'String'>
+  readonly photoUrlsJson: Prisma.FieldRef<"Listing", 'String'>
   readonly status: Prisma.FieldRef<"Listing", 'String'>
   readonly authorId: Prisma.FieldRef<"Listing", 'String'>
   readonly createdAt: Prisma.FieldRef<"Listing", 'DateTime'>

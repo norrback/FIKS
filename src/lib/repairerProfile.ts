@@ -66,6 +66,7 @@ export async function ensureRepairerProfile(userId: string): Promise<{ slug: str
     data: {
       userId,
       slug,
+      serviceName: user.name?.trim() || "",
       bio: "",
       serviceDescription: "",
       expertise: expertiseToJson([]),

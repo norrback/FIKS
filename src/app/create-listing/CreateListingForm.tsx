@@ -2,21 +2,63 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LISTING_CATEGORY_TREE, type MainListingCategory } from "@/lib/listingCategories";
 import styles from "./create-listing.module.css";
 
 export default function CreateListingForm() {
   const router = useRouter();
+  const mainCategories = Object.keys(LISTING_CATEGORY_TREE) as MainListingCategory[];
   const [formData, setFormData] = useState({
     itemName: "",
     description: "",
     location: "",
+    mainCategory: mainCategories[0] ?? "ELECTRONICS",
+    subCategory: LISTING_CATEGORY_TREE.ELECTRONICS[0] ?? "",
+    photoUrls: [] as string[],
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleMainCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const mainCategory = e.target.value as MainListingCategory;
+    const firstSub = LISTING_CATEGORY_TREE[mainCategory]?.[0] ?? "";
+    setFormData((prev) => ({ ...prev, mainCategory, subCategory: firstSub }));
+  };
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setError(null);
+    setUploading(true);
+    try {
+      const uploadedUrls: string[] = [];
+      for (const file of Array.from(files)) {
+        const fd = new FormData();
+        fd.append("file", file);
+        const res = await fetch("/api/uploads", { method: "POST", body: fd });
+        const data = (await res.json().catch(() => ({}))) as { error?: string; url?: string };
+        if (!res.ok || !data.url) {
+          throw new Error(data.error ?? "Upload failed.");
+        }
+        uploadedUrls.push(data.url);
+      }
+      setFormData((prev) => ({
+        ...prev,
+        photoUrls: [...prev.photoUrls, ...uploadedUrls],
+      }));
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Upload failed.";
+      setError(msg);
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,6 +74,9 @@ export default function CreateListingForm() {
           title: formData.itemName.trim(),
           description: formData.description.trim(),
           location: formData.location.trim(),
+          mainCategory: formData.mainCategory,
+          subCategory: formData.subCategory,
+          photoUrls: formData.photoUrls,
         }),
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -94,6 +139,73 @@ export default function CreateListingForm() {
           </div>
 
           <div className={styles.formGroup}>
+            <label htmlFor="mainCategory" className={styles.label}>
+              Main Category
+            </label>
+            <select
+              id="mainCategory"
+              name="mainCategory"
+              className={styles.input}
+              value={formData.mainCategory}
+              onChange={handleMainCategoryChange}
+              required
+              disabled={loading}
+            >
+              {mainCategories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat.charAt(0) + cat.slice(1).toLowerCase()}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="subCategory" className={styles.label}>
+              Subcategory
+            </label>
+            <select
+              id="subCategory"
+              name="subCategory"
+              className={styles.input}
+              value={formData.subCategory}
+              onChange={(e) => setFormData((prev) => ({ ...prev, subCategory: e.target.value }))}
+              required
+              disabled={loading}
+            >
+              {(LISTING_CATEGORY_TREE[formData.mainCategory as MainListingCategory] ?? []).map((sub) => (
+                <option key={sub} value={sub}>
+                  {sub}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="photoUpload" className={styles.label}>
+              Photos
+            </label>
+            <input
+              id="photoUpload"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              multiple
+              className={styles.fileInput}
+              onChange={handlePhotoUpload}
+              disabled={loading || uploading}
+            />
+            <small className={styles.uploadHint}>
+              {uploading ? "Uploading photos..." : "Upload image files (jpg, png, webp, gif)."}
+            </small>
+            {formData.photoUrls.length > 0 ? (
+              <div className={styles.uploadPreviewRow}>
+                {formData.photoUrls.map((url, idx) => (
+                  <img key={`upload-preview-${idx}`} src={url} alt="" className={styles.uploadPreviewImg} />
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <div className={styles.formGroup}>
             <label htmlFor="description" className={styles.label}>
               Description of Issue
             </label>
@@ -126,8 +238,8 @@ export default function CreateListingForm() {
             />
           </div>
 
-          <button type="submit" className={styles.submitBtn} disabled={loading}>
-            {loading ? "Publishing…" : "Publish Listing"}
+          <button type="submit" className={styles.submitBtn} disabled={loading || uploading}>
+            {loading ? "Publishing…" : uploading ? "Uploading photos…" : "Publish Listing"}
           </button>
         </div>
 

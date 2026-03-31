@@ -46,6 +46,7 @@ export type RepairerProfileMinAggregateOutputType = {
   id: string | null
   userId: string | null
   slug: string | null
+  serviceName: string | null
   bio: string | null
   serviceDescription: string | null
   expertise: string | null
@@ -64,6 +65,7 @@ export type RepairerProfileMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   slug: string | null
+  serviceName: string | null
   bio: string | null
   serviceDescription: string | null
   expertise: string | null
@@ -82,6 +84,7 @@ export type RepairerProfileCountAggregateOutputType = {
   id: number
   userId: number
   slug: number
+  serviceName: number
   bio: number
   serviceDescription: number
   expertise: number
@@ -118,6 +121,7 @@ export type RepairerProfileMinAggregateInputType = {
   id?: true
   userId?: true
   slug?: true
+  serviceName?: true
   bio?: true
   serviceDescription?: true
   expertise?: true
@@ -136,6 +140,7 @@ export type RepairerProfileMaxAggregateInputType = {
   id?: true
   userId?: true
   slug?: true
+  serviceName?: true
   bio?: true
   serviceDescription?: true
   expertise?: true
@@ -154,6 +159,7 @@ export type RepairerProfileCountAggregateInputType = {
   id?: true
   userId?: true
   slug?: true
+  serviceName?: true
   bio?: true
   serviceDescription?: true
   expertise?: true
@@ -259,6 +265,7 @@ export type RepairerProfileGroupByOutputType = {
   id: string
   userId: string
   slug: string
+  serviceName: string
   bio: string
   serviceDescription: string
   expertise: string
@@ -300,6 +307,7 @@ export type RepairerProfileWhereInput = {
   id?: Prisma.StringFilter<"RepairerProfile"> | string
   userId?: Prisma.StringFilter<"RepairerProfile"> | string
   slug?: Prisma.StringFilter<"RepairerProfile"> | string
+  serviceName?: Prisma.StringFilter<"RepairerProfile"> | string
   bio?: Prisma.StringFilter<"RepairerProfile"> | string
   serviceDescription?: Prisma.StringFilter<"RepairerProfile"> | string
   expertise?: Prisma.StringFilter<"RepairerProfile"> | string
@@ -320,6 +328,7 @@ export type RepairerProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  serviceName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   serviceDescription?: Prisma.SortOrder
   expertise?: Prisma.SortOrder
@@ -343,6 +352,7 @@ export type RepairerProfileWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RepairerProfileWhereInput | Prisma.RepairerProfileWhereInput[]
   OR?: Prisma.RepairerProfileWhereInput[]
   NOT?: Prisma.RepairerProfileWhereInput | Prisma.RepairerProfileWhereInput[]
+  serviceName?: Prisma.StringFilter<"RepairerProfile"> | string
   bio?: Prisma.StringFilter<"RepairerProfile"> | string
   serviceDescription?: Prisma.StringFilter<"RepairerProfile"> | string
   expertise?: Prisma.StringFilter<"RepairerProfile"> | string
@@ -363,6 +373,7 @@ export type RepairerProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  serviceName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   serviceDescription?: Prisma.SortOrder
   expertise?: Prisma.SortOrder
@@ -389,6 +400,7 @@ export type RepairerProfileScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   userId?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   slug?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
+  serviceName?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   bio?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   serviceDescription?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   expertise?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
@@ -406,6 +418,7 @@ export type RepairerProfileScalarWhereWithAggregatesInput = {
 export type RepairerProfileCreateInput = {
   id?: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -426,6 +439,7 @@ export type RepairerProfileUncheckedCreateInput = {
   id?: string
   userId: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -444,6 +458,7 @@ export type RepairerProfileUncheckedCreateInput = {
 export type RepairerProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -464,6 +479,7 @@ export type RepairerProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -483,6 +499,7 @@ export type RepairerProfileCreateManyInput = {
   id?: string
   userId: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -500,6 +517,7 @@ export type RepairerProfileCreateManyInput = {
 export type RepairerProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -518,6 +536,7 @@ export type RepairerProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -541,6 +560,7 @@ export type RepairerProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  serviceName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   serviceDescription?: Prisma.SortOrder
   expertise?: Prisma.SortOrder
@@ -567,6 +587,7 @@ export type RepairerProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  serviceName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   serviceDescription?: Prisma.SortOrder
   expertise?: Prisma.SortOrder
@@ -585,6 +606,7 @@ export type RepairerProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  serviceName?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   serviceDescription?: Prisma.SortOrder
   expertise?: Prisma.SortOrder
@@ -677,6 +699,7 @@ export type RepairerProfileUpdateOneRequiredWithoutCompletedJobsNestedInput = {
 export type RepairerProfileCreateWithoutUserInput = {
   id?: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -695,6 +718,7 @@ export type RepairerProfileCreateWithoutUserInput = {
 export type RepairerProfileUncheckedCreateWithoutUserInput = {
   id?: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -729,6 +753,7 @@ export type RepairerProfileUpdateToOneWithWhereWithoutUserInput = {
 export type RepairerProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -747,6 +772,7 @@ export type RepairerProfileUpdateWithoutUserInput = {
 export type RepairerProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -765,6 +791,7 @@ export type RepairerProfileUncheckedUpdateWithoutUserInput = {
 export type RepairerProfileCreateWithoutCompletedJobsInput = {
   id?: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -784,6 +811,7 @@ export type RepairerProfileUncheckedCreateWithoutCompletedJobsInput = {
   id?: string
   userId: string
   slug: string
+  serviceName?: string
   bio?: string
   serviceDescription?: string
   expertise?: string
@@ -817,6 +845,7 @@ export type RepairerProfileUpdateToOneWithWhereWithoutCompletedJobsInput = {
 export type RepairerProfileUpdateWithoutCompletedJobsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -836,6 +865,7 @@ export type RepairerProfileUncheckedUpdateWithoutCompletedJobsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
   serviceDescription?: Prisma.StringFieldUpdateOperationsInput | string
   expertise?: Prisma.StringFieldUpdateOperationsInput | string
@@ -885,6 +915,7 @@ export type RepairerProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   userId?: boolean
   slug?: boolean
+  serviceName?: boolean
   bio?: boolean
   serviceDescription?: boolean
   expertise?: boolean
@@ -906,6 +937,7 @@ export type RepairerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   userId?: boolean
   slug?: boolean
+  serviceName?: boolean
   bio?: boolean
   serviceDescription?: boolean
   expertise?: boolean
@@ -925,6 +957,7 @@ export type RepairerProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   userId?: boolean
   slug?: boolean
+  serviceName?: boolean
   bio?: boolean
   serviceDescription?: boolean
   expertise?: boolean
@@ -944,6 +977,7 @@ export type RepairerProfileSelectScalar = {
   id?: boolean
   userId?: boolean
   slug?: boolean
+  serviceName?: boolean
   bio?: boolean
   serviceDescription?: boolean
   expertise?: boolean
@@ -958,7 +992,7 @@ export type RepairerProfileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type RepairerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "bio" | "serviceDescription" | "expertise" | "completedJobsCount" | "ratingSum" | "ratingCount" | "servicePhotoUrl" | "serviceLocationLabel" | "serviceLatitude" | "serviceLongitude" | "createdAt" | "updatedAt", ExtArgs["result"]["repairerProfile"]>
+export type RepairerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "serviceName" | "bio" | "serviceDescription" | "expertise" | "completedJobsCount" | "ratingSum" | "ratingCount" | "servicePhotoUrl" | "serviceLocationLabel" | "serviceLatitude" | "serviceLongitude" | "createdAt" | "updatedAt", ExtArgs["result"]["repairerProfile"]>
 export type RepairerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   completedJobs?: boolean | Prisma.RepairerProfile$completedJobsArgs<ExtArgs>
@@ -981,6 +1015,10 @@ export type $RepairerProfilePayload<ExtArgs extends runtime.Types.Extensions.Int
     id: string
     userId: string
     slug: string
+    /**
+     * Public-facing repair service name shown in header and profile.
+     */
+    serviceName: string
     bio: string
     serviceDescription: string
     /**
@@ -1436,6 +1474,7 @@ export interface RepairerProfileFieldRefs {
   readonly id: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly userId: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly slug: Prisma.FieldRef<"RepairerProfile", 'String'>
+  readonly serviceName: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly bio: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly serviceDescription: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly expertise: Prisma.FieldRef<"RepairerProfile", 'String'>
