@@ -16,7 +16,20 @@ async function loadStoryForUser(storyId: string, userId: string) {
   const story = await prisma.repairStory.findUnique({
     where: { id: storyId },
     include: {
-      listing: { select: { id: true, title: true, authorId: true } },
+      listing: {
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          location: true,
+          status: true,
+          mainCategory: true,
+          subCategory: true,
+          photoUrlsJson: true,
+          authorId: true,
+          author: { select: { name: true, email: true } },
+        },
+      },
       repairer: { select: { id: true, name: true, email: true } },
       branchedFrom: { select: { id: true, status: true } },
     },
@@ -206,7 +219,20 @@ export async function PATCH(request: NextRequest, context: Ctx) {
     where: { id: storyId },
     data,
     include: {
-      listing: { select: { id: true, title: true, authorId: true } },
+      listing: {
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          location: true,
+          status: true,
+          mainCategory: true,
+          subCategory: true,
+          photoUrlsJson: true,
+          authorId: true,
+          author: { select: { name: true, email: true } },
+        },
+      },
       repairer: { select: { id: true, name: true, email: true } },
     },
   });

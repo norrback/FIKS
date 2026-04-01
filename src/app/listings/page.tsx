@@ -4,6 +4,7 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { LISTING_CATEGORY_TREE } from "@/lib/listingCategories";
 import { parsePhotoUrls } from "@/lib/listingPhotos";
+import { APPLICATION_BLOCKING_REPAIR_STORY_STATUSES, getEffectiveListingStatus } from "@/lib/repairStoryStatus";
 import ListingsGrid, { type ListingGridItem } from "./ListingsGrid";
 import styles from "./listings.module.css";
 
@@ -23,6 +24,11 @@ export default async function ListingsPage({ searchParams }: Props) {
 
   const listings = await prisma.listing.findMany({
     where: {
+      repairStories: {
+        none: {
+          status: { in: [...APPLICATION_BLOCKING_REPAIR_STORY_STATUSES] },
+        },
+      },
       ...(category ? { mainCategory: category } : {}),
       ...(q
         ? {
@@ -39,6 +45,7 @@ export default async function ListingsPage({ searchParams }: Props) {
     orderBy: { createdAt: "desc" },
     include: {
       author: { select: { name: true, email: true } },
+      repairStories: { select: { status: true } },
     },
   });
 
@@ -47,7 +54,10 @@ export default async function ListingsPage({ searchParams }: Props) {
     title: listing.title,
     description: listing.description,
     location: listing.location,
-    status: listing.status,
+    status: getEffectiveListingStatus(
+      listing.status,
+      listing.repairStories.map((s) => s.status),
+    ),
     mainCategory: listing.mainCategory || "UNCATEGORIZED",
     subCategory: listing.subCategory || "",
     authorName: listing.author.name ?? listing.author.email,

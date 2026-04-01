@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { getEffectiveListingStatus } from "@/lib/repairStoryStatus";
 import RepairStoryWorkspace, { type Msg, type StoryPayload } from "./RepairStoryWorkspace";
 
 type Props = { params: Promise<{ storyId: string }> };
@@ -16,7 +17,20 @@ export default async function RepairStoryPage({ params }: Props) {
   const story = await prisma.repairStory.findUnique({
     where: { id: storyId },
     include: {
-      listing: { select: { id: true, title: true, authorId: true } },
+      listing: {
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          location: true,
+          status: true,
+          mainCategory: true,
+          subCategory: true,
+          photoUrlsJson: true,
+          authorId: true,
+          author: { select: { name: true, email: true } },
+        },
+      },
       repairer: { select: { id: true, name: true, email: true } },
     },
   });
@@ -30,6 +44,15 @@ export default async function RepairStoryPage({ params }: Props) {
   if (!viewerIsAuthor && !viewerIsRepairer) {
     redirect("/listings");
   }
+
+  const siblingStories = await prisma.repairStory.findMany({
+    where: { listingId: story.listingId },
+    select: { status: true },
+  });
+  const effectiveListingStatus = getEffectiveListingStatus(
+    story.listing.status,
+    siblingStories.map((s) => s.status),
+  );
 
   const rawMessages = await prisma.repairStoryMessage.findMany({
     where: { repairStoryId: storyId },
@@ -69,6 +92,7 @@ export default async function RepairStoryPage({ params }: Props) {
       initialMessages={initialMessages}
       viewerIsAuthor={viewerIsAuthor}
       viewerIsRepairer={viewerIsRepairer}
+      effectiveListingStatus={effectiveListingStatus}
     />
   );
 }

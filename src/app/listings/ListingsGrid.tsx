@@ -78,7 +78,7 @@ function ListingCard({ listing }: { listing: ListingGridItem }) {
           <p className={styles.cardMeta}>
             {listing.location ?? "Location not set"} · {listing.authorName}
           </p>
-          <span className={styles.status}>{listing.status}</span>
+          <span className={styles.status}>{listing.status.replace(/_/g, " ")}</span>
         </div>
       </Link>
     </li>

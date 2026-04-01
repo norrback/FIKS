@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { getEffectiveListingStatus } from "@/lib/repairStoryStatus";
 import MyItemsClient, { type MyItem } from "./MyItemsClient";
 import styles from "./my-items.module.css";
 
@@ -32,6 +33,7 @@ export default async function MyItemsPage() {
       photoUrlsJson: true,
       createdAt: true,
       updatedAt: true,
+      repairStories: { select: { status: true } },
     },
   });
 
@@ -40,7 +42,10 @@ export default async function MyItemsPage() {
     title: item.title,
     description: item.description,
     location: item.location,
-    status: item.status,
+    status: getEffectiveListingStatus(
+      item.status,
+      item.repairStories.map((s) => s.status),
+    ),
     mainCategory: item.mainCategory,
     subCategory: item.subCategory,
     photoUrlsJson: item.photoUrlsJson,

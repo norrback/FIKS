@@ -202,9 +202,6 @@
   cursor: not-allowed;
 }
 
-.sideMuted {
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  margin: 0 0 0.75rem;
+.caseCardAside {
+  align-self: start;
 }

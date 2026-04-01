@@ -236,7 +236,7 @@ export default function MyItemsClient({ initialItems }: Props) {
                 <h2 className={styles.cardTitle}>{item.title}</h2>
                 <p className={styles.cardMeta}>
                   {item.location ?? "Location not set"} · {item.mainCategory}
-                  {item.subCategory ? ` / ${item.subCategory}` : ""} · {item.status}
+                  {item.subCategory ? ` / ${item.subCategory}` : ""} · {item.status.replace(/_/g, " ")}
                 </p>
                 <p className={styles.cardMetaSmall}>Updated {formatDate(item.updatedAt)}</p>
               </div>

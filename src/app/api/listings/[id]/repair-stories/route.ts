@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { isTerminalRepairStoryStatus, TERMINAL_REPAIR_STORY_STATUSES } from "@/lib/repairStoryStatus";
+import {
+  APPLICATION_BLOCKING_REPAIR_STORY_STATUSES,
+  isTerminalRepairStoryStatus,
+  TERMINAL_REPAIR_STORY_STATUSES,
+} from "@/lib/repairStoryStatus";
 
 export const runtime = "nodejs";
 
@@ -72,6 +76,20 @@ export async function POST(request: NextRequest, context: Ctx) {
         : null;
   } catch {
     branchedFromId = null;
+  }
+
+  const agreedElsewhere = await prisma.repairStory.findFirst({
+    where: {
+      listingId,
+      status: { in: [...APPLICATION_BLOCKING_REPAIR_STORY_STATUSES] },
+    },
+    select: { id: true, status: true },
+  });
+  if (agreedElsewhere) {
+    return NextResponse.json(
+      { error: "Repaire agreed elsewhere. New applications are closed for this case.", storyId: agreedElsewhere.id },
+      { status: 409 },
+    );
   }
 
   const active = await prisma.repairStory.findFirst({

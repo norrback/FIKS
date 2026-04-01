@@ -8,12 +8,19 @@ import styles from "./listing-detail.module.css";
 type Props = {
   listingId: string;
   canApply: boolean;
+  blockedReason?: string | null;
   /** When set, POST includes branchedFromId (previous closed story). */
   branchFromStoryId?: string;
   activeStoryId?: string;
 };
 
-export default function ListingApplyCase({ listingId, canApply, branchFromStoryId, activeStoryId }: Props) {
+export default function ListingApplyCase({
+  listingId,
+  canApply,
+  blockedReason,
+  branchFromStoryId,
+  activeStoryId,
+}: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,8 +57,10 @@ export default function ListingApplyCase({ listingId, canApply, branchFromStoryI
 
   if (activeStoryId) {
     return (
-      <div className={styles.caseActions}>
-        <p className={styles.caseHint}>You have an open repair story on this case.</p>
+      <div className={`${styles.caseActions} ${blockedReason ? styles.caseActionsDisabled : ""}`}>
+        <p className={styles.caseHint}>
+          {blockedReason ? blockedReason : "You have an open repair story on this case."}
+        </p>
         <Link href={`/repair-stories/${activeStoryId}`} className={styles.caseLink}>
           Open your repair story
         </Link>
@@ -60,7 +69,14 @@ export default function ListingApplyCase({ listingId, canApply, branchFromStoryI
   }
 
   if (!canApply) {
-    return null;
+    if (!blockedReason) {
+      return null;
+    }
+    return (
+      <div className={`${styles.caseActions} ${styles.caseActionsDisabled}`} aria-live="polite">
+        <p className={styles.caseHint}>{blockedReason}</p>
+      </div>
+    );
   }
 
   return (

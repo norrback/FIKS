@@ -3,12 +3,14 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { parsePhotoUrls } from "@/lib/listingPhotos";
 import {
   ESCROW_STATES,
   REPAIR_STORY_STATUSES,
   isTerminalRepairStoryStatus,
   type RepairStoryStatusValue,
 } from "@/lib/repairStoryStatus";
+import listingGridStyles from "@/app/listings/listings.module.css";
 import styles from "./repair-story.module.css";
 
 type Party = { id: string; name: string | null; email: string };
@@ -28,7 +30,18 @@ export type StoryPayload = {
   repairerScore: number | null;
   createdAt: string;
   updatedAt: string;
-  listing: { id: string; title: string; authorId: string };
+  listing: {
+    id: string;
+    title: string;
+    description: string;
+    location: string | null;
+    status: string;
+    mainCategory: string;
+    subCategory: string;
+    photoUrlsJson: string;
+    authorId: string;
+    author: { name: string | null; email: string };
+  };
   repairer: Party;
 };
 
@@ -57,13 +70,19 @@ type Props = {
   initialMessages: Msg[];
   viewerIsAuthor: boolean;
   viewerIsRepairer: boolean;
+  effectiveListingStatus: string;
 };
+
+function dotLabel(index: number): string {
+  return `Show photo ${index + 1}`;
+}
 
 export default function RepairStoryWorkspace({
   initialStory,
   initialMessages,
   viewerIsAuthor,
   viewerIsRepairer,
+  effectiveListingStatus,
 }: Props) {
   const router = useRouter();
   const [story, setStory] = useState(initialStory);
@@ -77,6 +96,7 @@ export default function RepairStoryWorkspace({
   const [customerScore, setCustomerScore] = useState(story.customerScore?.toString() ?? "");
   const [repairerScore, setRepairerScore] = useState(story.repairerScore?.toString() ?? "");
   const [msgBody, setMsgBody] = useState("");
+  const [activeCasePhotoIndex, setActiveCasePhotoIndex] = useState(0);
   const [saving, setSaving] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -87,6 +107,11 @@ export default function RepairStoryWorkspace({
     const k = status as RepairStoryStatusValue;
     return STATUS_HELP[k] ?? "Status meanings will evolve as we learn the workflow.";
   }, [status]);
+  const listingPhotoUrls = useMemo(() => parsePhotoUrls(story.listing.photoUrlsJson), [story.listing.photoUrlsJson]);
+  const activeCasePhoto = useMemo(
+    () => listingPhotoUrls[activeCasePhotoIndex] ?? listingPhotoUrls[0] ?? null,
+    [activeCasePhotoIndex, listingPhotoUrls],
+  );
 
   async function saveMeta(e: React.FormEvent) {
     e.preventDefault();
@@ -224,9 +249,9 @@ export default function RepairStoryWorkspace({
       </nav>
 
       <p className={styles.processNote}>
-        This repair flow is a first draft: statuses, escrow, and scoring will change as we build FIKS. Several
-        repairers can each have their own <strong>repair story</strong> on the same <strong>case</strong> (listing).
-        If an attempt ends without a fix, start a <strong>branched</strong> story from the closed one.
+        This repair flow is a first draft: statuses, escrow, and scoring will change as we build FIKS. Each{" "}
+        <strong>repair story</strong> is a private thread between one repairer and the customer. If an attempt ends
+        without a fix, start a <strong>branched</strong> story from the closed one.
       </p>
 
       <div className={styles.grid}>
@@ -406,20 +431,47 @@ export default function RepairStoryWorkspace({
           </section>
         </div>
 
-        <aside className={styles.card}>
-          <h2 className={styles.cardTitle}>Case</h2>
-          <p className={styles.sideMuted}>
-            <strong>{story.listing.title}</strong>
-          </p>
-          <p className={styles.sideMuted}>
-            Repairer: <strong>{story.repairer.name ?? story.repairer.email}</strong>
-          </p>
-          <p className={styles.sideMuted}>
-            For case-wide chat (owner + repairers who have a story here), use the listing page.
-          </p>
-          <Link href={`/listings/${story.listingId}`} className={styles.backLink}>
-            Open listing
-          </Link>
+        <aside className={styles.caseCardAside}>
+          <div className={listingGridStyles.gridItem}>
+            <Link href={`/listings/${story.listingId}`} className={`${listingGridStyles.card} ${listingGridStyles.cardLink}`}>
+              <div className={listingGridStyles.photoWrap}>
+                {activeCasePhoto ? (
+                  <img src={activeCasePhoto} alt="" className={listingGridStyles.photo} loading="lazy" />
+                ) : (
+                  <div className={listingGridStyles.photoPlaceholder}>
+                    <span>{story.listing.mainCategory || "UNCATEGORIZED"}</span>
+                  </div>
+                )}
+
+                {listingPhotoUrls.length > 1 ? (
+                  <div className={listingGridStyles.dots} onMouseLeave={() => setActiveCasePhotoIndex(0)}>
+                    {listingPhotoUrls.map((_, idx) => (
+                      <button
+                        key={`${story.listing.id}-dot-${idx}`}
+                        type="button"
+                        className={`${listingGridStyles.dot} ${idx === activeCasePhotoIndex ? listingGridStyles.dotActive : ""}`}
+                        aria-label={dotLabel(idx)}
+                        onMouseEnter={() => setActiveCasePhotoIndex(idx)}
+                        onFocus={() => setActiveCasePhotoIndex(idx)}
+                        onClick={(e) => e.preventDefault()}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className={listingGridStyles.cardBody}>
+                <p className={listingGridStyles.categoryPill}>
+                  {story.listing.mainCategory || "UNCATEGORIZED"}
+                  {story.listing.subCategory ? ` · ${story.listing.subCategory}` : ""}
+                </p>
+                <h2 className={listingGridStyles.cardTitle}>{story.listing.title}</h2>
+                <p className={listingGridStyles.cardDesc}>{story.listing.description}</p>
+                <p className={listingGridStyles.cardMeta}>{story.listing.location ?? "Location not set"}</p>
+                <span className={listingGridStyles.status}>{effectiveListingStatus.replace(/_/g, " ")}</span>
+              </div>
+            </Link>
+          </div>
         </aside>
       </div>
     </div>
