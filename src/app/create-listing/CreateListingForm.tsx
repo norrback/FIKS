@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LISTING_CATEGORY_TREE, type MainListingCategory } from "@/lib/listingCategories";
 import styles from "./create-listing.module.css";
+
+const DEFAULT_LAT = 60.17;
+const DEFAULT_LNG = 24.93;
 
 export default function CreateListingForm() {
   const router = useRouter();
@@ -11,14 +14,59 @@ export default function CreateListingForm() {
   const [formData, setFormData] = useState({
     itemName: "",
     description: "",
-    location: "",
+    postalCode: "",
     mainCategory: mainCategories[0] ?? "ELECTRONICS",
     subCategory: LISTING_CATEGORY_TREE.ELECTRONICS[0] ?? "",
     photoUrls: [] as string[],
   });
+  const [coords, setCoords] = useState<{ lat: number; lng: number }>({ lat: DEFAULT_LAT, lng: DEFAULT_LNG });
+  const [locationName, setLocationName] = useState<string | null>(null);
+  const [geocoding, setGeocoding] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const geocodeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const geocodePostalCode = useCallback(async (code: string) => {
+    if (code.trim().length < 3) {
+      setLocationName(null);
+      return;
+    }
+    setGeocoding(true);
+    try {
+      const res = await fetch(`/api/geocode?q=${encodeURIComponent(code.trim())}`);
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        lat: number | null;
+        lng: number | null;
+        locationName: string | null;
+        postalCode: string | null;
+      };
+      if (data.lat != null && data.lng != null) {
+        setCoords({ lat: data.lat, lng: data.lng });
+        setLocationName(data.locationName || null);
+      } else {
+        setLocationName(null);
+      }
+    } catch {
+      /* silently ignore */
+    } finally {
+      setGeocoding(false);
+    }
+  }, []);
+
+  const handlePostalCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, postalCode: value }));
+    if (geocodeTimer.current) clearTimeout(geocodeTimer.current);
+    geocodeTimer.current = setTimeout(() => geocodePostalCode(value), 800);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (geocodeTimer.current) clearTimeout(geocodeTimer.current);
+    };
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -73,7 +121,10 @@ export default function CreateListingForm() {
         body: JSON.stringify({
           title: formData.itemName.trim(),
           description: formData.description.trim(),
-          location: formData.location.trim(),
+          postalCode: formData.postalCode.trim(),
+          locationName: locationName || "",
+          latitude: coords.lat !== DEFAULT_LAT || coords.lng !== DEFAULT_LNG ? coords.lat : undefined,
+          longitude: coords.lat !== DEFAULT_LAT || coords.lng !== DEFAULT_LNG ? coords.lng : undefined,
           mainCategory: formData.mainCategory,
           subCategory: formData.subCategory,
           photoUrls: formData.photoUrls,
@@ -222,20 +273,26 @@ export default function CreateListingForm() {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="location" className={styles.label}>
-              Location / Neighborhood
+            <label htmlFor="postalCode" className={styles.label}>
+              Postal Code
             </label>
             <input
-              id="location"
-              name="location"
+              id="postalCode"
+              name="postalCode"
               type="text"
               className={styles.input}
-              placeholder="e.g. Kallio, Helsinki"
-              value={formData.location}
-              onChange={handleInputChange}
+              placeholder="e.g. 66850"
+              value={formData.postalCode}
+              onChange={handlePostalCodeChange}
               required
               disabled={loading}
             />
+            {geocoding && <small className={styles.uploadHint}>Looking up location…</small>}
+            {!geocoding && locationName && (
+              <small className={styles.uploadHint}>
+                {locationName}
+              </small>
+            )}
           </div>
 
           <button type="submit" className={styles.submitBtn} disabled={loading || uploading}>
@@ -250,13 +307,17 @@ export default function CreateListingForm() {
               <iframe
                 title="Location Map"
                 className={styles.map}
-                src="https://www.openstreetmap.org/export/embed.html?bbox=24.91%2C60.15%2C24.96%2C60.20&layer=mapnik&marker=60.17%2C24.93"
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${coords.lng - 0.04}%2C${coords.lat - 0.03}%2C${coords.lng + 0.04}%2C${coords.lat + 0.03}&layer=mapnik&marker=${coords.lat}%2C${coords.lng}`}
                 allowFullScreen
               />
             </div>
-            {formData.location ? (
+            {formData.postalCode && locationName ? (
               <small style={{ color: "#666", marginTop: "0.5rem" }}>
-                Map will be centered on <strong>{formData.location}</strong>
+                Showing <strong>{locationName}</strong>
+              </small>
+            ) : formData.postalCode ? (
+              <small style={{ color: "#666", marginTop: "0.5rem" }}>
+                Enter a postal code to pin the map
               </small>
             ) : null}
           </div>

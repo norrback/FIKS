@@ -24,6 +24,7 @@ export default async function ListingsPage({ searchParams }: Props) {
 
   const listings = await prisma.listing.findMany({
     where: {
+      status: "OPEN",
       repairStories: {
         none: {
           status: { in: [...APPLICATION_BLOCKING_REPAIR_STORY_STATUSES] },
@@ -36,6 +37,8 @@ export default async function ListingsPage({ searchParams }: Props) {
               { title: { contains: q } },
               { description: { contains: q } },
               { location: { contains: q } },
+              { postalCode: { contains: q } },
+              { locationName: { contains: q } },
               { mainCategory: { contains: q.toUpperCase() } },
               { subCategory: { contains: q } },
             ],
@@ -54,6 +57,8 @@ export default async function ListingsPage({ searchParams }: Props) {
     title: listing.title,
     description: listing.description,
     location: listing.location,
+    postalCode: listing.postalCode || "",
+    locationName: listing.locationName || "",
     status: getEffectiveListingStatus(
       listing.status,
       listing.repairStories.map((s) => s.status),
@@ -62,6 +67,7 @@ export default async function ListingsPage({ searchParams }: Props) {
     subCategory: listing.subCategory || "",
     authorName: listing.author.name ?? listing.author.email,
     photoUrls: parsePhotoUrls(listing.photoUrlsJson),
+    createdAt: listing.createdAt.toISOString(),
   }));
 
   return (

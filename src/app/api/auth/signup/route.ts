@@ -19,6 +19,10 @@ type SignupBody = {
   serviceName?: string;
   services?: string;
   bio?: string;
+  postalCode?: string;
+  locationName?: string;
+  latitude?: number;
+  longitude?: number;
 };
 
 export async function POST(request: NextRequest) {
@@ -39,6 +43,10 @@ export async function POST(request: NextRequest) {
   const serviceName = String(body.serviceName ?? "").trim();
   const servicesRaw = String(body.services ?? "").trim();
   const bioRepairer = String(body.bio ?? "").trim();
+  const postalCode = String(body.postalCode ?? "").trim();
+  const locationName = String(body.locationName ?? "").trim();
+  const latitude = typeof body.latitude === "number" && isFinite(body.latitude) ? body.latitude : null;
+  const longitude = typeof body.longitude === "number" && isFinite(body.longitude) ? body.longitude : null;
 
   if (!name || !email || !password) {
     return NextResponse.json(
@@ -102,6 +110,10 @@ export async function POST(request: NextRequest) {
               bio: bioRepairer,
               serviceDescription: "",
               expertise: expertiseToJson(expertise),
+              servicePostalCode: postalCode,
+              serviceLocationLabel: locationName,
+              serviceLatitude: latitude,
+              serviceLongitude: longitude,
             },
           },
         },

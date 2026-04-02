@@ -20,17 +20,33 @@ export type ListingModel = runtime.Types.Result.DefaultSelection<Prisma.$Listing
 
 export type AggregateListing = {
   _count: ListingCountAggregateOutputType | null
+  _avg: ListingAvgAggregateOutputType | null
+  _sum: ListingSumAggregateOutputType | null
   _min: ListingMinAggregateOutputType | null
   _max: ListingMaxAggregateOutputType | null
+}
+
+export type ListingAvgAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
+}
+
+export type ListingSumAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
 }
 
 export type ListingMinAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  postalCode: string | null
+  locationName: string | null
   location: string | null
   mainCategory: string | null
   subCategory: string | null
+  latitude: number | null
+  longitude: number | null
   photoUrlsJson: string | null
   status: string | null
   authorId: string | null
@@ -42,9 +58,13 @@ export type ListingMaxAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  postalCode: string | null
+  locationName: string | null
   location: string | null
   mainCategory: string | null
   subCategory: string | null
+  latitude: number | null
+  longitude: number | null
   photoUrlsJson: string | null
   status: string | null
   authorId: string | null
@@ -56,9 +76,13 @@ export type ListingCountAggregateOutputType = {
   id: number
   title: number
   description: number
+  postalCode: number
+  locationName: number
   location: number
   mainCategory: number
   subCategory: number
+  latitude: number
+  longitude: number
   photoUrlsJson: number
   status: number
   authorId: number
@@ -68,13 +92,27 @@ export type ListingCountAggregateOutputType = {
 }
 
 
+export type ListingAvgAggregateInputType = {
+  latitude?: true
+  longitude?: true
+}
+
+export type ListingSumAggregateInputType = {
+  latitude?: true
+  longitude?: true
+}
+
 export type ListingMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  postalCode?: true
+  locationName?: true
   location?: true
   mainCategory?: true
   subCategory?: true
+  latitude?: true
+  longitude?: true
   photoUrlsJson?: true
   status?: true
   authorId?: true
@@ -86,9 +124,13 @@ export type ListingMaxAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  postalCode?: true
+  locationName?: true
   location?: true
   mainCategory?: true
   subCategory?: true
+  latitude?: true
+  longitude?: true
   photoUrlsJson?: true
   status?: true
   authorId?: true
@@ -100,9 +142,13 @@ export type ListingCountAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  postalCode?: true
+  locationName?: true
   location?: true
   mainCategory?: true
   subCategory?: true
+  latitude?: true
+  longitude?: true
   photoUrlsJson?: true
   status?: true
   authorId?: true
@@ -149,6 +195,18 @@ export type ListingAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ListingAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ListingSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ListingMinAggregateInputType
@@ -179,6 +237,8 @@ export type ListingGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ListingCountAggregateInputType | true
+  _avg?: ListingAvgAggregateInputType
+  _sum?: ListingSumAggregateInputType
   _min?: ListingMinAggregateInputType
   _max?: ListingMaxAggregateInputType
 }
@@ -187,15 +247,21 @@ export type ListingGroupByOutputType = {
   id: string
   title: string
   description: string
+  postalCode: string
+  locationName: string
   location: string | null
   mainCategory: string
   subCategory: string
+  latitude: number | null
+  longitude: number | null
   photoUrlsJson: string
   status: string
   authorId: string
   createdAt: Date
   updatedAt: Date
   _count: ListingCountAggregateOutputType | null
+  _avg: ListingAvgAggregateOutputType | null
+  _sum: ListingSumAggregateOutputType | null
   _min: ListingMinAggregateOutputType | null
   _max: ListingMaxAggregateOutputType | null
 }
@@ -222,9 +288,13 @@ export type ListingWhereInput = {
   id?: Prisma.StringFilter<"Listing"> | string
   title?: Prisma.StringFilter<"Listing"> | string
   description?: Prisma.StringFilter<"Listing"> | string
+  postalCode?: Prisma.StringFilter<"Listing"> | string
+  locationName?: Prisma.StringFilter<"Listing"> | string
   location?: Prisma.StringNullableFilter<"Listing"> | string | null
   mainCategory?: Prisma.StringFilter<"Listing"> | string
   subCategory?: Prisma.StringFilter<"Listing"> | string
+  latitude?: Prisma.FloatNullableFilter<"Listing"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Listing"> | number | null
   photoUrlsJson?: Prisma.StringFilter<"Listing"> | string
   status?: Prisma.StringFilter<"Listing"> | string
   authorId?: Prisma.StringFilter<"Listing"> | string
@@ -239,9 +309,13 @@ export type ListingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  locationName?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   subCategory?: Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
@@ -259,9 +333,13 @@ export type ListingWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ListingWhereInput | Prisma.ListingWhereInput[]
   title?: Prisma.StringFilter<"Listing"> | string
   description?: Prisma.StringFilter<"Listing"> | string
+  postalCode?: Prisma.StringFilter<"Listing"> | string
+  locationName?: Prisma.StringFilter<"Listing"> | string
   location?: Prisma.StringNullableFilter<"Listing"> | string | null
   mainCategory?: Prisma.StringFilter<"Listing"> | string
   subCategory?: Prisma.StringFilter<"Listing"> | string
+  latitude?: Prisma.FloatNullableFilter<"Listing"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Listing"> | number | null
   photoUrlsJson?: Prisma.StringFilter<"Listing"> | string
   status?: Prisma.StringFilter<"Listing"> | string
   authorId?: Prisma.StringFilter<"Listing"> | string
@@ -276,17 +354,23 @@ export type ListingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  locationName?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   subCategory?: Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ListingCountOrderByAggregateInput
+  _avg?: Prisma.ListingAvgOrderByAggregateInput
   _max?: Prisma.ListingMaxOrderByAggregateInput
   _min?: Prisma.ListingMinOrderByAggregateInput
+  _sum?: Prisma.ListingSumOrderByAggregateInput
 }
 
 export type ListingScalarWhereWithAggregatesInput = {
@@ -296,9 +380,13 @@ export type ListingScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   title?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   description?: Prisma.StringWithAggregatesFilter<"Listing"> | string
+  postalCode?: Prisma.StringWithAggregatesFilter<"Listing"> | string
+  locationName?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   location?: Prisma.StringNullableWithAggregatesFilter<"Listing"> | string | null
   mainCategory?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   subCategory?: Prisma.StringWithAggregatesFilter<"Listing"> | string
+  latitude?: Prisma.FloatNullableWithAggregatesFilter<"Listing"> | number | null
+  longitude?: Prisma.FloatNullableWithAggregatesFilter<"Listing"> | number | null
   photoUrlsJson?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   status?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   authorId?: Prisma.StringWithAggregatesFilter<"Listing"> | string
@@ -310,9 +398,13 @@ export type ListingCreateInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
@@ -326,9 +418,13 @@ export type ListingUncheckedCreateInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   authorId: string
@@ -342,9 +438,13 @@ export type ListingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -358,9 +458,13 @@ export type ListingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -374,9 +478,13 @@ export type ListingCreateManyInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   authorId: string
@@ -388,9 +496,13 @@ export type ListingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -401,9 +513,13 @@ export type ListingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -425,9 +541,13 @@ export type ListingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  locationName?: Prisma.SortOrder
   location?: Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   subCategory?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
@@ -435,13 +555,22 @@ export type ListingCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ListingAvgOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+}
+
 export type ListingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  locationName?: Prisma.SortOrder
   location?: Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   subCategory?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
@@ -453,14 +582,23 @@ export type ListingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  locationName?: Prisma.SortOrder
   location?: Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   subCategory?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   photoUrlsJson?: Prisma.SortOrder
   status?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ListingSumOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
 }
 
 export type ListingScalarRelationFilter = {
@@ -542,9 +680,13 @@ export type ListingCreateWithoutAuthorInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
@@ -557,9 +699,13 @@ export type ListingUncheckedCreateWithoutAuthorInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
@@ -600,9 +746,13 @@ export type ListingScalarWhereInput = {
   id?: Prisma.StringFilter<"Listing"> | string
   title?: Prisma.StringFilter<"Listing"> | string
   description?: Prisma.StringFilter<"Listing"> | string
+  postalCode?: Prisma.StringFilter<"Listing"> | string
+  locationName?: Prisma.StringFilter<"Listing"> | string
   location?: Prisma.StringNullableFilter<"Listing"> | string | null
   mainCategory?: Prisma.StringFilter<"Listing"> | string
   subCategory?: Prisma.StringFilter<"Listing"> | string
+  latitude?: Prisma.FloatNullableFilter<"Listing"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Listing"> | number | null
   photoUrlsJson?: Prisma.StringFilter<"Listing"> | string
   status?: Prisma.StringFilter<"Listing"> | string
   authorId?: Prisma.StringFilter<"Listing"> | string
@@ -614,9 +764,13 @@ export type ListingCreateWithoutRepairStoriesInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
@@ -629,9 +783,13 @@ export type ListingUncheckedCreateWithoutRepairStoriesInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   authorId: string
@@ -660,9 +818,13 @@ export type ListingUpdateWithoutRepairStoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -675,9 +837,13 @@ export type ListingUncheckedUpdateWithoutRepairStoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -690,9 +856,13 @@ export type ListingCreateWithoutListingMessagesInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
@@ -705,9 +875,13 @@ export type ListingUncheckedCreateWithoutListingMessagesInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   authorId: string
@@ -736,9 +910,13 @@ export type ListingUpdateWithoutListingMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -751,9 +929,13 @@ export type ListingUncheckedUpdateWithoutListingMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -766,9 +948,13 @@ export type ListingCreateManyAuthorInput = {
   id?: string
   title: string
   description: string
+  postalCode?: string
+  locationName?: string
   location?: string | null
   mainCategory?: string
   subCategory?: string
+  latitude?: number | null
+  longitude?: number | null
   photoUrlsJson?: string
   status?: string
   createdAt?: Date | string
@@ -779,9 +965,13 @@ export type ListingUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -794,9 +984,13 @@ export type ListingUncheckedUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -809,9 +1003,13 @@ export type ListingUncheckedUpdateManyWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
   subCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrlsJson?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -862,9 +1060,13 @@ export type ListingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   title?: boolean
   description?: boolean
+  postalCode?: boolean
+  locationName?: boolean
   location?: boolean
   mainCategory?: boolean
   subCategory?: boolean
+  latitude?: boolean
+  longitude?: boolean
   photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
@@ -880,9 +1082,13 @@ export type ListingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
+  postalCode?: boolean
+  locationName?: boolean
   location?: boolean
   mainCategory?: boolean
   subCategory?: boolean
+  latitude?: boolean
+  longitude?: boolean
   photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
@@ -895,9 +1101,13 @@ export type ListingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
+  postalCode?: boolean
+  locationName?: boolean
   location?: boolean
   mainCategory?: boolean
   subCategory?: boolean
+  latitude?: boolean
+  longitude?: boolean
   photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
@@ -910,9 +1120,13 @@ export type ListingSelectScalar = {
   id?: boolean
   title?: boolean
   description?: boolean
+  postalCode?: boolean
+  locationName?: boolean
   location?: boolean
   mainCategory?: boolean
   subCategory?: boolean
+  latitude?: boolean
+  longitude?: boolean
   photoUrlsJson?: boolean
   status?: boolean
   authorId?: boolean
@@ -920,7 +1134,7 @@ export type ListingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "mainCategory" | "subCategory" | "photoUrlsJson" | "status" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
+export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "postalCode" | "locationName" | "location" | "mainCategory" | "subCategory" | "latitude" | "longitude" | "photoUrlsJson" | "status" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
 export type ListingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   repairStories?: boolean | Prisma.Listing$repairStoriesArgs<ExtArgs>
@@ -951,6 +1165,17 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     title: string
     description: string
+    /**
+     * Postal code entered by the listing owner (e.g. "66850").
+     */
+    postalCode: string
+    /**
+     * Human-readable place name resolved from the postal code (e.g. "Jeppo, Nykarleby, Finland").
+     */
+    locationName: string
+    /**
+     * Legacy free-text location kept for backwards compat; new listings populate postalCode + locationName instead.
+     */
     location: string | null
     /**
      * Top-level category selected by the listing owner (e.g. ELECTRONICS, CLOTHES).
@@ -960,6 +1185,11 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
      * Optional second-level category under `mainCategory`.
      */
     subCategory: string
+    /**
+     * WGS84 coordinates resolved from the postal code.
+     */
+    latitude: number | null
+    longitude: number | null
     /**
      * JSON array of image URLs for card/details previews.
      */
@@ -1397,9 +1627,13 @@ export interface ListingFieldRefs {
   readonly id: Prisma.FieldRef<"Listing", 'String'>
   readonly title: Prisma.FieldRef<"Listing", 'String'>
   readonly description: Prisma.FieldRef<"Listing", 'String'>
+  readonly postalCode: Prisma.FieldRef<"Listing", 'String'>
+  readonly locationName: Prisma.FieldRef<"Listing", 'String'>
   readonly location: Prisma.FieldRef<"Listing", 'String'>
   readonly mainCategory: Prisma.FieldRef<"Listing", 'String'>
   readonly subCategory: Prisma.FieldRef<"Listing", 'String'>
+  readonly latitude: Prisma.FieldRef<"Listing", 'Float'>
+  readonly longitude: Prisma.FieldRef<"Listing", 'Float'>
   readonly photoUrlsJson: Prisma.FieldRef<"Listing", 'String'>
   readonly status: Prisma.FieldRef<"Listing", 'String'>
   readonly authorId: Prisma.FieldRef<"Listing", 'String'>

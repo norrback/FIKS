@@ -50,6 +50,7 @@ export default async function RepairerServicePage({ params }: Props) {
     ratingSum: profile.ratingSum,
     ratingCount: profile.ratingCount,
     servicePhotoUrl: profile.servicePhotoUrl,
+    servicePostalCode: profile.servicePostalCode,
     serviceLocationLabel: profile.serviceLocationLabel,
     serviceLatitude: profile.serviceLatitude,
     serviceLongitude: profile.serviceLongitude,

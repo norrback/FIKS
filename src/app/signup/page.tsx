@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./signup.module.css";
@@ -15,9 +15,56 @@ export default function SignupPage() {
     serviceName: "",
     services: "",
     bio: "",
+    postalCode: "",
   });
+  const [locationName, setLocationName] = useState<string | null>(null);
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [geocoding, setGeocoding] = useState(false);
+  const geocodeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const geocodePostalCode = useCallback(async (code: string) => {
+    if (code.trim().length < 3) {
+      setLocationName(null);
+      setCoords(null);
+      return;
+    }
+    setGeocoding(true);
+    try {
+      const res = await fetch(`/api/geocode?q=${encodeURIComponent(code.trim())}`);
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        lat: number | null;
+        lng: number | null;
+        locationName: string | null;
+      };
+      if (data.lat != null && data.lng != null) {
+        setCoords({ lat: data.lat, lng: data.lng });
+        setLocationName(data.locationName || null);
+      } else {
+        setLocationName(null);
+        setCoords(null);
+      }
+    } catch {
+      /* silently ignore */
+    } finally {
+      setGeocoding(false);
+    }
+  }, []);
+
+  const handlePostalCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, postalCode: value }));
+    if (geocodeTimer.current) clearTimeout(geocodeTimer.current);
+    geocodeTimer.current = setTimeout(() => geocodePostalCode(value), 800);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (geocodeTimer.current) clearTimeout(geocodeTimer.current);
+    };
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -37,9 +84,16 @@ export default function SignupPage() {
           email: formData.email,
           password: formData.password,
           role,
-          ...(role === "repairer" ? { serviceName: formData.serviceName } : {}),
           ...(role === "repairer"
-            ? { services: formData.services, bio: formData.bio }
+            ? {
+                serviceName: formData.serviceName,
+                services: formData.services,
+                bio: formData.bio,
+                postalCode: formData.postalCode.trim(),
+                locationName: locationName || "",
+                latitude: coords?.lat ?? null,
+                longitude: coords?.lng ?? null,
+              }
             : {}),
         }),
       });
@@ -191,6 +245,24 @@ export default function SignupPage() {
                   required={role === "repairer"}
                   disabled={loading}
                 />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="postalCode" className={styles.label}>Postal Code</label>
+                <input
+                  id="postalCode"
+                  name="postalCode"
+                  type="text"
+                  className={styles.input}
+                  placeholder="e.g. 66850"
+                  value={formData.postalCode}
+                  onChange={handlePostalCodeChange}
+                  disabled={loading}
+                />
+                {geocoding && <small className={styles.hint}>Looking up location…</small>}
+                {!geocoding && locationName && (
+                  <small className={styles.hint}>{locationName}</small>
+                )}
               </div>
             </>
           )}

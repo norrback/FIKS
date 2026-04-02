@@ -147,6 +147,11 @@
   font-weight: 600;
 }
 
+.hint {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
 .link:hover {
   text-decoration: underline;
 }

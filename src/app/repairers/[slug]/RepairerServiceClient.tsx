@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./repairer-service.module.css";
 import { DEFAULT_SERVICE_MAP, repairerOsmEmbedSrc } from "@/lib/repairerMapEmbed";
@@ -27,6 +27,7 @@ export type RepairerServiceInitial = {
   ratingSum: number;
   ratingCount: number;
   servicePhotoUrl: string | null;
+  servicePostalCode: string;
   serviceLocationLabel: string;
   serviceLatitude: number | null;
   serviceLongitude: number | null;
@@ -69,13 +70,12 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
   const [serviceDescription, setServiceDescription] = useState(initial.serviceDescription);
   const [expertiseText, setExpertiseText] = useState(initial.expertise.join(", "));
   const [servicePhotoUrl, setServicePhotoUrl] = useState(initial.servicePhotoUrl ?? "");
+  const [servicePostalCode, setServicePostalCode] = useState(initial.servicePostalCode);
   const [serviceLocationLabel, setServiceLocationLabel] = useState(initial.serviceLocationLabel);
-  const [serviceLatitudeInput, setServiceLatitudeInput] = useState(
-    initial.serviceLatitude != null ? String(initial.serviceLatitude) : "",
-  );
-  const [serviceLongitudeInput, setServiceLongitudeInput] = useState(
-    initial.serviceLongitude != null ? String(initial.serviceLongitude) : "",
-  );
+  const [serviceLatitude, setServiceLatitude] = useState(initial.serviceLatitude);
+  const [serviceLongitude, setServiceLongitude] = useState(initial.serviceLongitude);
+  const [geocoding, setGeocoding] = useState(false);
+  const geocodeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -92,9 +92,10 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
     serviceDescription: string;
     expertiseText: string;
     servicePhotoUrl: string;
+    servicePostalCode: string;
     serviceLocationLabel: string;
-    serviceLatitudeInput: string;
-    serviceLongitudeInput: string;
+    serviceLatitude: number | null;
+    serviceLongitude: number | null;
   } | null>(null);
 
   const jobsKey = initial.completedJobs.map((j) => j.id).join("|");
@@ -106,9 +107,10 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
     setServiceDescription(initial.serviceDescription);
     setExpertiseText(initial.expertise.join(", "));
     setServicePhotoUrl(initial.servicePhotoUrl ?? "");
+    setServicePostalCode(initial.servicePostalCode);
     setServiceLocationLabel(initial.serviceLocationLabel);
-    setServiceLatitudeInput(initial.serviceLatitude != null ? String(initial.serviceLatitude) : "");
-    setServiceLongitudeInput(initial.serviceLongitude != null ? String(initial.serviceLongitude) : "");
+    setServiceLatitude(initial.serviceLatitude);
+    setServiceLongitude(initial.serviceLongitude);
     setStats({
       completedJobsCount: initial.completedJobsCount,
       ratingSum: initial.ratingSum,
@@ -123,6 +125,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
     initial.serviceDescription,
     initial.expertise.join(","),
     initial.servicePhotoUrl,
+    initial.servicePostalCode,
     initial.serviceLocationLabel,
     initial.serviceLatitude,
     initial.serviceLongitude,
@@ -137,25 +140,15 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
   const completedJobs = initial.completedJobs;
   const jobsListed = completedJobs.length;
 
-  const parsedPreviewLat = Number(serviceLatitudeInput.trim());
-  const parsedPreviewLng = Number(serviceLongitudeInput.trim());
-  const previewCoordsValid =
-    serviceLatitudeInput.trim() !== "" &&
-    serviceLongitudeInput.trim() !== "" &&
-    Number.isFinite(parsedPreviewLat) &&
-    Number.isFinite(parsedPreviewLng);
-
-  const mapLat = previewCoordsValid
-    ? parsedPreviewLat
-    : (initial.serviceLatitude ?? DEFAULT_SERVICE_MAP.latitude);
-  const mapLng = previewCoordsValid
-    ? parsedPreviewLng
-    : (initial.serviceLongitude ?? DEFAULT_SERVICE_MAP.longitude);
+  const hasCoords = serviceLatitude != null && serviceLongitude != null;
+  const mapLat = serviceLatitude ?? DEFAULT_SERVICE_MAP.latitude;
+  const mapLng = serviceLongitude ?? DEFAULT_SERVICE_MAP.longitude;
 
   const mapSrc = useMemo(() => repairerOsmEmbedSrc(mapLat, mapLng), [mapLat, mapLng]);
 
-  const hasSavedPin = initial.serviceLatitude != null && initial.serviceLongitude != null;
-  const displayLocationLabel = serviceLocationLabel.trim() || "Approximate service area";
+  const displayLocationLabel = servicePostalCode
+    ? `${servicePostalCode}${serviceLocationLabel ? ` ${serviceLocationLabel}` : ""}`
+    : serviceLocationLabel.trim() || "Approximate service area";
 
   const osmLink = useMemo(
     () => `https://www.openstreetmap.org/?mlat=${mapLat}&mlon=${mapLng}#map=15/${mapLat}/${mapLng}`,
@@ -164,6 +157,46 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
 
   const photoSrc = servicePhotoUrl.trim() || initial.servicePhotoUrl || "";
 
+  const geocodePostalCode = useCallback(async (code: string) => {
+    if (code.trim().length < 3) {
+      setServiceLocationLabel("");
+      return;
+    }
+    setGeocoding(true);
+    try {
+      const res = await fetch(`/api/geocode?q=${encodeURIComponent(code.trim())}`);
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        lat: number | null;
+        lng: number | null;
+        locationName: string | null;
+      };
+      if (data.lat != null && data.lng != null) {
+        setServiceLatitude(data.lat);
+        setServiceLongitude(data.lng);
+        setServiceLocationLabel(data.locationName || "");
+      } else {
+        setServiceLocationLabel("");
+      }
+    } catch {
+      /* silently ignore */
+    } finally {
+      setGeocoding(false);
+    }
+  }, []);
+
+  function handlePostalCodeChange(value: string) {
+    setServicePostalCode(value);
+    if (geocodeTimer.current) clearTimeout(geocodeTimer.current);
+    geocodeTimer.current = setTimeout(() => geocodePostalCode(value), 800);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (geocodeTimer.current) clearTimeout(geocodeTimer.current);
+    };
+  }, []);
+
   function startEditing() {
     setSnapshot({
       serviceName,
@@ -171,9 +204,10 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
       serviceDescription,
       expertiseText,
       servicePhotoUrl,
+      servicePostalCode,
       serviceLocationLabel,
-      serviceLatitudeInput,
-      serviceLongitudeInput,
+      serviceLatitude,
+      serviceLongitude,
     });
     setError(null);
     setEditing(true);
@@ -182,30 +216,6 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-
-    const latStr = serviceLatitudeInput.trim();
-    const lngStr = serviceLongitudeInput.trim();
-    let serviceLatitude: number | null = null;
-    let serviceLongitude: number | null = null;
-    if (latStr !== "" || lngStr !== "") {
-      if (latStr === "" || lngStr === "") {
-        setError("Enter both latitude and longitude for the map pin, or leave both fields empty.");
-        return;
-      }
-      const la = Number(latStr);
-      const lo = Number(lngStr);
-      if (!Number.isFinite(la) || !Number.isFinite(lo)) {
-        setError("Latitude and longitude must be valid numbers.");
-        return;
-      }
-      if (la < -90 || la > 90 || lo < -180 || lo > 180) {
-        setError("Coordinates are out of range.");
-        return;
-      }
-      serviceLatitude = la;
-      serviceLongitude = lo;
-    }
-
     setSaving(true);
     try {
       const res = await fetch(`/api/repairers/${encodeURIComponent(initial.slug)}`, {
@@ -217,9 +227,10 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
           serviceDescription,
           expertise: expertiseText,
           servicePhotoUrl: servicePhotoUrl.trim() === "" ? null : servicePhotoUrl.trim(),
+          servicePostalCode: servicePostalCode.trim(),
           serviceLocationLabel: serviceLocationLabel.trim(),
-          serviceLatitude,
-          serviceLongitude,
+          serviceLatitude: serviceLatitude,
+          serviceLongitude: serviceLongitude,
         }),
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -232,6 +243,7 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
         ratingSum?: number;
         ratingCount?: number;
         servicePhotoUrl?: string | null;
+        servicePostalCode?: string;
         serviceLocationLabel?: string;
         serviceLatitude?: number | null;
         serviceLongitude?: number | null;
@@ -254,13 +266,10 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
         setServicePhotoUrl(data.servicePhotoUrl ?? "");
         setPhotoBroken(false);
       }
+      if (typeof data.servicePostalCode === "string") setServicePostalCode(data.servicePostalCode);
       if (typeof data.serviceLocationLabel === "string") setServiceLocationLabel(data.serviceLocationLabel);
-      if (data.serviceLatitude !== undefined) {
-        setServiceLatitudeInput(data.serviceLatitude != null ? String(data.serviceLatitude) : "");
-      }
-      if (data.serviceLongitude !== undefined) {
-        setServiceLongitudeInput(data.serviceLongitude != null ? String(data.serviceLongitude) : "");
-      }
+      if (data.serviceLatitude !== undefined) setServiceLatitude(data.serviceLatitude ?? null);
+      if (data.serviceLongitude !== undefined) setServiceLongitude(data.serviceLongitude ?? null);
       setSnapshot(null);
       setEditing(false);
       router.refresh();
@@ -278,9 +287,10 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
       setServiceDescription(snapshot.serviceDescription);
       setExpertiseText(snapshot.expertiseText);
       setServicePhotoUrl(snapshot.servicePhotoUrl);
+      setServicePostalCode(snapshot.servicePostalCode);
       setServiceLocationLabel(snapshot.serviceLocationLabel);
-      setServiceLatitudeInput(snapshot.serviceLatitudeInput);
-      setServiceLongitudeInput(snapshot.serviceLongitudeInput);
+      setServiceLatitude(snapshot.serviceLatitude);
+      setServiceLongitude(snapshot.serviceLongitude);
       setPhotoBroken(false);
     }
     setSnapshot(null);
@@ -393,50 +403,22 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
               </p>
             </div>
             <div className={styles.field}>
-              <label className={styles.label} htmlFor="serviceLocationLabel">
-                Location label
+              <label className={styles.label} htmlFor="servicePostalCode">
+                Postal Code
               </label>
               <input
-                id="serviceLocationLabel"
+                id="servicePostalCode"
                 className={styles.input}
-                value={serviceLocationLabel}
-                onChange={(e) => setServiceLocationLabel(e.target.value)}
-                placeholder="e.g. Helsinki — workshop name"
+                value={servicePostalCode}
+                onChange={(e) => handlePostalCodeChange(e.target.value)}
+                placeholder="e.g. 66850"
                 disabled={saving}
               />
+              {geocoding && <p className={styles.fieldHint}>Looking up location…</p>}
+              {!geocoding && serviceLocationLabel && (
+                <p className={styles.fieldHint}>{serviceLocationLabel}</p>
+              )}
             </div>
-            <div className={styles.coordRow}>
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="serviceLatitude">
-                  Map latitude (WGS84)
-                </label>
-                <input
-                  id="serviceLatitude"
-                  className={styles.input}
-                  value={serviceLatitudeInput}
-                  onChange={(e) => setServiceLatitudeInput(e.target.value)}
-                  placeholder={String(DEFAULT_SERVICE_MAP.latitude)}
-                  disabled={saving}
-                />
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="serviceLongitude">
-                  Map longitude (WGS84)
-                </label>
-                <input
-                  id="serviceLongitude"
-                  className={styles.input}
-                  value={serviceLongitudeInput}
-                  onChange={(e) => setServiceLongitudeInput(e.target.value)}
-                  placeholder={String(DEFAULT_SERVICE_MAP.longitude)}
-                  disabled={saving}
-                />
-              </div>
-            </div>
-            <p className={styles.fieldHint}>
-              Leave latitude and longitude empty to show a default Helsinki overview. Set both to drop a pin on the
-              embedded map.
-            </p>
             <div className={styles.field}>
               <label className={styles.label} htmlFor="bio">
                 Bio
@@ -617,8 +599,8 @@ export default function RepairerServiceClient({ initial, isOwner }: Props) {
             <iframe title="Service location map" className={styles.mapFrame} src={mapSrc} loading="lazy" />
           </div>
           <p className={styles.mapCaption}>{displayLocationLabel}</p>
-          {!hasSavedPin && !previewCoordsValid ? (
-            <p className={styles.mapHint}>Default map — add coordinates in your profile to pin your workshop.</p>
+          {!hasCoords ? (
+            <p className={styles.mapHint}>Default map — add a postal code in your profile to pin your workshop.</p>
           ) : null}
           <a className={styles.mapLink} href={osmLink} target="_blank" rel="noreferrer">
             Open in OpenStreetMap

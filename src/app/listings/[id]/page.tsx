@@ -85,7 +85,9 @@ export default async function ListingDetailPage({ params }: Props) {
         <header className={styles.head}>
           <h1 className={styles.title}>{listing.title}</h1>
           <p className={styles.meta}>
-            {listing.location ?? "Location not set"}
+            {listing.postalCode
+              ? `${listing.postalCode}${listing.locationName ? ` ${listing.locationName}` : ""}`
+              : listing.location ?? "Location not set"}
             {" · "}
             {listing.author.name ?? listing.author.email}
             {" · "}

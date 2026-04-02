@@ -11,6 +11,10 @@ type CreateListingBody = {
   itemName?: string;
   description?: string;
   location?: string;
+  postalCode?: string;
+  locationName?: string;
+  latitude?: number;
+  longitude?: number;
   mainCategory?: string;
   subCategory?: string;
   photoUrls?: string[];
@@ -31,8 +35,12 @@ export async function POST(request: NextRequest) {
 
   const title = String(body.title ?? body.itemName ?? "").trim();
   const description = String(body.description ?? "").trim();
+  const postalCode = String(body.postalCode ?? "").trim();
+  const locationName = String(body.locationName ?? "").trim();
   const locationRaw = String(body.location ?? "").trim();
   const location = locationRaw.length > 0 ? locationRaw : null;
+  const latitude = typeof body.latitude === "number" && isFinite(body.latitude) ? body.latitude : null;
+  const longitude = typeof body.longitude === "number" && isFinite(body.longitude) ? body.longitude : null;
   const mainCategory = String(body.mainCategory ?? "").trim().toUpperCase();
   const subCategory = String(body.subCategory ?? "").trim();
   const photoUrls = Array.isArray(body.photoUrls)
@@ -63,7 +71,11 @@ export async function POST(request: NextRequest) {
       data: {
         title,
         description,
+        postalCode,
+        locationName,
         location,
+        latitude,
+        longitude,
         mainCategory,
         subCategory,
         photoUrlsJson: photoUrlsToJson(photoUrls),

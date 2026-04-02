@@ -41,9 +41,11 @@ model RepairerProfile {
   ratingCount          Int      @default(0)
   /// Public HTTPS URL for a workshop or profile photo (paste link; uploads can be added later).
   servicePhotoUrl      String?
-  /// Human-readable service area label shown next to the map.
+  /// Postal code entered by the repairer (e.g. "66850").
+  servicePostalCode    String   @default("")
+  /// Human-readable service area label resolved from the postal code.
   serviceLocationLabel String   @default("")
-  /// WGS84 coordinates for the embedded map (both should be set for a pin).
+  /// WGS84 coordinates resolved from the postal code for the embedded map.
   serviceLatitude      Float?
   serviceLongitude     Float?
   createdAt            DateTime @default(now())
@@ -77,11 +79,19 @@ model Listing {
   id          String   @id @default(uuid())
   title       String
   description String
-  location    String?
+  /// Postal code entered by the listing owner (e.g. "66850").
+  postalCode   String  @default("")
+  /// Human-readable place name resolved from the postal code (e.g. "Jeppo, Nykarleby, Finland").
+  locationName String  @default("")
+  /// Legacy free-text location kept for backwards compat; new listings populate postalCode + locationName instead.
+  location     String?
   /// Top-level category selected by the listing owner (e.g. ELECTRONICS, CLOTHES).
   mainCategory String  @default("")
   /// Optional second-level category under `mainCategory`.
   subCategory  String  @default("")
+  /// WGS84 coordinates resolved from the postal code.
+  latitude     Float?
+  longitude    Float?
   /// JSON array of image URLs for card/details previews.
   photoUrlsJson String @default("[]")
   status      String   @default("OPEN")

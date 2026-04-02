@@ -15,6 +15,7 @@ type PatchBody = {
   serviceDescription?: unknown;
   expertise?: unknown;
   servicePhotoUrl?: unknown;
+  servicePostalCode?: unknown;
   serviceLocationLabel?: unknown;
   serviceLatitude?: unknown;
   serviceLongitude?: unknown;
@@ -99,6 +100,10 @@ export async function PATCH(
     }
   }
 
+  const servicePostalCode = typeof body.servicePostalCode === "string"
+    ? body.servicePostalCode.trim().slice(0, 20)
+    : undefined;
+
   const serviceLocationLabel = normalizeLocationLabel(body.serviceLocationLabel);
   if (body.serviceLocationLabel !== undefined && serviceLocationLabel === undefined) {
     return NextResponse.json({ error: "serviceLocationLabel must be a string" }, { status: 400 });
@@ -156,6 +161,7 @@ export async function PATCH(
       ...(serviceDescription !== undefined ? { serviceDescription } : {}),
       ...(expertiseJson !== undefined ? { expertise: expertiseJson } : {}),
       ...(servicePhotoUrl !== undefined ? { servicePhotoUrl } : {}),
+      ...(servicePostalCode !== undefined ? { servicePostalCode } : {}),
       ...(serviceLocationLabel !== undefined ? { serviceLocationLabel } : {}),
       ...(serviceLatitude !== undefined ? { serviceLatitude } : {}),
       ...(serviceLongitude !== undefined ? { serviceLongitude } : {}),
@@ -169,6 +175,7 @@ export async function PATCH(
       ratingSum: true,
       ratingCount: true,
       servicePhotoUrl: true,
+      servicePostalCode: true,
       serviceLocationLabel: true,
       serviceLatitude: true,
       serviceLongitude: true,
@@ -184,6 +191,7 @@ export async function PATCH(
     ratingSum: updated.ratingSum,
     ratingCount: updated.ratingCount,
     servicePhotoUrl: updated.servicePhotoUrl,
+    servicePostalCode: updated.servicePostalCode,
     serviceLocationLabel: updated.serviceLocationLabel,
     serviceLatitude: updated.serviceLatitude,
     serviceLongitude: updated.serviceLongitude,

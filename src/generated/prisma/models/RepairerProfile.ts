@@ -54,6 +54,7 @@ export type RepairerProfileMinAggregateOutputType = {
   ratingSum: number | null
   ratingCount: number | null
   servicePhotoUrl: string | null
+  servicePostalCode: string | null
   serviceLocationLabel: string | null
   serviceLatitude: number | null
   serviceLongitude: number | null
@@ -73,6 +74,7 @@ export type RepairerProfileMaxAggregateOutputType = {
   ratingSum: number | null
   ratingCount: number | null
   servicePhotoUrl: string | null
+  servicePostalCode: string | null
   serviceLocationLabel: string | null
   serviceLatitude: number | null
   serviceLongitude: number | null
@@ -92,6 +94,7 @@ export type RepairerProfileCountAggregateOutputType = {
   ratingSum: number
   ratingCount: number
   servicePhotoUrl: number
+  servicePostalCode: number
   serviceLocationLabel: number
   serviceLatitude: number
   serviceLongitude: number
@@ -129,6 +132,7 @@ export type RepairerProfileMinAggregateInputType = {
   ratingSum?: true
   ratingCount?: true
   servicePhotoUrl?: true
+  servicePostalCode?: true
   serviceLocationLabel?: true
   serviceLatitude?: true
   serviceLongitude?: true
@@ -148,6 +152,7 @@ export type RepairerProfileMaxAggregateInputType = {
   ratingSum?: true
   ratingCount?: true
   servicePhotoUrl?: true
+  servicePostalCode?: true
   serviceLocationLabel?: true
   serviceLatitude?: true
   serviceLongitude?: true
@@ -167,6 +172,7 @@ export type RepairerProfileCountAggregateInputType = {
   ratingSum?: true
   ratingCount?: true
   servicePhotoUrl?: true
+  servicePostalCode?: true
   serviceLocationLabel?: true
   serviceLatitude?: true
   serviceLongitude?: true
@@ -273,6 +279,7 @@ export type RepairerProfileGroupByOutputType = {
   ratingSum: number
   ratingCount: number
   servicePhotoUrl: string | null
+  servicePostalCode: string
   serviceLocationLabel: string
   serviceLatitude: number | null
   serviceLongitude: number | null
@@ -315,6 +322,7 @@ export type RepairerProfileWhereInput = {
   ratingSum?: Prisma.IntFilter<"RepairerProfile"> | number
   ratingCount?: Prisma.IntFilter<"RepairerProfile"> | number
   servicePhotoUrl?: Prisma.StringNullableFilter<"RepairerProfile"> | string | null
+  servicePostalCode?: Prisma.StringFilter<"RepairerProfile"> | string
   serviceLocationLabel?: Prisma.StringFilter<"RepairerProfile"> | string
   serviceLatitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
   serviceLongitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
@@ -336,6 +344,7 @@ export type RepairerProfileOrderByWithRelationInput = {
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
   servicePhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  servicePostalCode?: Prisma.SortOrder
   serviceLocationLabel?: Prisma.SortOrder
   serviceLatitude?: Prisma.SortOrderInput | Prisma.SortOrder
   serviceLongitude?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -360,6 +369,7 @@ export type RepairerProfileWhereUniqueInput = Prisma.AtLeast<{
   ratingSum?: Prisma.IntFilter<"RepairerProfile"> | number
   ratingCount?: Prisma.IntFilter<"RepairerProfile"> | number
   servicePhotoUrl?: Prisma.StringNullableFilter<"RepairerProfile"> | string | null
+  servicePostalCode?: Prisma.StringFilter<"RepairerProfile"> | string
   serviceLocationLabel?: Prisma.StringFilter<"RepairerProfile"> | string
   serviceLatitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
   serviceLongitude?: Prisma.FloatNullableFilter<"RepairerProfile"> | number | null
@@ -381,6 +391,7 @@ export type RepairerProfileOrderByWithAggregationInput = {
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
   servicePhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  servicePostalCode?: Prisma.SortOrder
   serviceLocationLabel?: Prisma.SortOrder
   serviceLatitude?: Prisma.SortOrderInput | Prisma.SortOrder
   serviceLongitude?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -408,6 +419,7 @@ export type RepairerProfileScalarWhereWithAggregatesInput = {
   ratingSum?: Prisma.IntWithAggregatesFilter<"RepairerProfile"> | number
   ratingCount?: Prisma.IntWithAggregatesFilter<"RepairerProfile"> | number
   servicePhotoUrl?: Prisma.StringNullableWithAggregatesFilter<"RepairerProfile"> | string | null
+  servicePostalCode?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   serviceLocationLabel?: Prisma.StringWithAggregatesFilter<"RepairerProfile"> | string
   serviceLatitude?: Prisma.FloatNullableWithAggregatesFilter<"RepairerProfile"> | number | null
   serviceLongitude?: Prisma.FloatNullableWithAggregatesFilter<"RepairerProfile"> | number | null
@@ -426,6 +438,7 @@ export type RepairerProfileCreateInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -447,6 +460,7 @@ export type RepairerProfileUncheckedCreateInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -466,6 +480,7 @@ export type RepairerProfileUpdateInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -487,6 +502,7 @@ export type RepairerProfileUncheckedUpdateInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -507,6 +523,7 @@ export type RepairerProfileCreateManyInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -525,6 +542,7 @@ export type RepairerProfileUpdateManyMutationInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -544,6 +562,7 @@ export type RepairerProfileUncheckedUpdateManyInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -568,6 +587,7 @@ export type RepairerProfileCountOrderByAggregateInput = {
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
   servicePhotoUrl?: Prisma.SortOrder
+  servicePostalCode?: Prisma.SortOrder
   serviceLocationLabel?: Prisma.SortOrder
   serviceLatitude?: Prisma.SortOrder
   serviceLongitude?: Prisma.SortOrder
@@ -595,6 +615,7 @@ export type RepairerProfileMaxOrderByAggregateInput = {
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
   servicePhotoUrl?: Prisma.SortOrder
+  servicePostalCode?: Prisma.SortOrder
   serviceLocationLabel?: Prisma.SortOrder
   serviceLatitude?: Prisma.SortOrder
   serviceLongitude?: Prisma.SortOrder
@@ -614,6 +635,7 @@ export type RepairerProfileMinOrderByAggregateInput = {
   ratingSum?: Prisma.SortOrder
   ratingCount?: Prisma.SortOrder
   servicePhotoUrl?: Prisma.SortOrder
+  servicePostalCode?: Prisma.SortOrder
   serviceLocationLabel?: Prisma.SortOrder
   serviceLatitude?: Prisma.SortOrder
   serviceLongitude?: Prisma.SortOrder
@@ -707,6 +729,7 @@ export type RepairerProfileCreateWithoutUserInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -726,6 +749,7 @@ export type RepairerProfileUncheckedCreateWithoutUserInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -761,6 +785,7 @@ export type RepairerProfileUpdateWithoutUserInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -780,6 +805,7 @@ export type RepairerProfileUncheckedUpdateWithoutUserInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -799,6 +825,7 @@ export type RepairerProfileCreateWithoutCompletedJobsInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -819,6 +846,7 @@ export type RepairerProfileUncheckedCreateWithoutCompletedJobsInput = {
   ratingSum?: number
   ratingCount?: number
   servicePhotoUrl?: string | null
+  servicePostalCode?: string
   serviceLocationLabel?: string
   serviceLatitude?: number | null
   serviceLongitude?: number | null
@@ -853,6 +881,7 @@ export type RepairerProfileUpdateWithoutCompletedJobsInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -873,6 +902,7 @@ export type RepairerProfileUncheckedUpdateWithoutCompletedJobsInput = {
   ratingSum?: Prisma.IntFieldUpdateOperationsInput | number
   ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   servicePhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicePostalCode?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLocationLabel?: Prisma.StringFieldUpdateOperationsInput | string
   serviceLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   serviceLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -923,6 +953,7 @@ export type RepairerProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
   ratingSum?: boolean
   ratingCount?: boolean
   servicePhotoUrl?: boolean
+  servicePostalCode?: boolean
   serviceLocationLabel?: boolean
   serviceLatitude?: boolean
   serviceLongitude?: boolean
@@ -945,6 +976,7 @@ export type RepairerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   ratingSum?: boolean
   ratingCount?: boolean
   servicePhotoUrl?: boolean
+  servicePostalCode?: boolean
   serviceLocationLabel?: boolean
   serviceLatitude?: boolean
   serviceLongitude?: boolean
@@ -965,6 +997,7 @@ export type RepairerProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   ratingSum?: boolean
   ratingCount?: boolean
   servicePhotoUrl?: boolean
+  servicePostalCode?: boolean
   serviceLocationLabel?: boolean
   serviceLatitude?: boolean
   serviceLongitude?: boolean
@@ -985,6 +1018,7 @@ export type RepairerProfileSelectScalar = {
   ratingSum?: boolean
   ratingCount?: boolean
   servicePhotoUrl?: boolean
+  servicePostalCode?: boolean
   serviceLocationLabel?: boolean
   serviceLatitude?: boolean
   serviceLongitude?: boolean
@@ -992,7 +1026,7 @@ export type RepairerProfileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type RepairerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "serviceName" | "bio" | "serviceDescription" | "expertise" | "completedJobsCount" | "ratingSum" | "ratingCount" | "servicePhotoUrl" | "serviceLocationLabel" | "serviceLatitude" | "serviceLongitude" | "createdAt" | "updatedAt", ExtArgs["result"]["repairerProfile"]>
+export type RepairerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "slug" | "serviceName" | "bio" | "serviceDescription" | "expertise" | "completedJobsCount" | "ratingSum" | "ratingCount" | "servicePhotoUrl" | "servicePostalCode" | "serviceLocationLabel" | "serviceLatitude" | "serviceLongitude" | "createdAt" | "updatedAt", ExtArgs["result"]["repairerProfile"]>
 export type RepairerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   completedJobs?: boolean | Prisma.RepairerProfile$completedJobsArgs<ExtArgs>
@@ -1036,11 +1070,15 @@ export type $RepairerProfilePayload<ExtArgs extends runtime.Types.Extensions.Int
      */
     servicePhotoUrl: string | null
     /**
-     * Human-readable service area label shown next to the map.
+     * Postal code entered by the repairer (e.g. "66850").
+     */
+    servicePostalCode: string
+    /**
+     * Human-readable service area label resolved from the postal code.
      */
     serviceLocationLabel: string
     /**
-     * WGS84 coordinates for the embedded map (both should be set for a pin).
+     * WGS84 coordinates resolved from the postal code for the embedded map.
      */
     serviceLatitude: number | null
     serviceLongitude: number | null
@@ -1482,6 +1520,7 @@ export interface RepairerProfileFieldRefs {
   readonly ratingSum: Prisma.FieldRef<"RepairerProfile", 'Int'>
   readonly ratingCount: Prisma.FieldRef<"RepairerProfile", 'Int'>
   readonly servicePhotoUrl: Prisma.FieldRef<"RepairerProfile", 'String'>
+  readonly servicePostalCode: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly serviceLocationLabel: Prisma.FieldRef<"RepairerProfile", 'String'>
   readonly serviceLatitude: Prisma.FieldRef<"RepairerProfile", 'Float'>
   readonly serviceLongitude: Prisma.FieldRef<"RepairerProfile", 'Float'>
