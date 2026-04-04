@@ -1,13 +1,13 @@
 import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
-import LocationCarousel from "@/components/LocationCarousel";
+import NewestListings from "@/components/NewestListings";
 
 export default function Home() {
   return (
     <>
       <HeroSection />
       <HowItWorks />
-      <LocationCarousel />
+      <NewestListings />
     </>
   );
 }

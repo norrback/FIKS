@@ -2,21 +2,18 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+See [`DEV.md`](DEV.md) for the full local development guide — first-time setup, environment variables, database commands, and troubleshooting common issues (e.g. hung dev server).
+
+Quick start:
 
 ```bash
+npm install
+npx prisma db push
+npx prisma db seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 
