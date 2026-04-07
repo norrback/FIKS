@@ -109,10 +109,6 @@
       letter-spacing: -0.05em;
     }
 
-    /* If you have fiks_logo.avif, replace the text logo with:
-       <a href="/" class="logo"><img src="fiks_logo.avif" alt="FIKS." style="height:36px;width:auto"></a>
-    */
-
     .header-search {
       flex: 1;
       max-width: 400px;
@@ -188,11 +184,9 @@
     .hero {
       padding: 12rem 0;
       text-align: center;
-      /* Replace the gradient below with: url('fiks_bg.png') center/cover no-repeat
-         layered under the gradient overlay if you have the background image */
       background:
         linear-gradient(rgba(248, 250, 252, 0.1), rgba(226, 232, 240, 0.2)),
-        linear-gradient(135deg, #1e293b 0%, #334155 40%, #475569 100%);
+        url('fiks_bg.png') center/cover no-repeat;
       background-size: cover;
       background-position: center;
       border-bottom: 1px solid var(--color-border);
@@ -462,7 +456,7 @@
   <!-- Header -->
   <header class="header">
     <div class="container header-nav">
-      <a href="/" class="logo">FIKS.</a>
+      <a href="/" class="logo"><img src="fiks_logo.avif" alt="FIKS." style="height:36px;width:auto"></a>
 
       <div class="header-search">
         <input type="text" placeholder="Search for repairers or broken parts…" disabled>
