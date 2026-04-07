@@ -449,9 +449,60 @@
       .listings-header { flex-direction: column; align-items: flex-start; }
       .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
+
+    /* ── Popup overlay ── */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-overlay.hidden { display: none; }
+
+    .popup-box {
+      background: var(--color-surface);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      padding: 2.5rem 3rem;
+      max-width: 480px;
+      text-align: center;
+      cursor: default;
+    }
+
+    .popup-box p {
+      font-size: 1.15rem;
+      color: var(--color-text-main);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .popup-hint {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popup" onclick="this.classList.add('hidden')">
+    <div class="popup-box" onclick="event.stopPropagation()">
+      <p>This is just a static landing page. Live site is coming soon.</p>
+      <span class="popup-hint">Click anywhere to close</span>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="header">
