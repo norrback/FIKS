@@ -12,5 +12,5 @@ export function isMainCategory(value: string): value is MainListingCategory {
 export function isValidSubCategory(mainCategory: string, subCategory: string): boolean {
   if (!subCategory) return true;
   if (!isMainCategory(mainCategory)) return false;
-  return LISTING_CATEGORY_TREE[mainCategory].includes(subCategory);
+  return (LISTING_CATEGORY_TREE[mainCategory] as readonly string[]).includes(subCategory);
 }

@@ -29,7 +29,7 @@ export default async function Header() {
           name: string | null;
           email: string;
           role: string;
-          repairerProfile: { slug: string } | null;
+          repairerProfile: { slug: string; serviceName: string } | null;
         }
       | null = null;
     try {
@@ -58,6 +58,7 @@ export default async function Header() {
           repairerProfile: {
             select: {
               slug: true,
+              serviceName: true,
             },
           },
         },
@@ -65,10 +66,7 @@ export default async function Header() {
     }
     repairerSlug = user?.repairerProfile?.slug ?? null;
     isRepairer = user?.role === "REPAIRER";
-    serviceName =
-      "serviceName" in (user?.repairerProfile ?? {})
-        ? user?.repairerProfile?.serviceName?.trim() || null
-        : null;
+    serviceName = user?.repairerProfile?.serviceName?.trim() || null;
 
     const userName = user?.name?.trim() || user?.email || session.email;
     accountName = serviceName || userName;

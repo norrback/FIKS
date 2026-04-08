@@ -11,13 +11,20 @@ const DEFAULT_LNG = 24.93;
 export default function CreateListingForm() {
   const router = useRouter();
   const mainCategories = Object.keys(LISTING_CATEGORY_TREE) as MainListingCategory[];
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    itemName: string;
+    description: string;
+    postalCode: string;
+    mainCategory: MainListingCategory;
+    subCategory: string;
+    photoUrls: string[];
+  }>({
     itemName: "",
     description: "",
     postalCode: "",
     mainCategory: mainCategories[0] ?? "ELECTRONICS",
     subCategory: LISTING_CATEGORY_TREE.ELECTRONICS[0] ?? "",
-    photoUrls: [] as string[],
+    photoUrls: [],
   });
   const [coords, setCoords] = useState<{ lat: number; lng: number }>({ lat: DEFAULT_LAT, lng: DEFAULT_LNG });
   const [locationName, setLocationName] = useState<string | null>(null);

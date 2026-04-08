@@ -65,10 +65,11 @@ export default function MyItemsClient({ initialItems }: Props) {
 
   useEffect(() => {
     if (!openMenuId) return;
+    const currentMenuId = openMenuId;
 
     function onPointerDown(event: MouseEvent | TouchEvent) {
       const target = event.target as Node | null;
-      const host = menuRefs.current[openMenuId];
+      const host = menuRefs.current[currentMenuId];
       if (host && target && !host.contains(target)) {
         setOpenMenuId(null);
       }
