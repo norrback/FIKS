@@ -1,4 +1,6 @@
 import { randomUUID } from "node:crypto";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { getSession } from "@/lib/auth";
@@ -15,6 +17,8 @@ function extensionForMime(mime: string): string {
   if (mime === "image/gif") return ".gif";
   return "";
 }
+
+const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
 
 export async function POST(request: NextRequest) {
   const session = await getSession();
@@ -41,7 +45,16 @@ export async function POST(request: NextRequest) {
   const ext = extensionForMime(file.type);
   const filename = `${Date.now()}-${randomUUID()}${ext}`;
 
-  const blob = await put(filename, file, { access: "public" });
+  if (useBlob) {
+    const blob = await put(filename, file, { access: "public" });
+    return NextResponse.json({ url: blob.url });
+  }
 
-  return NextResponse.json({ url: blob.url });
+  // Local dev fallback: write to public/uploads/
+  const uploadDir = path.join(process.cwd(), "public", "uploads");
+  await mkdir(uploadDir, { recursive: true });
+  const bytes = Buffer.from(await file.arrayBuffer());
+  await writeFile(path.join(uploadDir, filename), bytes);
+
+  return NextResponse.json({ url: `/uploads/${filename}` });
 }
