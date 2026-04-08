@@ -11,7 +11,7 @@ export function parsePhotoUrls(json: string): string[] {
 export function normalizePhotoUrls(urls: string[]): string[] {
   const unique = new Set<string>();
   for (const raw of urls) {
-    if (raw.startsWith("/uploads/")) {
+    if (raw.startsWith("/uploads/") || raw.startsWith("https://")) {
       unique.add(raw);
     }
   }

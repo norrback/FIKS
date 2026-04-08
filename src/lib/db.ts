@@ -1,7 +1,5 @@
-import path from "node:path";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
-import { findProjectRoot } from "@/lib/projectRoot";
 
 const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
@@ -17,24 +15,12 @@ function isPrismaClientInSync(client: PrismaClient): boolean {
   );
 }
 
-/**
- * Resolve SQLite `file:` URLs against the repo root (same DB as `npx prisma db push`),
- * not `process.cwd()` — Next.js can run route handlers with a different cwd.
- */
-function sqliteUrlForAdapter(): string {
-  const raw = process.env.DATABASE_URL ?? "file:./prisma/dev.db";
-  if (!raw.startsWith("file:")) return raw;
-  const rel = raw.slice("file:".length).replace(/^\//, "");
-  if (path.isAbsolute(rel)) {
-    return `file:${rel.replace(/\\/g, "/")}`;
-  }
-  const root = findProjectRoot();
-  const abs = path.join(root, rel);
-  return `file:${abs.replace(/\\/g, "/")}`;
-}
-
 function createPrismaClient() {
-  const adapter = new PrismaBetterSqlite3({ url: sqliteUrlForAdapter() });
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL environment variable is not set");
+  }
+  const adapter = new PrismaPg(connectionString);
   return new PrismaClient({ adapter });
 }
 

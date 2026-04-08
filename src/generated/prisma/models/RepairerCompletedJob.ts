@@ -576,6 +576,7 @@ export type RepairerCompletedJobCreateOrConnectWithoutRepairerProfileInput = {
 
 export type RepairerCompletedJobCreateManyRepairerProfileInputEnvelope = {
   data: Prisma.RepairerCompletedJobCreateManyRepairerProfileInput | Prisma.RepairerCompletedJobCreateManyRepairerProfileInput[]
+  skipDuplicates?: boolean
 }
 
 export type RepairerCompletedJobUpsertWithWhereUniqueWithoutRepairerProfileInput = {
@@ -1427,6 +1428,7 @@ export type RepairerCompletedJobCreateManyArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many RepairerCompletedJobs.
    */
   data: Prisma.RepairerCompletedJobCreateManyInput | Prisma.RepairerCompletedJobCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1445,6 +1447,7 @@ export type RepairerCompletedJobCreateManyAndReturnArgs<ExtArgs extends runtime.
    * The data used to create many RepairerCompletedJobs.
    */
   data: Prisma.RepairerCompletedJobCreateManyInput | Prisma.RepairerCompletedJobCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

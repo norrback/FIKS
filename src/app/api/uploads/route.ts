@@ -1,9 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
+import { put } from "@vercel/blob";
 import { getSession } from "@/lib/auth";
-import { findProjectRoot } from "@/lib/projectRoot";
 
 export const runtime = "nodejs";
 
@@ -42,15 +40,8 @@ export async function POST(request: NextRequest) {
 
   const ext = extensionForMime(file.type);
   const filename = `${Date.now()}-${randomUUID()}${ext}`;
-  const root = findProjectRoot();
-  const uploadDir = path.join(root, "public", "uploads");
-  const outputPath = path.join(uploadDir, filename);
 
-  await mkdir(uploadDir, { recursive: true });
-  const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(outputPath, bytes);
+  const blob = await put(filename, file, { access: "public" });
 
-  return NextResponse.json({
-    url: `/uploads/${filename}`,
-  });
+  return NextResponse.json({ url: blob.url });
 }

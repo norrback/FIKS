@@ -1760,6 +1760,7 @@ export type RepairerProfileCreateManyArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many RepairerProfiles.
    */
   data: Prisma.RepairerProfileCreateManyInput | Prisma.RepairerProfileCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1778,6 +1779,7 @@ export type RepairerProfileCreateManyAndReturnArgs<ExtArgs extends runtime.Types
    * The data used to create many RepairerProfiles.
    */
   data: Prisma.RepairerProfileCreateManyInput | Prisma.RepairerProfileCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -27,7 +27,7 @@ function normalizeOptionalUrl(value: unknown): string | null | undefined {
   if (typeof value !== "string") return undefined;
   const t = value.trim();
   if (t.length === 0) return null;
-  if (t.startsWith("/uploads/")) return t;
+  if (t.startsWith("/uploads/") || t.startsWith("https://")) return t;
   return undefined;
 }
 

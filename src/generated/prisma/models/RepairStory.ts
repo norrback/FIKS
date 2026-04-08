@@ -827,6 +827,7 @@ export type RepairStoryCreateOrConnectWithoutRepairerInput = {
 
 export type RepairStoryCreateManyRepairerInputEnvelope = {
   data: Prisma.RepairStoryCreateManyRepairerInput | Prisma.RepairStoryCreateManyRepairerInput[]
+  skipDuplicates?: boolean
 }
 
 export type RepairStoryUpsertWithWhereUniqueWithoutRepairerInput = {
@@ -911,6 +912,7 @@ export type RepairStoryCreateOrConnectWithoutListingInput = {
 
 export type RepairStoryCreateManyListingInputEnvelope = {
   data: Prisma.RepairStoryCreateManyListingInput | Prisma.RepairStoryCreateManyListingInput[]
+  skipDuplicates?: boolean
 }
 
 export type RepairStoryUpsertWithWhereUniqueWithoutListingInput = {
@@ -1017,6 +1019,7 @@ export type RepairStoryCreateOrConnectWithoutBranchedFromInput = {
 
 export type RepairStoryCreateManyBranchedFromInputEnvelope = {
   data: Prisma.RepairStoryCreateManyBranchedFromInput | Prisma.RepairStoryCreateManyBranchedFromInput[]
+  skipDuplicates?: boolean
 }
 
 export type RepairStoryUpsertWithoutBranchChildrenInput = {
@@ -2253,6 +2256,7 @@ export type RepairStoryCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many RepairStories.
    */
   data: Prisma.RepairStoryCreateManyInput | Prisma.RepairStoryCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2271,6 +2275,7 @@ export type RepairStoryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many RepairStories.
    */
   data: Prisma.RepairStoryCreateManyInput | Prisma.RepairStoryCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

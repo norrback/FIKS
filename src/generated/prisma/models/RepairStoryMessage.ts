@@ -424,6 +424,7 @@ export type RepairStoryMessageCreateOrConnectWithoutSenderInput = {
 
 export type RepairStoryMessageCreateManySenderInputEnvelope = {
   data: Prisma.RepairStoryMessageCreateManySenderInput | Prisma.RepairStoryMessageCreateManySenderInput[]
+  skipDuplicates?: boolean
 }
 
 export type RepairStoryMessageUpsertWithWhereUniqueWithoutSenderInput = {
@@ -474,6 +475,7 @@ export type RepairStoryMessageCreateOrConnectWithoutRepairStoryInput = {
 
 export type RepairStoryMessageCreateManyRepairStoryInputEnvelope = {
   data: Prisma.RepairStoryMessageCreateManyRepairStoryInput | Prisma.RepairStoryMessageCreateManyRepairStoryInput[]
+  skipDuplicates?: boolean
 }
 
 export type RepairStoryMessageUpsertWithWhereUniqueWithoutRepairStoryInput = {
@@ -1278,6 +1280,7 @@ export type RepairStoryMessageCreateManyArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many RepairStoryMessages.
    */
   data: Prisma.RepairStoryMessageCreateManyInput | Prisma.RepairStoryMessageCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1296,6 +1299,7 @@ export type RepairStoryMessageCreateManyAndReturnArgs<ExtArgs extends runtime.Ty
    * The data used to create many RepairStoryMessages.
    */
   data: Prisma.RepairStoryMessageCreateManyInput | Prisma.RepairStoryMessageCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

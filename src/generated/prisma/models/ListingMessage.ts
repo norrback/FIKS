@@ -424,6 +424,7 @@ export type ListingMessageCreateOrConnectWithoutSenderInput = {
 
 export type ListingMessageCreateManySenderInputEnvelope = {
   data: Prisma.ListingMessageCreateManySenderInput | Prisma.ListingMessageCreateManySenderInput[]
+  skipDuplicates?: boolean
 }
 
 export type ListingMessageUpsertWithWhereUniqueWithoutSenderInput = {
@@ -474,6 +475,7 @@ export type ListingMessageCreateOrConnectWithoutListingInput = {
 
 export type ListingMessageCreateManyListingInputEnvelope = {
   data: Prisma.ListingMessageCreateManyListingInput | Prisma.ListingMessageCreateManyListingInput[]
+  skipDuplicates?: boolean
 }
 
 export type ListingMessageUpsertWithWhereUniqueWithoutListingInput = {
@@ -1278,6 +1280,7 @@ export type ListingMessageCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many ListingMessages.
    */
   data: Prisma.ListingMessageCreateManyInput | Prisma.ListingMessageCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1296,6 +1299,7 @@ export type ListingMessageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * The data used to create many ListingMessages.
    */
   data: Prisma.ListingMessageCreateManyInput | Prisma.ListingMessageCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

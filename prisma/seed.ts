@@ -2,26 +2,18 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { config } from "dotenv";
 import bcrypt from "bcryptjs";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 config({ path: path.join(root, ".env") });
 
-function sqliteUrlForAdapter(): string {
-  const raw = process.env.DATABASE_URL ?? "file:./prisma/dev.db";
-  if (!raw.startsWith("file:")) return raw;
-  const rel = raw.slice("file:".length).replace(/^\//, "");
-  if (path.isAbsolute(rel)) {
-    return `file:${rel.replace(/\\/g, "/")}`;
-  }
-  const abs = path.join(root, rel);
-  return `file:${abs.replace(/\\/g, "/")}`;
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL environment variable is not set");
 }
-
-const prisma = new PrismaClient({
-  adapter: new PrismaBetterSqlite3({ url: sqliteUrlForAdapter() }),
-});
+const adapter = new PrismaPg(connectionString);
+const prisma = new PrismaClient({ adapter });
 
 type JobSeed = {
   title: string;
