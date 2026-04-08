@@ -42,4 +42,14 @@ function getPrisma(): PrismaClient {
   return client;
 }
 
-export const prisma = getPrisma();
+/**
+ * Lazy Prisma client — created on first property access, not at import time.
+ * This prevents build failures when DATABASE_URL is unavailable during
+ * static page generation (e.g. /_not-found on Vercel).
+ */
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop) {
+    const client = getPrisma();
+    return Reflect.get(client, prop, client);
+  },
+});
