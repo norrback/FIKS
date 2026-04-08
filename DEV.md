@@ -98,7 +98,7 @@ The app deploys to [Vercel](https://vercel.com). On every push to `dev`, Vercel 
 ### Vercel project setup
 
 1. Import the Git repo on Vercel
-2. Add **Vercel Postgres** integration (auto-sets `DATABASE_URL`)
+2. Add **Vercel Postgres** integration (auto-sets `DATABASE_URL`). In **Settings → Environment Variables**, confirm `DATABASE_URL` is enabled for **Production** and **Preview** (not “Development” only), so builds and runtime both see it.
 3. Add **Vercel Blob** storage (auto-sets `BLOB_READ_WRITE_TOKEN`)
 4. Set `AUTH_SECRET` to a random 32+ character string in project settings
 5. Add `dev.fiks.fi` as a custom domain
