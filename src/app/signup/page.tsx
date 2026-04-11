@@ -7,7 +7,7 @@ import styles from "./signup.module.css";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [role, setRole] = useState<"user" | "repairer">("user");
+  const [role, setRole] = useState<"user" | "repairer" | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -124,28 +124,31 @@ export default function SignupPage() {
     <div className={styles.container}>
       <div className={styles.formWrapper}>
         <h1 className={styles.title}>Create an account</h1>
-        <p className={styles.subtitle}>
-          {role === "user"
-            ? "Sign up to list your broken items."
-            : "Sign up to offer your repair services and help others."}
-        </p>
-        
-        <div className={styles.roleToggle}>
-          <button 
-            className={`${styles.roleBtn} ${role === "user" ? styles.active : ""}`}
+        <p className={styles.subtitle}>How will you use FIKS?</p>
+
+        <div className={styles.roleCards}>
+          <button
+            type="button"
+            className={`${styles.roleCard} ${role === "user" ? styles.roleCardActive : ""}`}
             onClick={() => setRole("user")}
-            type="button"
           >
-            I need repairs
+            <span className={styles.roleIcon}>📦</span>
+            <span className={styles.roleCardTitle}>I need repairs</span>
+            <span className={styles.roleCardDesc}>Post broken items and get quotes from local repairers</span>
           </button>
-          <button 
-            className={`${styles.roleBtn} ${role === "repairer" ? styles.active : ""}`}
-            onClick={() => setRole("repairer")}
+          <button
             type="button"
+            className={`${styles.roleCard} ${role === "repairer" ? styles.roleCardActive : ""}`}
+            onClick={() => setRole("repairer")}
           >
-            I am a repairer
+            <span className={styles.roleIcon}>🛠️</span>
+            <span className={styles.roleCardTitle}>I am a repairer</span>
+            <span className={styles.roleCardDesc}>Offer your skills and connect with customers nearby</span>
           </button>
         </div>
+        {role === null && (
+          <p className={styles.roleHint}>Select a role to continue</p>
+        )}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           {error ? (
@@ -166,7 +169,7 @@ export default function SignupPage() {
               onChange={handleInputChange}
               autoComplete="name"
               required
-              disabled={loading}
+              disabled={loading || role === null}
             />
           </div>
 
@@ -182,10 +185,10 @@ export default function SignupPage() {
               onChange={handleInputChange}
               autoComplete="email"
               required
-              disabled={loading}
+              disabled={loading || role === null}
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>Password</label>
             <input
@@ -198,7 +201,7 @@ export default function SignupPage() {
               onChange={handleInputChange}
               autoComplete="new-password"
               required
-              disabled={loading}
+              disabled={loading || role === null}
             />
           </div>
 
@@ -267,7 +270,7 @@ export default function SignupPage() {
             </>
           )}
           
-          <button type="submit" className={styles.submitBtn} disabled={loading}>
+          <button type="submit" className={styles.submitBtn} disabled={loading || role === null}>
             {loading ? "Creating account…" : "Create Account"}
           </button>
         </form>

@@ -9,7 +9,7 @@ Mark items `[x]` when completed.
 
 ### Auth & Onboarding
 - [ ] **Signup email verification** — Send a confirmation email on registration; account inactive until verified.
-- [ ] **Repairer/customer role selection at signup** — Improve the current signup flow so the role choice (repairer vs. customer) is clearer and better guided.
+- [x] **Repairer/customer role selection at signup** — Improve the current signup flow so the role choice (repairer vs. customer) is clearer and better guided.
 
 ### Core Flow
 - [ ] **Repair story flow improvements** — Guided step-by-step flow (next → next → done) with scoring. WhatsApp-style chat with checkpoints for process progress (applied → agreed → in progress → completed → rated). Define checkpoints so they can later drive **escrow** milestones (when to hold funds, when to release, cancellation/refund) in the payments phase.

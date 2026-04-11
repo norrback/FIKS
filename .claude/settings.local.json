@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls C:/Users/andre/FIKS_cursor/FIKS/*.md)"
+    ]
+  }
+}
