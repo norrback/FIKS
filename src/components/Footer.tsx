@@ -29,6 +29,13 @@ export default function Footer() {
               <li><Link href="/privacy" className={styles.link}>Privacy Policy</Link></li>
             </ul>
           </div>
+
+          <div>
+            <h4 className={styles.heading}>Support</h4>
+            <ul className={styles.linkList}>
+              <li><Link href="/contact" className={styles.link}>Contact us</Link></li>
+            </ul>
+          </div>
         </div>
         
         <div className={styles.bottom}>

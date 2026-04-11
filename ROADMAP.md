@@ -8,24 +8,29 @@ Mark items `[x]` when completed.
 ## MVP
 
 ### Auth & Onboarding
-- [ ] **Signup email verification** — Send a confirmation email on registration; account inactive until verified.
+- [ ] **Signup email verification** — Send a confirmation email on registration; account inactive until verified. **Depends on email infrastructure (see below).**
 - [x] **Repairer/customer role selection at signup** — Improve the current signup flow so the role choice (repairer vs. customer) is clearer and better guided.
 
 ### Core Flow
 - [ ] **Repair story flow improvements** — Guided step-by-step flow (next → next → done) with scoring. WhatsApp-style chat with checkpoints for process progress (applied → agreed → in progress → completed → rated). Define checkpoints so they can later drive **escrow** milestones (when to hold funds, when to release, cancellation/refund) in the payments phase.
 
+### Email Infrastructure
+- [ ] **Resend integration** — Set up Resend as the email provider. Add `RESEND_API_KEY` env var. Create a shared `lib/email.ts` helper wrapping the Resend SDK. Sender address: `hello@fiks.fi`. This unlocks all email features below and must be done first.
+  - **Contact form** — Wire `/contact` form to a `POST /api/contact` route that forwards name, email, and message to `hello@fiks.fi` via Resend. Show the existing thank-you state on success, show an error message on failure.
+  - **Signup email verification** — On registration, generate a signed token (store in DB with expiry), send a verification link via Resend. Gate login until verified. Add a resend-verification flow.
+  - **Email notifications** — Transactional emails for key events (someone applied to your listing, new message, repair completed). Build on top of the same `lib/email.ts` helper.
+
 ### Notifications
 - [ ] **Platform notifications** — In-app notification center (bell icon) for events like new applications, messages, status changes.
-- [ ] **Email notifications** — Transactional emails for key events (someone applied to your listing, new message, repair completed).
 
 ### Listings
 - [ ] **Listing expiration** — Listings auto-expire after 20 days. Owner can renew; expired listings get status "vanhentunut" (expired) and are hidden from search.
 
 ### Pages
-- [ ] **About page** — Company info, mission, how it works.
-- [ ] **Privacy policy page** — GDPR-compliant privacy policy.
-- [ ] **Terms of service page** — Usage terms and conditions.
-- [ ] **Contact page** — Contact form or support email.
+- [x] **About page** — Company info, mission, how it works.
+- [x] **Privacy policy page** — GDPR-compliant privacy policy.
+- [x] **Terms of service page** — Usage terms and conditions.
+- [x] **Contact page** — Contact form or support email.
 
 ### Mobile
 - [ ] **Mobile optimization** — Responsive layout pass across all pages; touch-friendly interactions.
